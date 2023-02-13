@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include "Singelton.h"
+
 bool Renderer::init()
 {
     //Initialization flag
@@ -27,8 +29,8 @@ bool Renderer::init()
         else
         {
             //Create renderer for window
-            gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-            if (gRenderer == NULL)
+            SINGLETON->gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+            if (SINGLETON->gRenderer == NULL)
             {
                 printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
                 success = false;
@@ -36,7 +38,7 @@ bool Renderer::init()
             else
             {
                 //Initialize renderer color
-                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                SDL_SetRenderDrawColor(SINGLETON->gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
                 //Initialize PNG loading
                 int imgFlags = IMG_INIT_PNG;
@@ -48,6 +50,7 @@ bool Renderer::init()
             }
         }
     }
+    
     return success;
 }
 
@@ -92,7 +95,7 @@ SDL_Texture* Renderer::loadTexture(std::string path)
     else
     {
         //Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+        newTexture = SDL_CreateTextureFromSurface(SINGLETON->gRenderer, loadedSurface);
         if (newTexture == NULL)
         {
             printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -169,6 +172,28 @@ bool Renderer::loadMediaTexture()
     return success;
 }
 
+bool Renderer::loadMediaColorKeying()
+{
+    //Loading success flag
+    bool success = true;
+
+    //Load Foo' texture
+    if( !gFooTexture.loadFromFile( "assets/textures/foo.png" ) )
+    {
+        printf( "Failed to load Foo' texture image!\n" );
+        success = false;
+    }
+    
+    //Load background texture
+    if( !gBackgroundTexture.loadFromFile( "assets/textures/background.png" ) )
+    {
+        printf( "Failed to load background texture image!\n" );
+        success = false;
+    }
+
+    return success;
+}
+
 bool Renderer::loadNoMedia()
 {
     //Loading success flag
@@ -180,15 +205,15 @@ bool Renderer::loadNoMedia()
 
 void Renderer::close()
 {
-    //Free loaded image
-    SDL_DestroyTexture(gTexture);
-    gTexture = NULL;
+    //Free loaded images
+    gFooTexture.free();
+    gBackgroundTexture.free();
 
     //Destroy window    
-    SDL_DestroyRenderer(gRenderer);
-    SDL_DestroyWindow(gWindow);
+    SDL_DestroyRenderer( SINGLETON->gRenderer );
+    SDL_DestroyWindow( gWindow );
     gWindow = NULL;
-    gRenderer = NULL;
+    SINGLETON->gRenderer = NULL;
 
     //Quit SDL subsystems
     IMG_Quit();

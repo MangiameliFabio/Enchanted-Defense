@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\fabio\Documents\GitHub\LazyFooEngine\libraries\SDL2_image-2.6.1\include;C:\Users\fabio\Documents\GitHub\LazyFooEngine\libraries\SDL2-2.24.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\fabio\Documents\GitHub\LazyFooEngine\libraries\SDL2_image-2.6.1\lib\x64;C:\Users\fabio\Documents\GitHub\LazyFooEngine\libraries\SDL2-2.24.0\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\fabio\Documents\GitHub\LazyFooEngine\libraries\SDL2-2.24.0\include;C:\Users\fabio\Documents\GitHub\LazyFooEngine\libraries\SDL2_image-2.6.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\fabio\Documents\GitHub\LazyFooEngine\libraries\SDL2-2.24.0\lib\x64;C:\Users\fabio\Documents\GitHub\LazyFooEngine\libraries\SDL2_image-2.6.1\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -145,11 +145,13 @@
     <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Singelton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h" />
     <ClInclude Include="LTexture.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Singelton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,8 @@
 c:\users\fabio\documents\github\lazyfooengine\x64\debug\vc142.pdb
 c:\users\fabio\documents\github\lazyfooengine\x64\debug\vc142.idb
-c:\users\fabio\documents\github\lazyfooengine\x64\debug\01_hello_sdl.obj
+c:\users\fabio\documents\github\lazyfooengine\x64\debug\renderer.obj
+c:\users\fabio\documents\github\lazyfooengine\x64\debug\ltexture.obj
+c:\users\fabio\documents\github\lazyfooengine\x64\debug\gameloop.obj
 c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.pdb
 c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\cl.command.1.tlog
 c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\cl.read.1.tlog
@@ -9,12 +11,6 @@ c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link-
 c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link-cvtres.write.1.tlog
 c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link-rc.read.1.tlog
 c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link-rc.write.1.tlog
-c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link.1568-cvtres.read.1.tlog
-c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link.1568-cvtres.write.1.tlog
-c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link.1568-rc.read.1.tlog
-c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link.1568-rc.write.1.tlog
-c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link.1568.read.1.tlog
-c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link.1568.write.1.tlog
 c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link.command.1.tlog
 c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link.read.1.tlog
 c:\users\fabio\documents\github\lazyfooengine\x64\debug\lazyfooengine.tlog\link.write.1.tlog
