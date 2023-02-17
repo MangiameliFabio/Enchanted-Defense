@@ -7,7 +7,36 @@
 
 class Renderer
 {
-public:    
+public:
+    bool init();
+
+    void renderUpdate();
+
+    //Loads individual image
+    SDL_Surface* loadSurface(std::string path);
+
+    SDL_Texture* loadTexture(std::string path);
+
+    //Loads media
+    bool loadMediaIMG();
+
+    bool loadMediaTexture(std::string path);
+
+    bool loadMediaColorKeying();
+
+    bool loadMediaSprites();
+
+    bool loadMediaColors();
+
+    bool loadMediaAlphaBlending();
+
+    bool loadMediaAnimation();
+
+    bool loadNoMedia();
+
+    //Frees media and shuts down SDL
+    void close();
+
     //Screen dimension constants
     const int SCREEN_WIDTH = 640;
     const int SCREEN_HEIGHT = 480;
@@ -30,23 +59,9 @@ public:
     //Scene textures
     LTexture gFooTexture;
     LTexture gBackgroundTexture;
-    
-    bool init();
+    LTexture gSpriteSheetTexture;
+    LTexture gModulatedTexture;
+    LTexture gCustomTexture;
 
-    //Loads individual image
-    SDL_Surface* loadSurface(std::string path);
-
-    SDL_Texture* loadTexture(std::string path);
-
-    //Loads media
-    bool loadMediaIMG();
-
-    bool loadMediaTexture();
-
-    bool loadMediaColorKeying();
-
-    bool loadNoMedia();
-
-    //Frees media and shuts down SDL
-    void close();
+    SDL_Rect gSpriteClips[4];
 };

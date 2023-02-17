@@ -22,12 +22,12 @@ int main(int argc, char* args[])
     else
     {
         //Load media
-        if (!renderer->loadMediaColorKeying())
+        if (!renderer->loadMediaTexture("assets/textures/arrow.png"))
         {
             printf("Failed to load media!\n");
         }
     }
-    
+
     //Main loop flag
     bool quit = false;
 
@@ -45,23 +45,35 @@ int main(int argc, char* args[])
             {
                 quit = true;
             }
+            else if (e.type == SDL_KEYDOWN)
+            {
+                switch (e.key.keysym.sym)
+                {
+                case SDLK_a:
+                    SINGLETON->degrees -= 1;
+                    break;
+
+                case SDLK_d:
+                    SINGLETON->degrees += 1;
+                    break;
+
+                case SDLK_q:
+                    SINGLETON->flipType = SDL_FLIP_HORIZONTAL;
+                    break;
+
+                case SDLK_w:
+                    SINGLETON->flipType = SDL_FLIP_NONE;
+                    break;
+
+                case SDLK_e:
+                    SINGLETON->flipType = SDL_FLIP_VERTICAL;
+                    break;
+                }
+            }
         }
-        //Clear screen
-        SDL_SetRenderDrawColor( SINGLETON->gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-        SDL_RenderClear( SINGLETON->gRenderer );
-
-        //Render background texture to screen
-        renderer->gBackgroundTexture.render( 0, 0 );
-
-        //Render Foo' to the screen
-        renderer->gFooTexture.render( 240, 190 );
-
-        //Update screen
-        SDL_RenderPresent( SINGLETON->gRenderer );
+        renderer->renderUpdate();
     }
-
     //Free resources and closeSDL
     renderer->close();
-
     return 0;
 }
