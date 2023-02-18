@@ -1,13 +1,18 @@
 ﻿#pragma once
-#include <SDL_render.h>
 
 #define SINGLETON Singleton::getInstance()
+#include <vector>
+
+#include "Texture.h"
 
 class Singleton
 {
 private:
     static Singleton* instance;
-    Singleton() {}
+
+    Singleton()
+    {
+    }
 
 public:
     static Singleton* getInstance()
@@ -18,20 +23,15 @@ public:
         return instance;
     }
 
-    //Modulation components
-    Uint8 r = 255;
-    Uint8 g = 255;
-    Uint8 b = 255;
-    
-    //Modulation component
-    Uint8 a = 255;
+    //Screen dimension constants
+    const int SCREEN_WIDTH = 640;
+    const int SCREEN_HEIGHT = 640;
 
-    //Angle of rotation
-    double degrees = 0;
+    //Grid should start at x=100 and y=100
 
-    //Flip type
-    SDL_RendererFlip flipType = SDL_FLIP_NONE;
-    
     //The window renderer
     SDL_Renderer* gRenderer = NULL;
+
+    //Textures to render
+    std::vector<Texture*> gTextureContainer;
 };
