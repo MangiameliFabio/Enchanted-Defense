@@ -5,6 +5,7 @@
 
 #include "Enums.h"
 #include "Object.h"
+#include "Subject.h"
 #include "Texture.h"
 #include "../Game/Player/PlayerCharacter.h"
 
@@ -38,10 +39,9 @@ public:
     //Delta Time
     float gDeltaTime = 1.f / 60.f;
 
-    //Current Input State
-    Inputs gCurrentInput = NONE;
-
     std::vector<Object*> updateFunctions;
 
     PlayerCharacter* Player;
+
+    bool quit = false;
 };

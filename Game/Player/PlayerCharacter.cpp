@@ -17,26 +17,43 @@ void PlayerCharacter::close()
     Object::close();
 }
 
-void PlayerCharacter::move(float xDir, float yDir)
+void PlayerCharacter::move(Vector& dir)
 {
-    x += xDir * SINGLETON->gDeltaTime * movementSpeed;
-    y += yDir * SINGLETON->gDeltaTime * movementSpeed;
+    position = position + dir * movementSpeed * SINGLETON->gDeltaTime;
 }
 
-PlayerCharacter::PlayerCharacter(float _x, float _y)
+PlayerCharacter::PlayerCharacter(Vector& spawnPos)
 {
     printf("Player created");
     SINGLETON->Player = this;
 
-    x = _x;
-    y = _y;
+    position = spawnPos;
 
     playerTexture.loadTexture("assets/textures/player/Player.png");
-    playerTexture.setDynamicX(&x);
-    playerTexture.setDynamicY(&y);
+    playerTexture.setDynamicX(&position.x);
+    playerTexture.setDynamicY(&position.y);
 }
 
 PlayerCharacter::~PlayerCharacter()
 {
     printf("Player has been deleted");
+}
+
+void PlayerCharacter::onNotify(const Event event)
+{
+    if (event == ALL_INPUTS_HANDLED)
+    {
+        if (isMoveing)
+        {
+            Vector dirNormalized = moveDir.normalize();
+            move(dirNormalized);
+            isMoveing = false;
+            moveDir.Zero();
+        }
+    }
+}
+
+void PlayerCharacter::addMoveDirection(Vector& v)
+{
+    moveDir += v;
 }

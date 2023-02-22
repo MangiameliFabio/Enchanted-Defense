@@ -1,22 +1,31 @@
 ﻿#pragma once
 #include "../../Engine/Object.h"
+#include "../../Engine/Observer.h"
 #include "../../Engine/Texture.h"
+#include "../../Engine/Vector.h"
 
-class PlayerCharacter : Object
+struct Vector;
+
+class PlayerCharacter : public Object, public Observer
 {
-    Texture playerTexture;
-
     void start() override;
     void update() override;
     void close() override;
 
-public:
-    void move(float xDir,float yDir);
+    Texture playerTexture;
+    Vector position = Vector();
+    Vector moveDir = Vector();
 
-    PlayerCharacter(float _x, float _y);
+public:
+    void move(Vector& dir);
+    void onNotify(const Event event) override;
+    void addMoveDirection(Vector& v);
+
+    PlayerCharacter(Vector& spawnPos);
     ~PlayerCharacter();
-    
-    float x;
-    float y;
+
     float movementSpeed = 100.f;
+
+    bool isMoveing = false;
+    bool isShooting = false;
 };

@@ -1,17 +1,18 @@
 ﻿#pragma once
+#include "PlayerCommands.h"
+#include "../GameCommands.h"
 class Command;
 
 class InputManager
 {
 public:
     Command* handleInput();
-
-    void init();
     void close();
 
 private:
-    Command* buttonW = nullptr;
-    Command* buttonA = nullptr;
-    Command* buttonS = nullptr;
-    Command* buttonD = nullptr;
+    Command* buttonW = new MoveUpCommand;
+    Command* buttonA = new MoveLeftCommand;
+    Command* buttonS = new MoveDownCommand;
+    Command* buttonD = new MoveRightCommand;
+    Command* buttonESC = new CloseGameCommand;
 };

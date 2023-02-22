@@ -19,5 +19,6 @@ void WorldManager::createAssets()
     const float playerStartPosX = SINGLETON->SCREEN_HEIGHT / 2;
     const float playerStartPosY = SINGLETON->SCREEN_HEIGHT / 2;
 
-    auto player = new PlayerCharacter(playerStartPosY, playerStartPosX);
+    Vector spawnPos = Vector(playerStartPosX, playerStartPosY);
+    auto player = new PlayerCharacter(spawnPos);
 }
