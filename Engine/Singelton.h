@@ -3,11 +3,10 @@
 #define SINGLETON Singleton::getInstance()
 #include <vector>
 
-#include "Enums.h"
-#include "Object.h"
-#include "Subject.h"
-#include "Texture.h"
+#include "./Core/Object.h"
+#include "./Core/Texture.h"
 #include "../Game/Player/PlayerCharacter.h"
+#include "Core/Renderer.h"
 
 class Singleton
 {
@@ -15,6 +14,7 @@ class Singleton
 
     Singleton()
     {
+        gRenderer = new Renderer;
     }
 
 public:
@@ -26,22 +26,41 @@ public:
         return instance;
     }
 
-    //Screen dimension constants
-    const int SCREEN_WIDTH = 750;
-    const int SCREEN_HEIGHT = 750;
+    //Player Refrence
+    PlayerCharacter* gPlayer;
 
     //The window renderer
-    SDL_Renderer* gRenderer = NULL;
+    SDL_Renderer* gSDL_Renderer = nullptr;
 
-    //Textures to render
-    std::vector<Texture*> gTextureContainer;
+    Renderer* gRenderer = nullptr;
+
+    //Update functions
+    std::vector<Object*> gObjectList;
 
     //Delta Time
     float gDeltaTime = 1.f / 60.f;
+    //Screen dimension constants
+    const int SCREEN_WIDTH = 750;
+    const int SCREEN_HEIGHT = 750;
+    int numRenderTextures = 0;
+    int numObjects = 0;
 
-    std::vector<Object*> updateFunctions;
+    bool gQuit = false;
 
-    PlayerCharacter* Player;
+    void addObject(Object* object)
+    {
+        gObjectList.push_back(object);
+        numObjects++;
+    }
 
-    bool quit = false;
+    void removeObject(Object* object)
+    {
+        //Find Texture in vector
+        const auto position = std::find(gObjectList.begin(), gObjectList.end(), object);
+
+        //Remove Observer
+        if (position != gObjectList.end())
+            gObjectList.erase(position);
+        numObjects--;
+    }
 };

@@ -3,7 +3,7 @@
 #include <SDL_image.h>
 #include <SDL_render.h>
 
-#include "Singelton.h"
+#include "../Singelton.h"
 
 bool Texture::loadTexture(std::string _path)
 {
@@ -16,6 +16,7 @@ bool Texture::loadTexture(std::string _path)
 
     //Load image at specified path
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+
     if (loadedSurface == nullptr)
     {
         printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
@@ -26,7 +27,7 @@ bool Texture::loadTexture(std::string _path)
         SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
 
         //Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(SINGLETON->gRenderer, loadedSurface);
+        newTexture = SDL_CreateTextureFromSurface(SINGLETON->gSDL_Renderer, loadedSurface);
         if (newTexture == nullptr)
         {
             printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -44,7 +45,7 @@ bool Texture::loadTexture(std::string _path)
 
     //Return success
     mTexture = newTexture;
-    SINGLETON->gTextureContainer.push_back(this);
+    SINGLETON->gRenderer->addTexture(this);
 
     return mTexture != nullptr;
 }
@@ -60,13 +61,17 @@ void Texture::render(SDL_Rect* clip, double angle, SDL_Point* center, SDL_Render
         int tempX = static_cast<int>(*dynamicX);
         int tempY = static_cast<int>(*dynamicY);
 
+        //Center Texture in the middle of the Object
+        tempX = tempX - getWidth() / 2;
+        tempY = tempY - getHeight() / 2;
+
         //Set rendering space and render to screen
         renderQuad = {tempX, tempY, mWidth, mHeight};
     }
     else
     {
         //Rendering for static textures like the background
-        
+
         //Set rendering space and render to screen
         renderQuad = {staticX, staticY, mWidth, mHeight};
     }
@@ -79,7 +84,7 @@ void Texture::render(SDL_Rect* clip, double angle, SDL_Point* center, SDL_Render
     }
 
     //Render to screen
-    SDL_RenderCopyEx(SINGLETON->gRenderer, mTexture, clip, &renderQuad, angle, center, flip);
+    SDL_RenderCopyEx(SINGLETON->gSDL_Renderer, mTexture, clip, &renderQuad, angle, center, flip);
 }
 
 void Texture::free()
@@ -95,6 +100,7 @@ void Texture::free()
         mHeight = 0;
         staticX = 0;
         staticY = 0;
+        SINGLETON->gRenderer->removeTexture(this);
     }
 }
 
@@ -107,6 +113,7 @@ Texture::~Texture()
     mTexture = nullptr;
     dynamicX = nullptr;
     dynamicY = nullptr;
+    SINGLETON->gRenderer->removeTexture(this);
 }
 
 void Texture::setDynamicX(float* x)
@@ -117,6 +124,12 @@ void Texture::setDynamicX(float* x)
 void Texture::setDynamicY(float* y)
 {
     this->dynamicY = y;
+}
+
+void Texture::setDynamicPosition(Vector* v)
+{
+    this->dynamicX = &v->x;
+    this->dynamicY = &v->y;
 }
 
 int Texture::getWidth() const

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../../Engine/Command.h"
+#include "../../Engine/Core/Patterns/Command.h"
 #include "../../Engine/Singelton.h"
 
 class MoveLeftCommand : public Command
@@ -8,8 +8,9 @@ public:
     virtual void execute()
     {
         Vector dir = Vector(-1, 0);
-        SINGLETON->Player->addMoveDirection(dir);
-        SINGLETON->Player->isMoveing = true;
+
+        SINGLETON->gPlayer->addMoveDirection(dir);
+        SINGLETON->gPlayer->isMoveing = true;
     }
 };
 
@@ -20,8 +21,8 @@ public:
     {
         Vector dir = Vector(1, 0);
 
-        SINGLETON->Player->addMoveDirection(dir);
-        SINGLETON->Player->isMoveing = true;
+        SINGLETON->gPlayer->addMoveDirection(dir);
+        SINGLETON->gPlayer->isMoveing = true;
     }
 };
 
@@ -32,8 +33,8 @@ public:
     {
         Vector dir = Vector(0, -1);
 
-        SINGLETON->Player->addMoveDirection(dir);
-        SINGLETON->Player->isMoveing = true;
+        SINGLETON->gPlayer->addMoveDirection(dir);
+        SINGLETON->gPlayer->isMoveing = true;
     }
 };
 
@@ -44,7 +45,7 @@ public:
     {
         Vector dir = Vector(0, 1);
 
-        SINGLETON->Player->addMoveDirection(dir);
-        SINGLETON->Player->isMoveing = true;
+        SINGLETON->gPlayer->addMoveDirection(dir);
+        SINGLETON->gPlayer->isMoveing = true;
     }
 };

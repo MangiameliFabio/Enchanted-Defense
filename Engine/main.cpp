@@ -2,43 +2,38 @@
 #include <cstdio>
 #include <SDL.h>
 
-#include "GameClock.h"
-#include "../Game/Player/InputManager.h"
-#include "Renderer.h"
 #include "Singelton.h"
-#include "Vector.h"
+#include "Core/Patterns/Subject.h"
+#include "Core/Renderer.h"
+#include "Core/GameClock.h"
+#include "Core/Vector.h"
 #include "../Game/WorldMAnager.h"
+#include "../Game/Player/InputManager.h"
 
 Singleton* Singleton::instance = nullptr;
 
 int main(int argc, char* args[])
 {
-    const auto renderer = new Renderer;
     const auto worldManager = new WorldManager;
     const auto gameClock = new GameClock;
     const auto inputManager = new InputManager;
     const auto eventHandler = new Subject;
 
-    Vector a(1, 1);
-    Vector b(2, 2);
-
-    Vector c = 3.f * a;
-
-    printf("x = %f, y = %f", a.x, a.y);
-
-    if (!renderer->init())
+    if (!SINGLETON->gRenderer->init())
     {
         printf("failed to initialize renderer \n");
     }
+    SINGLETON->gRenderer = SINGLETON->gRenderer;
 
+    //Initialize
     worldManager->createAssets();
     gameClock->init();
-    eventHandler->addObserver(SINGLETON->Player);
+    eventHandler->addObserver(SINGLETON->gPlayer);
 
     //Event handler
     SDL_Event e;
 
-    while (!SINGLETON->quit)
+    while (!SINGLETON->gQuit)
     {
         gameClock->startTick();
         //Handle events on queue
@@ -47,27 +42,30 @@ int main(int argc, char* args[])
             //User requests quit
             if (e.type == SDL_QUIT)
             {
-                SINGLETON->quit = true;
+                SINGLETON->gQuit = true;
             }
         }
         //Get Current Input
         inputManager->handleInput();
         eventHandler->notify(ALL_INPUTS_HANDLED);
 
-        for (const auto funcPtr : SINGLETON->updateFunctions)
+        for (const auto object : SINGLETON->gObjectList)
         {
-            funcPtr->update();
+            if (object->shouldUpdate)
+            {
+                object->update();
+            }
         }
 
         //Render Scene
-        renderer->renderUpdate();
+        SINGLETON->gRenderer->renderUpdate();
 
         //End of Tick
         gameClock->endTick();
     }
 
     //Shutdown Systems
-    renderer->close();
+    SINGLETON->gRenderer->close();
     gameClock->close();
     inputManager->close();
 

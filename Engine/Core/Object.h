@@ -2,13 +2,14 @@
 
 class Object
 {
-    void (Object::*updatePointer)() = nullptr;
-    
 public:
-    virtual ~Object() = default;
-    Object();
+    bool shouldUpdate = true;
+    
     virtual void start();
     virtual void update();
     virtual void close();
+    
+    Object();
+    virtual ~Object();
 };
 

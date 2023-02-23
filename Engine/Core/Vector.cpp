@@ -1,6 +1,7 @@
 ﻿#include "Vector.h"
 
 #include <cmath>
+#include <cstdio>
 
 Vector& Vector::operator=(const Vector& v)
 {
@@ -61,6 +62,12 @@ float Vector::length()
 
 Vector Vector::normalize()
 {
+    float vLength = length();
+    if (vLength == 0.f)
+    {
+        printf("Can't normalize Vector with length 0 \n");
+        return *this;
+    }
     return *this * (1.f / length());
 }
 

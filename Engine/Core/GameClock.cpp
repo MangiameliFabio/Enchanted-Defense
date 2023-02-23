@@ -1,6 +1,5 @@
 ﻿#include "GameClock.h"
-
-#include "Singelton.h"
+#include "../Singelton.h"
 
 void GameClock::init()
 {
@@ -14,7 +13,7 @@ void GameClock::init()
 void GameClock::close()
 {
     //Clear pointer
-    pFrameTimes = nullptr;    
+    pFrameTimes = nullptr;
 
     delete this;
 }
@@ -57,5 +56,4 @@ GameClock::GameClock()
 GameClock::~GameClock()
 {
     printf("destroy Game Clock \n");
-
 }

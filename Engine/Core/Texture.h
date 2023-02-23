@@ -2,6 +2,8 @@
 #include <SDL_render.h>
 #include <string>
 
+#include "Vector.h"
+
 class Texture
 {
     void free();
@@ -20,11 +22,15 @@ public:
     void setDynamicX(float* x);
     void setDynamicY(float* y);
 
+    void setDynamicPosition(Vector* v);
+
     Texture();
     ~Texture();
 
     int staticX = 0;
     int staticY = 0;
+
+    bool markForRender = true;
 
 private:
     SDL_Texture* mTexture;
@@ -33,7 +39,7 @@ private:
 
     int mWidth = 0;
     int mHeight = 0;
-    
+
     //Dynamic positions for player and enemies
     float* dynamicX = nullptr;
     float* dynamicY = nullptr;
