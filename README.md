@@ -1,5 +1,5 @@
 # Top Down Shooter
-Currently, I'm working on this project. It is a custom engine in which I implemented a top-down shooter. The Engine is highly inspired by
+Currently, I'm working on this project. It is a custom engine in which I implement a top-down shooter. The Engine is highly inspired by
 the [LazyFoo SDL](https://lazyfoo.net/tutorials/SDL/index.php) tutorial series.
 
 For the Textures I used [Piskel](https://www.piskelapp.com/p/create/sprite). I'm not an artist so please excuse the simplicity of the textures :P
