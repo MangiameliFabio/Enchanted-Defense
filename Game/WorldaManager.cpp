@@ -21,4 +21,5 @@ void WorldManager::createAssets()
 
     Vector spawnPos = Vector(playerStartPosX, playerStartPosY);
     auto player = new PlayerCharacter(spawnPos);
+    player->start();
 }

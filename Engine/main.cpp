@@ -17,7 +17,6 @@ int main(int argc, char* args[])
     const auto worldManager = new WorldManager;
     const auto gameClock = new GameClock;
     const auto inputManager = new InputManager;
-    const auto eventHandler = new Subject;
 
     if (!SINGLETON->gRenderer->init())
     {
@@ -28,7 +27,7 @@ int main(int argc, char* args[])
     //Initialize
     worldManager->createAssets();
     gameClock->init();
-    eventHandler->addObserver(SINGLETON->gPlayer);
+    SINGLETON->addObserver(SINGLETON->gPlayer);
 
     //Event handler
     SDL_Event e;
@@ -47,7 +46,7 @@ int main(int argc, char* args[])
         }
         //Get Current Input
         inputManager->handleInput();
-        eventHandler->notify(ALL_INPUTS_HANDLED);
+        SINGLETON->notify(ALL_INPUTS_HANDLED);
 
         for (const auto object : SINGLETON->gObjectList)
         {

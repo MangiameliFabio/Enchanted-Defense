@@ -6,6 +6,9 @@
 void PlayerCharacter::start()
 {
     Object::start();
+    SINGLETON->gPlayer = this;
+    playerASM = new PlayerASM;
+    playerASM->start();
 }
 
 void PlayerCharacter::update()
@@ -26,11 +29,8 @@ void PlayerCharacter::move(Vector& dir)
 PlayerCharacter::PlayerCharacter(Vector& spawnPos)
 {
     printf("Player created \n");
-    SINGLETON->gPlayer = this;
 
     position = spawnPos;
-
-    createAnimations();
 }
 
 PlayerCharacter::~PlayerCharacter()
@@ -58,18 +58,4 @@ void PlayerCharacter::onNotify(const Event event)
 void PlayerCharacter::addMoveDirection(Vector& v)
 {
     moveDir += v;
-}
-
-void PlayerCharacter::createAnimations()
-{
-    //Piskel x4
-    idle1.loadTexture("assets/textures/player/idle/idle1.png");
-    idle1.setDynamicPosition(&position);
-    idle2.loadTexture("assets/textures/player/idle/idle2.png");
-    idle2.setDynamicPosition(&position);
-
-    idleAnimation = new Animator();
-    idleAnimation->setFrameRate(4.f);
-    idleAnimation->addSprite(&idle1);
-    idleAnimation->addSprite(&idle2);
 }

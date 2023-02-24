@@ -2,15 +2,12 @@
 #include <map>
 #include <vector>
 
-#include "Core/Object.h"
 #include "Core/Texture.h"
 #include "Core/Vector.h"
 
-class Animator : public Object
+class Animator
 {
     std::vector<Texture*> animationSprites;
-
-    Vector* posSprite;
 
     float currentFrameTime = 0.f;
     float frameRate = 1.f;
@@ -19,12 +16,11 @@ class Animator : public Object
     int currentSprite = 0;
     int maxSprites = 0;
 
-    bool disabled;
-
 public:
-    void update() override;
+    void update();
     void addSprite(Texture* texture);
     void setFrameRate(float framesPerSecond);
+    void flip(SDL_RendererFlip flip);
     void disable();
     void enable();
 

@@ -2,6 +2,8 @@
 #include "../../Engine/Core/Patterns/Command.h"
 #include "../../Engine/Singelton.h"
 
+class AnimationSubject;
+
 class MoveLeftCommand : public Command
 {
 public:
@@ -11,6 +13,7 @@ public:
 
         SINGLETON->gPlayer->addMoveDirection(dir);
         SINGLETON->gPlayer->isMoveing = true;
+        SINGLETON->gPlayer->playerASM->stateEnum = LEFT;
     }
 };
 
@@ -23,6 +26,7 @@ public:
 
         SINGLETON->gPlayer->addMoveDirection(dir);
         SINGLETON->gPlayer->isMoveing = true;
+        SINGLETON->gPlayer->playerASM->stateEnum = RIGHT;
     }
 };
 
@@ -35,6 +39,7 @@ public:
 
         SINGLETON->gPlayer->addMoveDirection(dir);
         SINGLETON->gPlayer->isMoveing = true;
+        SINGLETON->gPlayer->playerASM->stateEnum = UP;
     }
 };
 
@@ -47,5 +52,6 @@ public:
 
         SINGLETON->gPlayer->addMoveDirection(dir);
         SINGLETON->gPlayer->isMoveing = true;
+        SINGLETON->gPlayer->playerASM->stateEnum = DOWN;
     }
 };

@@ -7,8 +7,9 @@
 #include "./Core/Texture.h"
 #include "../Game/Player/PlayerCharacter.h"
 #include "Core/Renderer.h"
+#include "Core/Patterns/Subject.h"
 
-class Singleton
+class Singleton : public Subject
 {
     static Singleton* instance;
 

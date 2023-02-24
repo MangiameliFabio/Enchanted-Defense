@@ -50,7 +50,7 @@ bool Texture::loadTexture(std::string _path)
     return mTexture != nullptr;
 }
 
-void Texture::render(SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
+void Texture::render(SDL_Rect* clip, double angle, SDL_Point* center)
 {
     SDL_Rect renderQuad;
     if (dynamicX && dynamicY)

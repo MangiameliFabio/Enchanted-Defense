@@ -1,34 +1,26 @@
 ﻿#include "Animator.h"
-
-#include <map>
-
 #include "Singelton.h"
-#include "Core/Helper.h"
 
 void Animator::update()
 {
-    Object::update();
-    if (!disabled)
+    if (currentFrameTime <= 0.f)
     {
-        if (currentFrameTime <= 0.f)
-        {
-            //Reset FrameTime
-            currentFrameTime = frameRate;
+        //Reset FrameTime
+        currentFrameTime = frameRate;
 
-            //Set new sprite for rendering
-            animationSprites[lastSprite]->markForRender = false;
-            animationSprites[currentSprite]->markForRender = true;
+        //Set new sprite for rendering
+        animationSprites[lastSprite]->markForRender = false;
+        animationSprites[currentSprite]->markForRender = true;
 
-            //Set current sprite to last sprite
-            lastSprite = currentSprite;
+        //Set current sprite to last sprite
+        lastSprite = currentSprite;
 
-            //If current sprite is over max reset to 0
-            currentSprite = currentSprite < maxSprites - 1 ? +1 : 0;
-        }
-        else
-        {
-            currentFrameTime -= SINGLETON->gDeltaTime;
-        }
+        //If current sprite is over max reset to 0
+        currentSprite = currentSprite < maxSprites - 1 ? currentSprite + 1 : 0;
+    }
+    else
+    {
+        currentFrameTime -= SINGLETON->gDeltaTime;
     }
 }
 
@@ -44,17 +36,28 @@ void Animator::setFrameRate(float framesPerSecond)
     frameRate = 1.f / framesPerSecond;
 }
 
+void Animator::flip(SDL_RendererFlip flip)
+{
+    for (const auto sprite : animationSprites)
+    {
+        sprite->flip = flip;
+    }
+}
+
 void Animator::disable()
 {
-    disabled = true;
-    currentFrameTime = 0;
-    animationSprites[currentSprite]->markForRender = false;
+    currentFrameTime = 0.f;
+    currentSprite = 0;
+
+    for (auto sprite : animationSprites)
+    {
+        sprite->markForRender = false;
+    }
 }
 
 void Animator::enable()
 {
-    disabled = true;
-    currentFrameTime = 0;
+    currentFrameTime = 0.f;
     animationSprites[currentSprite]->markForRender = true;
 }
 

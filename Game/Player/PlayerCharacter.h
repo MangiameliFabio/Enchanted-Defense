@@ -1,38 +1,35 @@
 ﻿#pragma once
+
 #include "../../Engine/Core/Object.h"
 #include "../../Engine/Core/Patterns/Observer.h"
-#include "../../Engine/Core/Texture.h"
 #include "../../Engine/Core/Vector.h"
 #include "../../Engine/Enums.h"
+#include "AnimationStateMachine/PlayerASM.h"
 
 class Animator;
 struct Vector;
 
 class PlayerCharacter : public Object, public Observer
 {
+public:
     void start() override;
     void update() override;
     void close() override;
 
-    Animator* idleAnimation;
-    Vector position = Vector();
-    Vector moveDir = Vector();
-
-    //Sprites
-    Texture idle1;
-    Texture idle2;
-
-public:
     void move(Vector& dir);
     void onNotify(const Event event) override;
     void addMoveDirection(Vector& v);
-    void createAnimations();
 
     PlayerCharacter(Vector& spawnPos);
     ~PlayerCharacter();
 
-    float movementSpeed = 200.f;
+    Vector position = Vector();
+
+    float movementSpeed = 150.f;
+    Vector moveDir = Vector();
 
     bool isMoveing = false;
     bool isShooting = false;
+
+    PlayerASM* playerASM;
 };

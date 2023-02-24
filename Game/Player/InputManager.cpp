@@ -9,12 +9,13 @@ Command* InputManager::handleInput()
     //Set texture based on current keystate
     const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
+    SINGLETON->gPlayer->playerASM->stateEnum = IDLE;
     if (currentKeyStates[SDL_SCANCODE_W]) buttonW->execute();
     if (currentKeyStates[SDL_SCANCODE_A]) buttonA->execute();
     if (currentKeyStates[SDL_SCANCODE_S]) buttonS->execute();
     if (currentKeyStates[SDL_SCANCODE_D]) buttonD->execute();
     if (currentKeyStates[SDL_SCANCODE_ESCAPE]) buttonESC->execute();
-    
+
     return nullptr;
 }
 
