@@ -50,7 +50,7 @@ bool Texture::loadTexture(std::string _path)
     return mTexture != nullptr;
 }
 
-void Texture::render(SDL_Rect* clip, double angle, SDL_Point* center)
+void Texture::render(double angle, SDL_Point* center)
 {
     SDL_Rect renderQuad;
     if (dynamicX && dynamicY)
@@ -60,7 +60,7 @@ void Texture::render(SDL_Rect* clip, double angle, SDL_Point* center)
         //Convert float pos into int for rendering
         int tempX = static_cast<int>(*dynamicX);
         int tempY = static_cast<int>(*dynamicY);
-
+        
         //Center Texture in the middle of the Object
         tempX = tempX - getWidth() / 2;
         tempY = tempY - getHeight() / 2;

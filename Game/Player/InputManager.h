@@ -14,5 +14,9 @@ private:
     Command* buttonA = new MoveLeftCommand;
     Command* buttonS = new MoveDownCommand;
     Command* buttonD = new MoveRightCommand;
+    Command* buttonUp = new AimUpCommand;
+    Command* buttonLeft = new AimLeftCommand;
+    Command* buttonDown = new AimDownCommand;
+    Command* buttonRight = new AimRightCommand;
     Command* buttonESC = new CloseGameCommand;
 };

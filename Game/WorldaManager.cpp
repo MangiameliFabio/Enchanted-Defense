@@ -1,6 +1,8 @@
-﻿#include "../Engine/Singelton.h"
+﻿#include "Projectile.h"
+#include "../Engine/Singelton.h"
 #include "WorldMAnager.h"
 #include "Player/PlayerCharacter.h"
+#include "Skeleton/SkeletonCharacter.h"
 
 WorldManager::WorldManager()
 {
@@ -22,4 +24,7 @@ void WorldManager::createAssets()
     Vector spawnPos = Vector(playerStartPosX, playerStartPosY);
     auto player = new PlayerCharacter(spawnPos);
     player->start();
+
+    Vector skelSpawnPos = Vector(playerStartPosX, playerStartPosY - 200);
+    auto skeleton = new SkeletonCharacter(skelSpawnPos);
 }

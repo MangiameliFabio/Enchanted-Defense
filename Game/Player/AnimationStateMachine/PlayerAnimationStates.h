@@ -1,24 +1,11 @@
 ﻿#pragma once
-#include "PlayerASM.h"
 #include "../../../Engine/Animator.h"
+#include "../../../Engine/BaseState.h"
 
-class PlayerBaseState
-{
-public:
-    virtual ~PlayerBaseState();
-
-    virtual void startState();
-    virtual void updateState();
-    virtual void endState();
-
-    Animator* animation = nullptr;
-};
-
-class PlayerIdle : public PlayerBaseState
+class PlayerIdle : public BaseState
 {
     //Sprites
-    Texture idle0;
-    Texture idle1;
+    Texture idleSpriteSheet;
 
     void updateState();
 
@@ -26,12 +13,9 @@ public:
     PlayerIdle();
 };
 
-class PlayerLeft : public PlayerBaseState
+class PlayerLeft : public BaseState
 {
-    Texture left0;
-    Texture left1;
-    Texture left2;
-    Texture left3;
+    Texture leftSpriteSheet;
 
 public:
     PlayerLeft();
@@ -39,12 +23,9 @@ public:
     void updateState() override;
 };
 
-class PlayerRight : public PlayerBaseState
+class PlayerRight : public BaseState
 {
-    Texture right0;
-    Texture right1;
-    Texture right2;
-    Texture right3;
+    Texture rightSpriteSheet;
 
 public:
     PlayerRight();
@@ -52,12 +33,9 @@ public:
     void updateState() override;
 };
 
-class PlayerUp : public PlayerBaseState
+class PlayerUp : public BaseState
 {
-    Texture up0;
-    Texture up1;
-    Texture up2;
-    Texture up3;
+    Texture upSpriteSheet;
 
 public:
     PlayerUp();
@@ -65,15 +43,9 @@ public:
     void updateState() override;
 };
 
-class PlayerDown : public PlayerBaseState
+class PlayerDown : public BaseState
 {
-    Texture down0;
-    Texture down1;
-    Texture down2;
-    Texture down3;
-    Texture down4;
-    Texture down5;
-    Texture down6;
+    Texture downSpriteSheet;
 
 public:
     PlayerDown();

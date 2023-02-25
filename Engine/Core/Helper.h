@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define F_COMPARE Helper::epsilonComparison
+#define F_EQUALS Helper::epsilonComparison
 
 class Helper
 {

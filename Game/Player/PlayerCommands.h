@@ -2,6 +2,7 @@
 #include "../../Engine/Core/Patterns/Command.h"
 #include "../../Engine/Singelton.h"
 
+class PlayerASM;
 class AnimationSubject;
 
 class MoveLeftCommand : public Command
@@ -13,7 +14,7 @@ public:
 
         SINGLETON->gPlayer->addMoveDirection(dir);
         SINGLETON->gPlayer->isMoveing = true;
-        SINGLETON->gPlayer->playerASM->stateEnum = LEFT;
+        static_cast<PlayerASM*>(SINGLETON->gPlayer->stateMachine)->stateEnum = LEFT;
     }
 };
 
@@ -26,7 +27,7 @@ public:
 
         SINGLETON->gPlayer->addMoveDirection(dir);
         SINGLETON->gPlayer->isMoveing = true;
-        SINGLETON->gPlayer->playerASM->stateEnum = RIGHT;
+        SINGLETON->gPlayer->stateMachine->stateEnum = RIGHT;
     }
 };
 
@@ -39,7 +40,7 @@ public:
 
         SINGLETON->gPlayer->addMoveDirection(dir);
         SINGLETON->gPlayer->isMoveing = true;
-        SINGLETON->gPlayer->playerASM->stateEnum = UP;
+        SINGLETON->gPlayer->stateMachine->stateEnum = UP;
     }
 };
 
@@ -52,6 +53,54 @@ public:
 
         SINGLETON->gPlayer->addMoveDirection(dir);
         SINGLETON->gPlayer->isMoveing = true;
-        SINGLETON->gPlayer->playerASM->stateEnum = DOWN;
+        SINGLETON->gPlayer->stateMachine->stateEnum = DOWN;
+    }
+};
+
+class AimLeftCommand : public Command
+{
+public:
+    virtual void execute()
+    {
+        Vector dir = Vector(-1, 0);
+
+        SINGLETON->gPlayer->addAimDirection(dir);
+        SINGLETON->gPlayer->isShooting = true;
+    }
+};
+
+class AimRightCommand : public Command
+{
+public:
+    virtual void execute()
+    {
+        Vector dir = Vector(1, 0);
+
+        SINGLETON->gPlayer->addAimDirection(dir);
+        SINGLETON->gPlayer->isShooting = true;
+    }
+};
+
+class AimUpCommand : public Command
+{
+public:
+    virtual void execute()
+    {
+        Vector dir = Vector(0, -1);
+
+        SINGLETON->gPlayer->addAimDirection(dir);
+        SINGLETON->gPlayer->isShooting = true;
+    }
+};
+
+class AimDownCommand : public Command
+{
+public:
+    virtual void execute()
+    {
+        Vector dir = Vector(0, 1);
+
+        SINGLETON->gPlayer->addAimDirection(dir);
+        SINGLETON->gPlayer->isShooting = true;
     }
 };

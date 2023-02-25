@@ -16,6 +16,7 @@ public:
     void renderUpdate();
     void addTexture(Texture* texture);
     void removeTexture(Texture* texture);
+    void drawPoint(int x, int y);
 
     //Frees media and shuts down SDL
     void close();

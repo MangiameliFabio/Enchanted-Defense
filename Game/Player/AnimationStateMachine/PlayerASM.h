@@ -1,28 +1,22 @@
 ﻿#pragma once
 #include "PlayerAnimationStates.h"
 #include "../../../Engine/Enums.h"
-#include "../../../Engine/Core/Object.h"
+#include "../../../Engine/AnimationStateMachine.h"
 
 class PlayerUp;
 class PlayerLeft;
 class PlayerDown;
 class PlayerRight;
 class PlayerIdle;
-class PlayerBaseState;
+class BaseState;
 
-class PlayerASM : public Object
+class PlayerASM : public AnimationStateMachine
 {
-    void update() override;
-
-    PlayerBaseState* currentState = nullptr;
-
 public:
-    PlayerASM();
+    PlayerASM(){}
 
     void start() override;
-    void close() override;
-
-    void stateTransition(PlayerBaseState* state);
+    void close();
 
     PlayerIdle* idleState = nullptr;
     PlayerLeft* leftState = nullptr;

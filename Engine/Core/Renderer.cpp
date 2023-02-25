@@ -93,6 +93,16 @@ void Renderer::removeTexture(Texture* texture)
     numTextures--;
 }
 
+void Renderer::drawPoint(int x, int y)
+{
+    // Draw a pixel with the color
+    SDL_SetRenderDrawColor(SINGLETON->gSDL_Renderer, 255, 0, 0, 255);
+    SDL_RenderDrawPoint(SINGLETON->gSDL_Renderer, 100, 100);
+
+    // Update the screen
+    SDL_RenderPresent(SINGLETON->gSDL_Renderer);
+}
+
 void Renderer::close()
 {
     //Destroy window    

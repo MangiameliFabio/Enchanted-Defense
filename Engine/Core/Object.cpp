@@ -12,6 +12,8 @@ void Object::update()
 
 void Object::close()
 {
+    queuedForDelete = true;
+    SINGLETON->addToDeleteQueue(this);
 }
 
 Object::Object()

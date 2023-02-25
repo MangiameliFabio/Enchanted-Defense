@@ -1,14 +1,8 @@
 ﻿#include "PlayerASM.h"
 #include "PlayerAnimationStates.h"
 
-PlayerASM::PlayerASM()
-{
-}
-
 void PlayerASM::start()
 {
-    Object::start();
-
     idleState = new PlayerIdle;
     leftState = new PlayerLeft;
     rightState = new PlayerRight;
@@ -16,31 +10,17 @@ void PlayerASM::start()
     upState = new PlayerUp;
 
     currentState = idleState;
-    if (!currentState)
-    {
-        printf("Current State is invalid");
-    }
-    else
-    {
-        currentState->startState();
-    }
-}
-
-void PlayerASM::update()
-{
-    Object::update();
-
-    currentState->updateState();
+    
+    AnimationStateMachine::start();
 }
 
 void PlayerASM::close()
 {
-    Object::close();
-}
+    AnimationStateMachine::close();
 
-void PlayerASM::stateTransition(PlayerBaseState* state)
-{
-    currentState->endState();
-    currentState = state;
-    currentState->startState();
+    idleState = nullptr;
+    leftState = nullptr;
+    rightState = nullptr;
+    upState = nullptr;
+    downState = nullptr;
 }

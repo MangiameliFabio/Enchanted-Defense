@@ -10,7 +10,7 @@ class Texture
 
 public:
     bool loadTexture(std::string _path);
-    void render(SDL_Rect* clip = nullptr, double angle = 0, SDL_Point* center = nullptr);
+    void render(double angle = 0, SDL_Point* center = nullptr);
 
     void setWidth(int m_width);
     void setHeight(int m_height);
@@ -31,6 +31,8 @@ public:
     int staticY = 0;
 
     bool markForRender = true;
+    
+    SDL_Rect* clip = nullptr;
 
 private:
     SDL_Texture* mTexture;

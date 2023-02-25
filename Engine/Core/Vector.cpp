@@ -3,6 +3,8 @@
 #include <cmath>
 #include <cstdio>
 
+#include "Helper.h"
+
 Vector& Vector::operator=(const Vector& v)
 {
     if (this == &v) return *this;
@@ -13,46 +15,44 @@ Vector& Vector::operator=(const Vector& v)
 
 Vector Vector::operator+(const Vector& v)
 {
-    x = x + v.x;
-    y = y + v.y;
-    return *this;
+    return {x + v.x, y + v.y};
 }
 
-Vector& Vector::operator+=(const Vector& v)
+void Vector::operator+=(const Vector& v)
 {
     x += v.x;
     y += v.y;
-    return *this;
 }
 
 Vector Vector::operator-(const Vector& v)
 {
-    x = x - v.x;
-    y = y - v.y;
-    return *this;
+    return {x - v.x, y - v.y};
 }
 
-Vector& Vector::operator-=(const Vector& v)
+void Vector::operator-=(const Vector& v)
 {
     x -= v.x;
     y -= v.y;
-    return *this;
 }
 
-Vector Vector::operator*(const float f)
+Vector Vector::operator*(const float f) const
 {
-    x = x * f;
-    y = y * f;
-
-    return *this;
+    return {x * f, y * f};
 }
 
 Vector operator*(const float f, Vector v)
 {
-    v.x = v.x * f;
-    v.y = v.y * f;
+    return {v.x * f, v.y * f};
+}
 
-    return v;
+float Vector::operator*(Vector& v)
+{
+    return x * v.x + y * v.x;
+}
+
+bool Vector::operator==(const Vector& v)
+{
+    return F_EQUALS(v.x, x) && F_EQUALS(v.y, y);
 }
 
 float Vector::length()
@@ -75,4 +75,14 @@ void Vector::Zero()
 {
     x = 0;
     y = 0;
+}
+
+void Vector::print(std::string text)
+{
+    printf("%sx: %.0f, y: %.1f \n", text.c_str(), x, y);
+}
+
+float Vector::dist(Vector& v1, Vector& v2)
+{
+    return (v1 - v2).length();
 }

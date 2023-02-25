@@ -35,6 +35,11 @@ int main(int argc, char* args[])
     while (!SINGLETON->gQuit)
     {
         gameClock->startTick();
+
+        //Clear everything in delete queue
+        SINGLETON->gQueueForDelete.clear();
+        SINGLETON->sizeQueueForDelete = 0;
+
         //Handle events on queue
         while (SDL_PollEvent(&e) != 0)
         {
@@ -48,12 +53,16 @@ int main(int argc, char* args[])
         inputManager->handleInput();
         SINGLETON->notify(ALL_INPUTS_HANDLED);
 
-        for (const auto object : SINGLETON->gObjectList)
+        for (int object = 0; object < SINGLETON->sizeObjectList; ++object)
         {
-            if (object->shouldUpdate)
+            if (SINGLETON->gObjectList[object]->shouldUpdate)
             {
-                object->update();
+                SINGLETON->gObjectList[object]->update();
             }
+        }
+        for (int object = 0; object < SINGLETON->sizeQueueForDelete; ++object)
+        {
+            delete SINGLETON->gQueueForDelete[object];
         }
 
         //Render Scene

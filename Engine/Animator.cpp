@@ -8,15 +8,17 @@ void Animator::update()
         //Reset FrameTime
         currentFrameTime = frameRate;
 
-        //Set new sprite for rendering
-        animationSprites[lastSprite]->markForRender = false;
-        animationSprites[currentSprite]->markForRender = true;
-
-        //Set current sprite to last sprite
-        lastSprite = currentSprite;
-
-        //If current sprite is over max reset to 0
-        currentSprite = currentSprite < maxSprites - 1 ? currentSprite + 1 : 0;
+        animationFrame.x += spriteSheet->getWidth();
+        
+        if (currentSprite < maxSprites - 1)
+        {
+            currentSprite++;
+        }
+        else
+        {
+            currentSprite = 0;
+            animationFrame.x = 0;
+        }
     }
     else
     {
@@ -24,11 +26,19 @@ void Animator::update()
     }
 }
 
-void Animator::addSprite(Texture* texture)
+void Animator::addSpriteSheet(Texture* texture, int spriteCount, int widthSprite, int heightSprite)
 {
-    texture->markForRender = false;
-    animationSprites.push_back(texture);
-    maxSprites++;
+    spriteSheet = texture;
+    spriteSheet->markForRender = false;
+    spriteSheet->clip = &animationFrame;
+    spriteSheet->setHeight(heightSprite);
+    spriteSheet->setWidth(widthSprite);
+
+    maxSprites = spriteCount;
+
+    animationFrame.w = widthSprite;
+    animationFrame.h = heightSprite;
+    animationFrame.y = 0;
 }
 
 void Animator::setFrameRate(float framesPerSecond)
@@ -38,27 +48,23 @@ void Animator::setFrameRate(float framesPerSecond)
 
 void Animator::flip(SDL_RendererFlip flip)
 {
-    for (const auto sprite : animationSprites)
-    {
-        sprite->flip = flip;
-    }
+    spriteSheet->flip = flip;
 }
 
 void Animator::disable()
 {
     currentFrameTime = 0.f;
     currentSprite = 0;
+    animationFrame.x = 0;
 
-    for (auto sprite : animationSprites)
-    {
-        sprite->markForRender = false;
-    }
+    spriteSheet->markForRender = false;
 }
 
 void Animator::enable()
 {
     currentFrameTime = 0.f;
-    animationSprites[currentSprite]->markForRender = true;
+    
+    spriteSheet->markForRender = true;
 }
 
 Animator::Animator()
