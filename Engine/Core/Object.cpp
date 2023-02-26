@@ -13,6 +13,7 @@ void Object::update()
 void Object::close()
 {
     queuedForDelete = true;
+    SINGLETON->removeObject(this);
     SINGLETON->addToDeleteQueue(this);
 }
 
@@ -23,5 +24,4 @@ Object::Object()
 
 Object::~Object()
 {
-    SINGLETON->removeObject(this);
 }

@@ -1,16 +1,15 @@
 ﻿#pragma once
 
 #define SINGLETON Singleton::getInstance()
-#include <vector>
+#define PLAYER Singleton::getInstance()->gPlayer
+#define DELTA_TIME Singleton::getInstance()->gDeltaTime
+#define MEASURE_PERFORMANCE Singleton::getInstance()->measurePerformance
 
-#include "../Game/ProjectileSpawner.h"
-#include "./Core/Object.h"
-#include "./Core/Texture.h"
-#include "../Game/Player/PlayerCharacter.h"
-#include "Core/AStar.h"
 #include "Core/Renderer.h"
 #include "Core/Patterns/Subject.h"
+#include "../Game/Player/PlayerCharacter.h"
 
+class Pathfinding;
 class BaseEnemy;
 
 class Singleton : public Subject
@@ -40,7 +39,7 @@ public:
     Renderer* gRenderer = nullptr;
 
     //Pathfinding Grid
-    AStar* pathfindingGrid = new AStar(75, 75, 50, 50);
+    Pathfinding* pathfindingGrid;
 
     //Update functions
     std::vector<Object*> gObjectList;
@@ -62,6 +61,8 @@ public:
     int sizeQueueForDelete = 0;
 
     bool gQuit = false;
+    bool measurePerformance = false;
+    bool debug = true;
 
     void addObject(Object* object)
     {

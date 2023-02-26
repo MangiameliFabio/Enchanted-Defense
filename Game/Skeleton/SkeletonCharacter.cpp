@@ -1,6 +1,8 @@
 ﻿#include "SkeletonCharacter.h"
 
 #include "../../Engine/Singelton.h"
+#include "../../Engine/Pathfinding.h"
+#include "../../Engine/Core/MeasurePerformance.h"
 
 SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
 {
@@ -18,6 +20,8 @@ SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
 
     collision = new CollisionObject;
     collision->createCollisionShape(spriteSheet.getHeight(), spriteSheet.getWidth(), &position);
+
+    name = typeid(this).name();
 }
 
 SkeletonCharacter::~SkeletonCharacter()
@@ -26,30 +30,84 @@ SkeletonCharacter::~SkeletonCharacter()
 
 void SkeletonCharacter::update()
 {
+    auto timer = new MeasurePerformance;
+    if (MEASURE_PERFORMANCE) { timer->start(); }
     BaseCharacter::update();
+    if (MEASURE_PERFORMANCE) { timer->end("     Base Character Constructor: "); }
 
+
+    if (MEASURE_PERFORMANCE) { timer->start(); }
     isMoving = true;
-    if (!SINGLETON->pathfindingGrid->findPath(position, SINGLETON->gPlayer->position, path))
+    if (pfCurrentCooldown <= 0)
     {
-        isMoving = false;
+        pfCurrentCooldown = pfCooldown;
+        if (!SINGLETON->pathfindingGrid->findPath(position, PLAYER->position, path, this))
+        {
+            isMoving = false;
+        }
     }
+    else
+    {
+        pfCurrentCooldown -= DELTA_TIME;
+    }
+    if (MEASURE_PERFORMANCE) { timer->end("     Pathfinding: "); }
 
     if (isMoving)
+    {
+        lastValidPos = position;
         move();
+        if (checkForCollision())
+        {
+            position = lastValidPos;
+        }
+    }
 
+    if (MEASURE_PERFORMANCE) { timer->start(); }
     animation.update();
+    if (MEASURE_PERFORMANCE) { timer->end("     Animation: "); }
 }
 
 void SkeletonCharacter::move()
 {
-    Vector dir = (path.top() - position).normalize();
-    position = position + dir * movementSpeed * SINGLETON->gDeltaTime;
-
-    if (Vector::dist(path.top(), position) <= 20.f)
+    if (!path.empty())
     {
+        if (Vector::dist(path[0], position) <= 20.f)
+        {
+            path.erase(path.begin());
+        }
         if (!path.empty())
         {
-            path.pop();
+            Vector dir = (path[0] - position).normalize();
+            position = position + dir * movementSpeed * DELTA_TIME;
         }
     }
+}
+
+void SkeletonCharacter::close()
+{
+    BaseEnemy::close();
+}
+
+bool SkeletonCharacter::checkForCollision()
+{
+    for (int enemy = 0; enemy < SINGLETON->sizeEnemiesList; ++enemy)
+    {
+        if (SINGLETON->gEnemiesList[enemy] != this)
+        {
+            if (Vector::dist(SINGLETON->gEnemiesList[enemy]->position, position) <= 100.f)
+            {
+                if (collision->checkForIntersection(SINGLETON->gEnemiesList[enemy]->collision))
+                {
+                    return true;
+                }
+            }
+        }
+        if (Vector::dist(PLAYER->position, position) <= 100.f)
+            if (collision->checkForIntersection(PLAYER->collision))
+            {
+                close();
+                return true;
+            }
+    }
+    return false;
 }

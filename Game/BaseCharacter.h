@@ -11,5 +11,5 @@ public:
     Vector position;
     Vector moveDir;
 
-    CollisionObject* collision;
+    CollisionObject* collision = nullptr;
 };

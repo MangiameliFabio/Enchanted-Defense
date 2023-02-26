@@ -1,4 +1,7 @@
 ﻿#include "GameClock.h"
+
+#include <iostream>
+
 #include "../Singelton.h"
 
 void GameClock::init()
@@ -29,7 +32,7 @@ void GameClock::endTick()
     //Get current Time after Tick
     tickEnd = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> elapsedTime = tickEnd - tickBeginning;
-
+    
     // make sure the elapsed time is not too large
     if (elapsedTime > maxElapsedTime)
         elapsedTime = maxElapsedTime;
@@ -45,7 +48,7 @@ void GameClock::endTick()
     elapsedTime /= static_cast<double>(numFrameTimes) * 1000;
 
     //Update delta Time in Singleton
-    SINGLETON->gDeltaTime = static_cast<float>(elapsedTime.count());
+    DELTA_TIME = static_cast<float>(elapsedTime.count());
 }
 
 GameClock::GameClock()

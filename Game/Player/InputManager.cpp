@@ -9,15 +9,18 @@ Command* InputManager::handleInput()
     //Set texture based on current keystate
     const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
-    SINGLETON->gPlayer->stateMachine->stateEnum = IDLE;
-    if (currentKeyStates[SDL_SCANCODE_W]) buttonW->execute();
-    if (currentKeyStates[SDL_SCANCODE_A]) buttonA->execute();
-    if (currentKeyStates[SDL_SCANCODE_S]) buttonS->execute();
-    if (currentKeyStates[SDL_SCANCODE_D]) buttonD->execute();
-    if (currentKeyStates[SDL_SCANCODE_UP]) buttonUp->execute();
-    if (currentKeyStates[SDL_SCANCODE_LEFT]) buttonLeft->execute();
-    if (currentKeyStates[SDL_SCANCODE_DOWN]) buttonDown->execute();
-    if (currentKeyStates[SDL_SCANCODE_RIGHT]) buttonRight->execute();
+    if (PLAYER)
+    {
+        PLAYER->stateMachine->stateEnum = IDLE;
+        if (currentKeyStates[SDL_SCANCODE_W])       buttonW->execute();
+        if (currentKeyStates[SDL_SCANCODE_A])       buttonA->execute();
+        if (currentKeyStates[SDL_SCANCODE_S])       buttonS->execute();
+        if (currentKeyStates[SDL_SCANCODE_D])       buttonD->execute();
+        if (currentKeyStates[SDL_SCANCODE_UP])      buttonUp->execute();
+        if (currentKeyStates[SDL_SCANCODE_LEFT])    buttonLeft->execute();
+        if (currentKeyStates[SDL_SCANCODE_DOWN])    buttonDown->execute();
+        if (currentKeyStates[SDL_SCANCODE_RIGHT])   buttonRight->execute();
+    }
     if (currentKeyStates[SDL_SCANCODE_ESCAPE]) buttonESC->execute();
 
     return nullptr;

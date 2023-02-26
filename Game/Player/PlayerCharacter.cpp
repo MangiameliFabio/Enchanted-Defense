@@ -8,7 +8,7 @@ void PlayerCharacter::start()
 {
     BaseCharacter::start();
 
-    SINGLETON->gPlayer = this;
+    PLAYER = this;
 
     stateMachine = new PlayerASM;
     stateMachine->start();
@@ -18,6 +18,7 @@ void PlayerCharacter::start()
 
     collision = new CollisionObject;
     collision->createCollisionShape(spriteWidth, spriteHeight, &position);
+    collision->updatePixelBorder();
 }
 
 void PlayerCharacter::update()
@@ -26,7 +27,7 @@ void PlayerCharacter::update()
 
     if (attackCooldown > 0)
     {
-        attackCooldown -= SINGLETON->gDeltaTime;
+        attackCooldown -= DELTA_TIME;
     }
 }
 
@@ -39,7 +40,7 @@ void PlayerCharacter::close()
 
 void PlayerCharacter::move(Vector& dir)
 {
-    position = position + dir * movementSpeed * SINGLETON->gDeltaTime;
+    position = position + dir * movementSpeed * DELTA_TIME;
 
     //Map bounderies
     if (position.x - spriteWidth / 2 < 50.f)
@@ -63,8 +64,6 @@ void PlayerCharacter::move(Vector& dir)
 
 PlayerCharacter::PlayerCharacter(Vector& spawnPos)
 {
-    printf("Player created \n");
-
     position = spawnPos;
 }
 

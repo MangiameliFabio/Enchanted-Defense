@@ -11,10 +11,10 @@ public:
     virtual void execute()
     {
         Vector dir = Vector(-1, 0);
-
-        SINGLETON->gPlayer->addMoveDirection(dir);
-        SINGLETON->gPlayer->isMoveing = true;
-        static_cast<PlayerASM*>(SINGLETON->gPlayer->stateMachine)->stateEnum = LEFT;
+        
+        PLAYER->addMoveDirection(dir);
+        PLAYER->isMoveing = true;
+        PLAYER->stateMachine->stateEnum = LEFT;
     }
 };
 
@@ -25,9 +25,9 @@ public:
     {
         Vector dir = Vector(1, 0);
 
-        SINGLETON->gPlayer->addMoveDirection(dir);
-        SINGLETON->gPlayer->isMoveing = true;
-        SINGLETON->gPlayer->stateMachine->stateEnum = RIGHT;
+        PLAYER->addMoveDirection(dir);
+        PLAYER->isMoveing = true;
+        PLAYER->stateMachine->stateEnum = RIGHT;
     }
 };
 
@@ -38,9 +38,9 @@ public:
     {
         Vector dir = Vector(0, -1);
 
-        SINGLETON->gPlayer->addMoveDirection(dir);
-        SINGLETON->gPlayer->isMoveing = true;
-        SINGLETON->gPlayer->stateMachine->stateEnum = UP;
+        PLAYER->addMoveDirection(dir);
+        PLAYER->isMoveing = true;
+        PLAYER->stateMachine->stateEnum = UP;
     }
 };
 
@@ -51,9 +51,9 @@ public:
     {
         Vector dir = Vector(0, 1);
 
-        SINGLETON->gPlayer->addMoveDirection(dir);
-        SINGLETON->gPlayer->isMoveing = true;
-        SINGLETON->gPlayer->stateMachine->stateEnum = DOWN;
+        PLAYER->addMoveDirection(dir);
+        PLAYER->isMoveing = true;
+        PLAYER->stateMachine->stateEnum = DOWN;
     }
 };
 
@@ -64,8 +64,8 @@ public:
     {
         Vector dir = Vector(-1, 0);
 
-        SINGLETON->gPlayer->addAimDirection(dir);
-        SINGLETON->gPlayer->isShooting = true;
+        PLAYER->addAimDirection(dir);
+        PLAYER->isShooting = true;
     }
 };
 
@@ -76,8 +76,8 @@ public:
     {
         Vector dir = Vector(1, 0);
 
-        SINGLETON->gPlayer->addAimDirection(dir);
-        SINGLETON->gPlayer->isShooting = true;
+        PLAYER->addAimDirection(dir);
+        PLAYER->isShooting = true;
     }
 };
 
@@ -88,8 +88,8 @@ public:
     {
         Vector dir = Vector(0, -1);
 
-        SINGLETON->gPlayer->addAimDirection(dir);
-        SINGLETON->gPlayer->isShooting = true;
+        PLAYER->addAimDirection(dir);
+        PLAYER->isShooting = true;
     }
 };
 
@@ -100,7 +100,7 @@ public:
     {
         Vector dir = Vector(0, 1);
 
-        SINGLETON->gPlayer->addAimDirection(dir);
-        SINGLETON->gPlayer->isShooting = true;
+        PLAYER->addAimDirection(dir);
+        PLAYER->isShooting = true;
     }
 };

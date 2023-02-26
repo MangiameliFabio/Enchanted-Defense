@@ -14,3 +14,8 @@ enum playerAnim
     UP,
     DOWN,
 };
+
+enum Enemies
+{
+    SKELETON
+};

@@ -1,10 +1,11 @@
 ﻿#include "Renderer.h"
 
+#include <algorithm>
 #include <cstdio>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
-
+#include "../Debuging/DebugShape.h"
 #include "../Singelton.h"
 
 bool Renderer::init()
@@ -54,6 +55,7 @@ bool Renderer::init()
             }
         }
     }
+
     return success;
 }
 
@@ -64,12 +66,18 @@ void Renderer::renderUpdate()
     SDL_RenderClear(SINGLETON->gSDL_Renderer);
 
     //Render all textures
-    for (size_t i = 0; i < textureContainer.size(); ++i)
+    for (int i = 0; i < numTextures; ++i)
     {
         if (textureContainer[i]->markForRender)
         {
             textureContainer[i]->render();
         }
+    }
+
+    //Render all textures
+    for (int i = 0; i < numDebugShapes; ++i)
+    {
+        debugContainer[i]->render();
     }
 
     //Update screen
@@ -80,6 +88,17 @@ void Renderer::addTexture(Texture* texture)
 {
     textureContainer.push_back(texture);
     numTextures++;
+}
+
+void Renderer::addDebugShape(DebugShape* debugShape)
+{
+    debugContainer.push_back(debugShape);
+    std::sort(debugContainer.begin(), debugContainer.end(), [](const DebugShape* a, const DebugShape* b)
+    {
+        return a->zIndex < b->zIndex;
+    });
+
+    numDebugShapes++;
 }
 
 void Renderer::removeTexture(Texture* texture)
@@ -93,14 +112,15 @@ void Renderer::removeTexture(Texture* texture)
     numTextures--;
 }
 
-void Renderer::drawPoint(int x, int y)
+void Renderer::removeDebugShape(DebugShape* debugShape)
 {
-    // Draw a pixel with the color
-    SDL_SetRenderDrawColor(SINGLETON->gSDL_Renderer, 255, 0, 0, 255);
-    SDL_RenderDrawPoint(SINGLETON->gSDL_Renderer, 100, 100);
+    //Find Texture in vector
+    const auto position = std::find(debugContainer.begin(), debugContainer.end(), debugShape);
 
-    // Update the screen
-    SDL_RenderPresent(SINGLETON->gSDL_Renderer);
+    //Remove Observer
+    if (position != debugContainer.end())
+        debugContainer.erase(position);
+    numDebugShapes--;
 }
 
 void Renderer::close()

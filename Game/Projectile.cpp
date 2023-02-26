@@ -7,7 +7,7 @@ void Projectile::update()
 {
     Object::update();
 
-    pos = pos + (dir * projectileSpeed * SINGLETON->gDeltaTime);
+    pos = pos + (dir * projectileSpeed * DELTA_TIME);
 
     if (pos.x < 50.f || pos.y < 50.f || pos.x > SINGLETON->SCREEN_WIDTH - 50.f || pos.y > SINGLETON->SCREEN_WIDTH -
         50.f)
@@ -25,6 +25,7 @@ void Projectile::update()
                 {
                     enemy->close();
                     close();
+                    break;
                 }
             }
         }
@@ -39,4 +40,6 @@ Projectile::Projectile(const Vector& pos_, const Vector& dir_)
     texture.setDynamicPosition(&pos);
 
     projectileCollision.createCollisionShape(texture.getHeight(), texture.getWidth(), &pos);
+
+    name = typeid(this).name();
 }

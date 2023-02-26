@@ -92,7 +92,6 @@
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="Engine\Animator.cpp" />
-    <ClCompile Include="Engine\Core\AStar.cpp" />
     <ClCompile Include="Engine\Core\CollisionObject.cpp" />
     <ClCompile Include="Engine\Core\GameClock.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -454,6 +453,7 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Engine\Core\MeasurePerformance.cpp" />
     <ClCompile Include="Engine\Core\Vector.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -526,6 +526,9 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Engine\Debuging\DebugGrid.cpp" />
+    <ClCompile Include="Engine\Debuging\DebugRectangle.cpp" />
+    <ClCompile Include="Engine\Debuging\DebugShape.cpp" />
     <ClCompile Include="Engine\main.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -598,7 +601,7 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
-    <ClCompile Include="Engine\Singelton.cpp">
+    <ClCompile Include="Engine\Pathfinding.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
@@ -639,7 +642,7 @@
       <ProgramDataBaseFileName>x64\Debug\vc142.pdb</ProgramDataBaseFileName>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>x64\Debug\LazyFooEngine.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>x64\Debug\TopDownShooter.pch</PrecompiledHeaderOutputFile>
       <PreprocessToFile>false</PreprocessToFile>
       <PreprocessKeepComments>false</PreprocessKeepComments>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
@@ -652,7 +655,7 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <SpectreMitigation>false</SpectreMitigation>
       <StructMemberAlignment>Default</StructMemberAlignment>
-      <TrackerLogDirectory>x64\Debug\LazyFooEngine.tlog\</TrackerLogDirectory>
+      <TrackerLogDirectory>x64\Debug\TopDownShooter.tlog\</TrackerLogDirectory>
       <TranslateIncludes>false</TranslateIncludes>
       <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
       <TreatWarningAsError>false</TreatWarningAsError>
@@ -969,7 +972,6 @@
     <ClInclude Include="Engine\AnimationStateMachine.h" />
     <ClInclude Include="Engine\Animator.h" />
     <ClInclude Include="Engine\BaseState.h" />
-    <ClInclude Include="Engine\Core\AStar.h" />
     <ClInclude Include="Engine\Core\CollisionObject.h" />
     <ClInclude Include="Engine\Core\GameClock.h" />
     <ClInclude Include="Engine\Core\Helper.h" />
@@ -979,11 +981,17 @@
     <ClInclude Include="Engine\Core\Patterns\Subject.h" />
     <ClInclude Include="Engine\Core\Renderer.h" />
     <ClInclude Include="Engine\Core\Texture.h" />
+    <ClInclude Include="Engine\Core\MeasurePerformance.h" />
     <ClInclude Include="Engine\Core\Vector.h" />
+    <ClInclude Include="Engine\Debuging\DebugGrid.h" />
+    <ClInclude Include="Engine\Debuging\DebugRectangle.h" />
+    <ClInclude Include="Engine\Debuging\DebugShape.h" />
     <ClInclude Include="Engine\Enums.h" />
+    <ClInclude Include="Engine\Pathfinding.h" />
     <ClInclude Include="Engine\Singelton.h" />
     <ClInclude Include="Game\BaseCharacter.h" />
     <ClInclude Include="Game\BaseEnemy.h" />
+    <ClInclude Include="Game\EnemySpawner.h" />
     <ClInclude Include="Game\GameCommands.h" />
     <ClInclude Include="Game\Player\AnimationStateMachine\PlayerAnimationStates.h" />
     <ClInclude Include="Game\Player\AnimationStateMachine\PlayerASM.h" />

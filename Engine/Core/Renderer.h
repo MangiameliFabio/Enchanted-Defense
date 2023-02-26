@@ -2,21 +2,27 @@
 #include <SDL_render.h>
 #include <vector>
 
-#include "Texture.h"
+#include "../Debuging/DebugShape.h"
+
+class Texture;
 
 class Renderer
 {
     //Textures to render
     std::vector<Texture*> textureContainer;
+    std::vector<DebugShape*> debugContainer;
+
     int numTextures = 0;
+    int numDebugShapes = 0;
 
 public:
     bool init();
 
     void renderUpdate();
     void addTexture(Texture* texture);
+    void addDebugShape(DebugShape* debugShape);
     void removeTexture(Texture* texture);
-    void drawPoint(int x, int y);
+    void removeDebugShape(DebugShape* debugShape);
 
     //Frees media and shuts down SDL
     void close();

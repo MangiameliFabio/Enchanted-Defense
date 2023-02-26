@@ -1,6 +1,8 @@
 ﻿#pragma once
 
-class WorldManager
+class EnemySpawner;
+
+class WorldManager : public Object
 {
 public:
     WorldManager();
@@ -9,7 +11,14 @@ public:
     void createAssets();
 
 private:
+    void update() override;
+
+    EnemySpawner* skeletonSpawner;
+    
     Texture background;
     Texture player;
     Texture arrow;
+
+    Vector playerStart;
+    Vector enemyStart;
 };

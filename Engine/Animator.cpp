@@ -22,7 +22,7 @@ void Animator::update()
     }
     else
     {
-        currentFrameTime -= SINGLETON->gDeltaTime;
+        currentFrameTime -= DELTA_TIME;
     }
 }
 
