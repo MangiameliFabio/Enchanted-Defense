@@ -6,6 +6,8 @@
 
 void DebugRectangle::render()
 {
+    DebugShape::render();
+
     // Set the color to red
     SDL_SetRenderDrawColor(SINGLETON->gSDL_Renderer, color.r, color.g, color.b, color.a);
 
@@ -14,6 +16,4 @@ void DebugRectangle::render()
 
     // Fill the rectangle with the current color
     SDL_RenderFillRect(SINGLETON->gSDL_Renderer, &rect);
-
-    DebugShape::render();
 }

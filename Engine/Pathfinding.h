@@ -15,6 +15,8 @@ struct AStarNode
     std::vector<AStarNode*> neighbours;
 
     Object* blockingObject = nullptr;
+    Object* heatSrc = nullptr;
+
     AStarNode* parent = nullptr;
 
     float globalGoal = INFINITY;
@@ -60,7 +62,9 @@ public:
     Pathfinding(int width_, int height_);
     Pathfinding(int width_, int height_, int offsetX_, int offsetY_);
 
-    ~Pathfinding(){}
+    ~Pathfinding() override = default;
 
     bool findPath(Vector& start, Vector& end, std::vector<Vector>& path, const Object* callingObject);
+
+    void applyHeat(AStarNode* node,float heat, Object* heatSrc);
 };

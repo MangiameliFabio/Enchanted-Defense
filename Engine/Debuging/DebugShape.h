@@ -23,5 +23,6 @@ public:
 
     int zIndex = 0;
 
+    bool markForDelete = true;
     bool persistent = true;
 };

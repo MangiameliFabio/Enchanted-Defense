@@ -4,7 +4,7 @@
 class Observer
 {
 public:
-    virtual ~Observer() {}
+    virtual ~Observer() = default;
 
     virtual void onNotify(const Event event) = 0;
 };

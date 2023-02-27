@@ -14,8 +14,4 @@ DebugShape::~DebugShape()
 
 void DebugShape::render()
 {
-    if (!persistent)
-    {
-        delete this;
-    }
 }

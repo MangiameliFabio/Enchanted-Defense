@@ -1,5 +1,6 @@
 ﻿#include "PlayerASM.h"
 #include "PlayerAnimationStates.h"
+#include "../../../Engine/Singelton.h"
 
 void PlayerASM::start()
 {
@@ -10,7 +11,9 @@ void PlayerASM::start()
     upState = new PlayerUp;
 
     currentState = idleState;
-    
+
+    PLAYER->addObserver(this);
+
     AnimationStateMachine::start();
 }
 
@@ -23,4 +26,12 @@ void PlayerASM::close()
     rightState = nullptr;
     upState = nullptr;
     downState = nullptr;
+}
+
+void PlayerASM::onNotify(const Event event)
+{
+    if (event == PLAYER_DIED)
+    {
+        stop();
+    }
 }

@@ -4,22 +4,27 @@
 #include "PlayerCommands.h"
 #include "../../Engine/Singelton.h"
 
+InputManager::InputManager()
+{
+    PLAYER->addObserver(this);
+}
+
 Command* InputManager::handleInput()
 {
     //Set texture based on current keystate
     const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
-    if (PLAYER)
+    if (!disablePlayerInput && PLAYER)
     {
         PLAYER->stateMachine->stateEnum = IDLE;
-        if (currentKeyStates[SDL_SCANCODE_W])       buttonW->execute();
-        if (currentKeyStates[SDL_SCANCODE_A])       buttonA->execute();
-        if (currentKeyStates[SDL_SCANCODE_S])       buttonS->execute();
-        if (currentKeyStates[SDL_SCANCODE_D])       buttonD->execute();
-        if (currentKeyStates[SDL_SCANCODE_UP])      buttonUp->execute();
-        if (currentKeyStates[SDL_SCANCODE_LEFT])    buttonLeft->execute();
-        if (currentKeyStates[SDL_SCANCODE_DOWN])    buttonDown->execute();
-        if (currentKeyStates[SDL_SCANCODE_RIGHT])   buttonRight->execute();
+        if (currentKeyStates[SDL_SCANCODE_W]) buttonW->execute();
+        if (currentKeyStates[SDL_SCANCODE_A]) buttonA->execute();
+        if (currentKeyStates[SDL_SCANCODE_S]) buttonS->execute();
+        if (currentKeyStates[SDL_SCANCODE_D]) buttonD->execute();
+        if (currentKeyStates[SDL_SCANCODE_UP]) buttonUp->execute();
+        if (currentKeyStates[SDL_SCANCODE_LEFT]) buttonLeft->execute();
+        if (currentKeyStates[SDL_SCANCODE_DOWN]) buttonDown->execute();
+        if (currentKeyStates[SDL_SCANCODE_RIGHT]) buttonRight->execute();
     }
     if (currentKeyStates[SDL_SCANCODE_ESCAPE]) buttonESC->execute();
 
@@ -49,4 +54,12 @@ void InputManager::close()
     delete buttonDown;
     delete buttonRight;
     delete buttonESC;
+}
+
+void InputManager::onNotify(const Event event)
+{
+    if (event == PLAYER_DIED)
+    {
+        disablePlayerInput = true;
+    }
 }

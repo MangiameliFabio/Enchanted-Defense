@@ -61,9 +61,16 @@ public:
     int sizeEnemiesList = 0;
     int sizeQueueForDelete = 0;
 
+    //Enemies to kill for win
+    int enemyCount = 50;
+
+    //Quit Game
     bool gQuit = false;
+
+    //True for performance stats
     bool measurePerformance = false;
-    bool debug = true;
+    //True to activate rendering of debugShapes
+    bool debug = false;
 
     void addObject(Object* object)
     {

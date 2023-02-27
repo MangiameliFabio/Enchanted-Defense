@@ -9,6 +9,8 @@ struct Vector
     Vector() : x(0), y(0){}
     Vector(float x_, float y_) : x(x_), y(y_){}
     Vector(int x_, int y_) : x(static_cast<float>(x_)), y(static_cast<float>(y_)){}
+    Vector(double x_, double y_) : x(static_cast<float>(x_)), y(static_cast<float>(y_)){}
+    
     ~Vector(){}
 
     Vector& operator=(const Vector& v);
@@ -30,4 +32,5 @@ struct Vector
     static float dist(Vector& v1, Vector& v2);
     static bool compare(Vector& v1, Vector& v2, float tolerance);
     static Vector middleBetweenVec(Vector& v1, Vector& v2);
+    static Vector rotate(Vector& v, float angle);
 };

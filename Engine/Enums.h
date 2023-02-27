@@ -3,7 +3,8 @@
 enum Event
 {
     NULL_EVENT,
-    ALL_INPUTS_HANDLED
+    ALL_INPUTS_HANDLED,
+    PLAYER_DIED,
 };
 
 enum playerAnim

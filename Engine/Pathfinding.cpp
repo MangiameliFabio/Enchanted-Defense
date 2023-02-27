@@ -9,6 +9,7 @@
 #include "Core/MeasurePerformance.h"
 #include "Debuging/DebugGrid.h"
 #include "Core/CollisionObject.h"
+#include "Debuging/DebugPoint.h"
 #include "Debuging/DebugRectangle.h"
 
 Pathfinding::Pathfinding(int width_, int height_)
@@ -120,6 +121,15 @@ bool Pathfinding::findPath(Vector& start, Vector& end, std::vector<Vector>& path
     return false;
 }
 
+void Pathfinding::applyHeat(AStarNode* node, float heat, Object* heatSrc)
+{
+    if (node->blocked) { return; }
+    if (node->heatSrc == heatSrc) { return; }
+
+    node->heat += heat;
+    node->heatSrc = heatSrc;
+}
+
 void Pathfinding::resetGrid()
 {
     for (int x = 0; x < mapWidth; ++x)
@@ -177,9 +187,6 @@ void Pathfinding::init()
                 nodes[y * mapWidth + x].neighbours.push_back(&nodes[(y + 1) * mapWidth + (x + 1)]);
         }
     }
-
-    // auto debugGrid = new DebugGrid(mapHeight, mapWidth, cellSize, offsetX, offsetY, Color(0, 0, 0, 128));
-    // debugGrid->zIndex = 1;
 }
 
 void Pathfinding::update()
@@ -212,32 +219,22 @@ void Pathfinding::update()
                 {
                     nodes[y * mapWidth + x].blocked = true;
                     nodes[y * mapWidth + x].blockingObject = SINGLETON->gEnemiesList[enemy];
+
+                    //Generate heat map
                     for (auto neighbour : nodes[y * mapWidth + x].neighbours)
                     {
-                        neighbour->heat = 100.f;
+                        applyHeat(neighbour, 50, nodes[y * mapWidth + x].blockingObject);
+                        for (auto secondIt : neighbour->neighbours)
+                        {
+                            applyHeat(secondIt, 25, nodes[y * mapWidth + x].blockingObject);
+                            for (auto thirdIt : neighbour->neighbours)
+                            {
+                                applyHeat(thirdIt, 10, nodes[y * mapWidth + x].blockingObject);
+                            }
+                        }
                     }
                 }
             }
         }
     }
-    // for (int x = 0; x < mapWidth; ++x)
-    // {
-    //     for (int y = 0; y < mapHeight; ++y)
-    //     {
-    //         if (nodes[y * mapWidth + x].blocked)
-    //         {
-    //             Vector v = nodeToVector(&nodes[y * mapWidth + x]);
-    //             auto rect = new DebugRectangle(cellSize - 5, cellSize - 5, v.x - cellSize / 2, v.y - cellSize / 2,
-    //                                            Color(255, 0, 0, 255));
-    //             rect->persistent = false;
-    //         }
-    //         if (nodes[y * mapWidth + x].heat > 0)
-    //         {
-    //             Vector v = nodeToVector(&nodes[y * mapWidth + x]);
-    //             auto rect = new DebugRectangle(cellSize - 5, cellSize - 5, v.x - cellSize / 2, v.y - cellSize / 2,
-    //                                            Color(0, 255, 0, 255));
-    //             rect->persistent = false;
-    //         }
-    //     }
-    // }
 }

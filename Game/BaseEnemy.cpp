@@ -9,5 +9,6 @@ BaseEnemy::BaseEnemy()
 
 BaseEnemy::~BaseEnemy()
 {
+    SINGLETON->enemyCount--;
     SINGLETON->removeEnemy(this);
 }

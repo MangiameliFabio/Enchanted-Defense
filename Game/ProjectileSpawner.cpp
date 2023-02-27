@@ -7,8 +7,3 @@ void ProjectileSpawner::spawnProjectile(Vector& pos, Vector& dir)
 {
     new Projectile(pos, dir);
 }
-
-void ProjectileSpawner::close()
-{
-    delete this;
-}

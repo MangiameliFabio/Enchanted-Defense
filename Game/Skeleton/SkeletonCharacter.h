@@ -4,8 +4,9 @@
 #include "../BaseCharacter.h"
 #include "../BaseEnemy.h"
 #include "../../Engine/Animator.h"
+#include "../../Engine/Core/Patterns/Observer.h"
 
-class SkeletonCharacter : public BaseEnemy
+class SkeletonCharacter : public BaseEnemy, public Observer
 {
     void update() override;
 
@@ -16,6 +17,9 @@ public:
     void move();
     void close() override;
     bool checkForCollision();
+    bool setDirToPath();
+    
+    void onNotify(const Event event) override;
 
     std::vector<Vector> path;
     std::vector<BaseCharacter*> nearCharacter;
@@ -23,11 +27,11 @@ public:
     Texture spriteSheet;
     Animator animation;
     Vector lastValidPos;
-    Vector moveDir;
 
     float pfCooldown = 0.5f;
     float pfCurrentCooldown = 0.f;
     float movementSpeed = 50.f;
 
     bool isMoving = true;
+
 };

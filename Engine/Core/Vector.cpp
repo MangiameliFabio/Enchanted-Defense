@@ -65,10 +65,10 @@ Vector Vector::normalize()
     float vLength = length();
     if (vLength == 0.f)
     {
-        printf("Can't normalize Vector with length 0 \n");
-        return *this;
+        return {};
     }
-    return *this * (1.f / length());
+    const Vector normalized = *this;
+    return normalized * (1.f / length());
 }
 
 void Vector::Zero()
@@ -109,4 +109,16 @@ bool Vector::compare(Vector& v1, Vector& v2, float tolerance)
 Vector Vector::middleBetweenVec(Vector& v1, Vector& v2)
 {
     return Vector((v1.x + v2.x) / 2, (v1.y + v2.y) / 2);
+}
+
+//     ( cos α | -sin α) (vx) 
+//     ( sin α | cos α ) (vy)
+Vector Vector::rotate(Vector& v, float angle)
+{
+    double radian = DEGREE_TO_R(angle);
+
+    double x = cos(radian) * static_cast<double>(v.x) + -sin(radian) * static_cast<double>(v.y);
+    double y = sin(radian) * static_cast<double>(v.x) + cos(radian) * static_cast<double>(v.y);
+
+    return Vector(x, y);
 }

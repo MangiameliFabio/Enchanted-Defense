@@ -81,6 +81,15 @@ void Renderer::renderUpdate()
         {
             debugContainer[i]->render();
         }
+
+        //Delete not persistent shapes
+        for (auto debugShape : debugContainer)
+        {
+            if (!debugShape->persistent)
+            {
+                delete debugShape;
+            }
+        }
     }
 
     //Update screen

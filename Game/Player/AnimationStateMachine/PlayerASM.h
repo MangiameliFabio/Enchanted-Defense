@@ -2,6 +2,7 @@
 #include "PlayerAnimationStates.h"
 #include "../../../Engine/Enums.h"
 #include "../../../Engine/AnimationStateMachine.h"
+#include "../../../Engine/Core/Patterns/Observer.h"
 
 class PlayerUp;
 class PlayerLeft;
@@ -10,14 +11,15 @@ class PlayerRight;
 class PlayerIdle;
 class BaseState;
 
-class PlayerASM : public AnimationStateMachine
+class PlayerASM : public AnimationStateMachine, public Observer
 {
 public:
     PlayerASM(){}
 
     void start() override;
-    void close();
-
+    void close() override;
+    void onNotify(const Event event) override;
+    
     PlayerIdle* idleState = nullptr;
     PlayerLeft* leftState = nullptr;
     PlayerRight* rightState = nullptr;

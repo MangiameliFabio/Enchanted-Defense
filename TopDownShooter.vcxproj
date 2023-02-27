@@ -528,6 +528,7 @@
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="Engine\Debuging\DebugGrid.cpp" />
+    <ClCompile Include="Engine\Debuging\DebugLine.cpp" />
     <ClCompile Include="Engine\Debuging\DebugPoint.cpp" />
     <ClCompile Include="Engine\Debuging\DebugRectangle.cpp" />
     <ClCompile Include="Engine\Debuging\DebugShape.cpp" />
@@ -987,6 +988,7 @@
     <ClInclude Include="Engine\Core\MeasurePerformance.h" />
     <ClInclude Include="Engine\Core\Vector.h" />
     <ClInclude Include="Engine\Debuging\DebugGrid.h" />
+    <ClInclude Include="Engine\Debuging\DebugLine.h" />
     <ClInclude Include="Engine\Debuging\DebugPoint.h" />
     <ClInclude Include="Engine\Debuging\DebugRectangle.h" />
     <ClInclude Include="Engine\Debuging\DebugShape.h" />

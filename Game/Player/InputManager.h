@@ -3,13 +3,8 @@
 #include "../GameCommands.h"
 class Command;
 
-class InputManager
+class InputManager : public Observer
 {
-public:
-    Command* handleInput();
-    void close();
-
-private:
     Command* buttonW = new MoveUpCommand;
     Command* buttonA = new MoveLeftCommand;
     Command* buttonS = new MoveDownCommand;
@@ -19,4 +14,14 @@ private:
     Command* buttonDown = new AimDownCommand;
     Command* buttonRight = new AimRightCommand;
     Command* buttonESC = new CloseGameCommand;
+    
+public:
+    InputManager();
+    ~InputManager() override = default;
+    
+    Command* handleInput();
+    void close();
+    void onNotify(const Event event) override;
+
+    bool disablePlayerInput = false;
 };

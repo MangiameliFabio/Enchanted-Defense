@@ -1,11 +1,7 @@
 ﻿#include "CollisionObject.h"
 
-#include <algorithm>
-
-#include "MeasurePerformance.h"
 #include "../Pathfinding.h"
 #include "../Debuging/DebugPoint.h"
-#include "../Debuging/DebugRectangle.h"
 
 bool CollisionObject::checkForIntersection(CollisionObject* otherObject)
 {
@@ -89,9 +85,9 @@ void CollisionObject::updatePixelBorder()
             pixelBorder[pixel].position.x = center->x - width / 2 + widthCounter;
             widthCounter++;
         }
-        auto rect = new DebugPoint(pixelBorder[pixel].position.x, pixelBorder[pixel].position.y,
-                                   Color(255, 255, 255, 255));
-        rect->persistent = false;
+
+        auto point = new DebugPoint(pixelBorder[pixel].position.x, pixelBorder[pixel].position.y);
+        point->persistent = false;
     }
 }
 
@@ -122,10 +118,30 @@ bool CollisionObject::calculateCollisionPoint(CollisionObject* otherObject, Rayc
         Vector origin = Vector::middleBetweenVec(*collisions[0], *collisions[collisions.size() - 1]);
         hit = Raycast(origin, relVelocityNorm, pixelBorder);
 
-        auto rect = new DebugRectangle(hit.point.x, hit.point.y, 5, 5, Color(255, 0, 0, 255));
-        rect->persistent = false;
         return true;
     }
 
     return false;
+}
+
+void CollisionObject::collisionResponse(CollisionObject* otherObject)
+{
+    //Calculate collision normal and relative velocity
+    Vector collNormal = (*center - *otherObject->center).normalize();
+    Vector relativeVel = parent->velocity - otherObject->parent->velocity;
+
+    //Calculate change of momentum
+    float restitution = 0.f;
+    float impulse = -(1 + restitution) * relativeVel * collNormal;
+    // ((1.f / 50.f) + (1.f / 50.f))
+
+    //Impuls is sometimes really big so clamp it to 50
+    if (impulse > 50)
+    {
+        impulse = 50;
+    }
+
+    //Apply impulse on velocities
+    parent->velocity += impulse * collNormal;
+    otherObject->parent->velocity -= impulse * collNormal;
 }

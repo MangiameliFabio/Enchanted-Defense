@@ -10,8 +10,10 @@ protected:
 
 public:
     void start() override;
-    
+    virtual void stop();
     void stateTransition(BaseState* state);
-    
+
     BaseState* currentState = nullptr;
+
+    bool paused = false;
 };

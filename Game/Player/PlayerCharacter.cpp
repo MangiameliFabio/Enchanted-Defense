@@ -18,7 +18,7 @@ void PlayerCharacter::start()
     spriteWidth = static_cast<float>(stateMachine->currentState->animation->spriteSheet->getWidth());
 
     collision = new CollisionObject(this);
-    collision->createCollisionShape(spriteWidth, spriteHeight, &position);
+    collision->createCollisionShape(spriteHeight, spriteWidth - 10, &position);
     collision->updatePixelBorder();
 }
 
@@ -36,7 +36,7 @@ void PlayerCharacter::close()
 {
     BaseCharacter::close();
 
-    stateMachine = nullptr;
+    stateMachine->close();
 }
 
 void PlayerCharacter::move()
@@ -71,8 +71,6 @@ PlayerCharacter::PlayerCharacter(Vector& spawnPos)
 
 PlayerCharacter::~PlayerCharacter()
 {
-    projectileSpawner.close();
-    stateMachine->close();
     printf("Player has been deleted \n");
 }
 
@@ -114,4 +112,9 @@ void PlayerCharacter::addMoveDirection(Vector& v)
 void PlayerCharacter::addAimDirection(Vector& v)
 {
     aimDir += v;
+}
+
+void PlayerCharacter::disablePlayer()
+{
+    notify(PLAYER_DIED);
 }
