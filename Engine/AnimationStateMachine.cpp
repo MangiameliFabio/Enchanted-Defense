@@ -6,7 +6,8 @@
 void AnimationStateMachine::start()
 {
     Object::start();
-
+    name = typeid(this).name();
+    
     if (!currentState)
     {
         printf("Current State is invalid");

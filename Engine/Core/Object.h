@@ -8,10 +8,6 @@ struct Vector;
 class Object
 {
 public:
-    bool shouldUpdate = true;
-    bool queuedForDelete = false;
-
-    std::string name = "invalid Name";
 
     virtual void start();
     virtual void update();
@@ -19,4 +15,10 @@ public:
 
     Object();
     virtual ~Object();
+    Vector velocity;
+
+    std::string name = "invalid Name";
+    
+    bool shouldUpdate = true;
+    bool queuedForDelete = false;
 };

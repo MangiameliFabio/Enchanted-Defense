@@ -3,6 +3,7 @@
 #include "../../../Engine/Singelton.h"
 #include "../../Engine/Animator.h"
 #include "AnimationStateMachine/PlayerASM.h"
+#include "../../../Engine/Core/CollisionObject.h"
 
 void PlayerCharacter::start()
 {
@@ -16,7 +17,7 @@ void PlayerCharacter::start()
     spriteHeight = static_cast<float>(stateMachine->currentState->animation->spriteSheet->getHeight());
     spriteWidth = static_cast<float>(stateMachine->currentState->animation->spriteSheet->getWidth());
 
-    collision = new CollisionObject;
+    collision = new CollisionObject(this);
     collision->createCollisionShape(spriteWidth, spriteHeight, &position);
     collision->updatePixelBorder();
 }
@@ -38,9 +39,9 @@ void PlayerCharacter::close()
     stateMachine = nullptr;
 }
 
-void PlayerCharacter::move(Vector& dir)
+void PlayerCharacter::move()
 {
-    position = position + dir * movementSpeed * DELTA_TIME;
+    position = position + velocity * DELTA_TIME;
 
     //Map bounderies
     if (position.x - spriteWidth / 2 < 50.f)
@@ -65,6 +66,7 @@ void PlayerCharacter::move(Vector& dir)
 PlayerCharacter::PlayerCharacter(Vector& spawnPos)
 {
     position = spawnPos;
+    name = typeid(this).name();
 }
 
 PlayerCharacter::~PlayerCharacter()
@@ -82,8 +84,8 @@ void PlayerCharacter::onNotify(const Event event)
         {
             if (!(moveDir.length() == 0.f))
             {
-                Vector dirNormalized = moveDir.normalize();
-                move(dirNormalized);
+                velocity = moveDir.normalize() * movementSpeed;
+                move();
             }
         }
         if (isShooting && attackCooldown <= 0.f)
@@ -98,6 +100,7 @@ void PlayerCharacter::onNotify(const Event event)
         }
         aimDir.Zero();
         moveDir.Zero();
+        velocity.Zero();
         isMoveing = false;
         isShooting = false;
     }

@@ -4,6 +4,7 @@
 #define PLAYER Singleton::getInstance()->gPlayer
 #define DELTA_TIME Singleton::getInstance()->gDeltaTime
 #define MEASURE_PERFORMANCE Singleton::getInstance()->measurePerformance
+#define DEBUG Singleton::getInstance()->debug
 
 #include "Core/Renderer.h"
 #include "Core/Patterns/Subject.h"

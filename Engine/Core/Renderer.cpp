@@ -74,10 +74,13 @@ void Renderer::renderUpdate()
         }
     }
 
-    //Render all textures
-    for (int i = 0; i < numDebugShapes; ++i)
+    if (DEBUG)
     {
-        debugContainer[i]->render();
+        //Render all textures
+        for (int i = 0; i < numDebugShapes; ++i)
+        {
+            debugContainer[i]->render();
+        }
     }
 
     //Update screen

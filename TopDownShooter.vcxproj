@@ -309,6 +309,7 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Engine\Core\Raycast.cpp" />
     <ClCompile Include="Engine\Core\Renderer.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -527,6 +528,7 @@
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="Engine\Debuging\DebugGrid.cpp" />
+    <ClCompile Include="Engine\Debuging\DebugPoint.cpp" />
     <ClCompile Include="Engine\Debuging\DebugRectangle.cpp" />
     <ClCompile Include="Engine\Debuging\DebugShape.cpp" />
     <ClCompile Include="Engine\main.cpp">
@@ -979,11 +981,13 @@
     <ClInclude Include="Engine\Core\Patterns\Command.h" />
     <ClInclude Include="Engine\Core\Patterns\Observer.h" />
     <ClInclude Include="Engine\Core\Patterns\Subject.h" />
+    <ClInclude Include="Engine\Core\Raycast.h" />
     <ClInclude Include="Engine\Core\Renderer.h" />
     <ClInclude Include="Engine\Core\Texture.h" />
     <ClInclude Include="Engine\Core\MeasurePerformance.h" />
     <ClInclude Include="Engine\Core\Vector.h" />
     <ClInclude Include="Engine\Debuging\DebugGrid.h" />
+    <ClInclude Include="Engine\Debuging\DebugPoint.h" />
     <ClInclude Include="Engine\Debuging\DebugRectangle.h" />
     <ClInclude Include="Engine\Debuging\DebugShape.h" />
     <ClInclude Include="Engine\Enums.h" />

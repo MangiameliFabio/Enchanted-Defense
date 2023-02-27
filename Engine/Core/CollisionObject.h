@@ -2,26 +2,24 @@
 
 #include <vector>
 
+#include "Raycast.h"
 #include "Vector.h"
 
+class Object;
 struct AStarNode;
 
 class CollisionObject
 {
     Vector* center = nullptr;
-    std::vector<Vector> pixelBorder;
+    std::vector<Collider> pixelBorder;
+    Object* parent;
 
     float width = 0;
     float height = 0;
 
 public:
-    CollisionObject()
-    {
-    }
-
-    ~CollisionObject()
-    {
-    }
+    CollisionObject(Object* parent) : parent(parent){}
+    ~CollisionObject()= default;
 
     bool checkForIntersection(CollisionObject* otherObject);
     bool checkForIntersection(const Vector& topLeft, const Vector& bottomRight);
@@ -31,7 +29,7 @@ public:
     void updatePosition();
     void updatePixelBorder();
 
-    void calculateCollisionNormal(CollisionObject* otherObject);
+    Vector calculateCollisionNormal(CollisionObject* otherObject);
 
     Vector topLeft;
     Vector bottomRight;

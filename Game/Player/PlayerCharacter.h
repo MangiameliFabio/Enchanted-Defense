@@ -5,7 +5,6 @@
 #include "../../Engine/Core/Patterns/Observer.h"
 #include "../../Engine/Core/Vector.h"
 #include "../../Engine/Enums.h"
-#include "../../Engine/Core/CollisionObject.h"
 #include "AnimationStateMachine/PlayerASM.h"
 
 class Animator;
@@ -18,7 +17,7 @@ public:
     void update() override;
     void close() override;
 
-    void move(Vector& dir);
+    void move();
     void onNotify(const Event event) override;
     void addMoveDirection(Vector& v);
     void addAimDirection(Vector& v);
@@ -27,7 +26,7 @@ public:
     ~PlayerCharacter();
 
     ProjectileSpawner projectileSpawner;
-    
+
     PlayerASM* stateMachine;
 
     Vector aimDir;

@@ -82,7 +82,31 @@ void Vector::print(std::string text)
     printf("%sx: %.0f, y: %.1f \n", text.c_str(), x, y);
 }
 
+void Vector::round()
+{
+    static_cast<int>(x + 0.5f);
+    static_cast<int>(y + 0.5f);
+}
+
 float Vector::dist(Vector& v1, Vector& v2)
 {
     return (v1 - v2).length();
+}
+
+bool Vector::compare(Vector& v1, Vector& v2, float tolerance)
+{
+    if (!Helper::epsilonComparison(v1.x, v2.x, tolerance))
+    {
+        return false;
+    }
+    if (!Helper::epsilonComparison(v1.y, v2.y, tolerance))
+    {
+        return false;
+    }
+    return true;
+}
+
+Vector Vector::middleBetweenVec(Vector& v1, Vector& v2)
+{
+    return Vector((v1.x + v2.x) / 2, (v1.y + v2.y) / 2);
 }

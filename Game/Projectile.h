@@ -10,9 +10,11 @@ class Projectile : public Object
 
 public:
     Projectile(const Vector& pos_, const Vector& dir_);
-    ~Projectile() override{}
+    ~Projectile() override = default;
 
-    CollisionObject projectileCollision;
+    void close() override;
+
+    CollisionObject* projectileCollision;
 
     Vector dir;
     Vector pos;

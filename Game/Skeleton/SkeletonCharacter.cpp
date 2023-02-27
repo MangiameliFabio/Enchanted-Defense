@@ -3,6 +3,7 @@
 #include "../../Engine/Singelton.h"
 #include "../../Engine/Pathfinding.h"
 #include "../../Engine/Core/MeasurePerformance.h"
+#include "../../Engine/Core/CollisionObject.h"
 
 SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
 {
@@ -18,7 +19,7 @@ SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
     animation.enable();
     animation.setFrameRate(8.f);
 
-    collision = new CollisionObject;
+    collision = new CollisionObject(this);
     collision->createCollisionShape(spriteSheet.getHeight(), spriteSheet.getWidth(), &position);
 
     name = typeid(this).name();
@@ -30,6 +31,8 @@ SkeletonCharacter::~SkeletonCharacter()
 
 void SkeletonCharacter::update()
 {
+    velocity.Zero();
+    
     auto timer = new MeasurePerformance;
     if (MEASURE_PERFORMANCE) { timer->start(); }
     BaseCharacter::update();
@@ -77,8 +80,8 @@ void SkeletonCharacter::move()
         }
         if (!path.empty())
         {
-            Vector dir = (path[0] - position).normalize();
-            position = position + dir * movementSpeed * DELTA_TIME;
+            velocity = (path[0] - position).normalize() * movementSpeed;
+            position = position + velocity * DELTA_TIME;
         }
     }
 }
@@ -105,7 +108,7 @@ bool SkeletonCharacter::checkForCollision()
         if (Vector::dist(PLAYER->position, position) <= 100.f)
             if (collision->checkForIntersection(PLAYER->collision))
             {
-                close();
+                // close();
                 return true;
             }
     }

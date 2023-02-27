@@ -8,6 +8,7 @@
 #include "../Game/BaseEnemy.h"
 #include "Core/MeasurePerformance.h"
 #include "Debuging/DebugGrid.h"
+#include "Core/CollisionObject.h"
 #include "Debuging/DebugRectangle.h"
 
 Pathfinding::Pathfinding(int width_, int height_)
@@ -132,6 +133,7 @@ void Pathfinding::resetGrid()
 
 void Pathfinding::init()
 {
+    name = typeid(this).name();
     nodes = new AStarNode[mapHeight * mapWidth];
 
     //Allocate Space for pathfinding grid
@@ -176,8 +178,8 @@ void Pathfinding::init()
         }
     }
 
-    auto debugGrid = new DebugGrid(mapHeight, mapWidth, cellSize, offsetX, offsetY, Color(0, 0, 0, 128));
-    debugGrid->zIndex = 1;
+    // auto debugGrid = new DebugGrid(mapHeight, mapWidth, cellSize, offsetX, offsetY, Color(0, 0, 0, 128));
+    // debugGrid->zIndex = 1;
 }
 
 void Pathfinding::update()
@@ -218,24 +220,24 @@ void Pathfinding::update()
             }
         }
     }
-    for (int x = 0; x < mapWidth; ++x)
-    {
-        for (int y = 0; y < mapHeight; ++y)
-        {
-            if (nodes[y * mapWidth + x].blocked)
-            {
-                Vector v = nodeToVector(&nodes[y * mapWidth + x]);
-                auto rect = new DebugRectangle(cellSize - 5, cellSize - 5, v.x - cellSize / 2, v.y - cellSize / 2,
-                                               Color(255, 0, 0, 255));
-                rect->persistent = false;
-            }
-            if (nodes[y * mapWidth + x].heat > 0)
-            {
-                Vector v = nodeToVector(&nodes[y * mapWidth + x]);
-                auto rect = new DebugRectangle(cellSize - 5, cellSize - 5, v.x - cellSize / 2, v.y - cellSize / 2,
-                                               Color(0, 255, 0, 255));
-                rect->persistent = false;
-            }
-        }
-    }
+    // for (int x = 0; x < mapWidth; ++x)
+    // {
+    //     for (int y = 0; y < mapHeight; ++y)
+    //     {
+    //         if (nodes[y * mapWidth + x].blocked)
+    //         {
+    //             Vector v = nodeToVector(&nodes[y * mapWidth + x]);
+    //             auto rect = new DebugRectangle(cellSize - 5, cellSize - 5, v.x - cellSize / 2, v.y - cellSize / 2,
+    //                                            Color(255, 0, 0, 255));
+    //             rect->persistent = false;
+    //         }
+    //         if (nodes[y * mapWidth + x].heat > 0)
+    //         {
+    //             Vector v = nodeToVector(&nodes[y * mapWidth + x]);
+    //             auto rect = new DebugRectangle(cellSize - 5, cellSize - 5, v.x - cellSize / 2, v.y - cellSize / 2,
+    //                                            Color(0, 255, 0, 255));
+    //             rect->persistent = false;
+    //         }
+    //     }
+    // }
 }

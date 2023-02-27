@@ -25,6 +25,9 @@ struct Vector
     Vector normalize();
     void Zero();
     void print(std::string text = "");
+    void round();
 
     static float dist(Vector& v1, Vector& v2);
+    static bool compare(Vector& v1, Vector& v2, float tolerance);
+    static Vector middleBetweenVec(Vector& v1, Vector& v2);
 };
