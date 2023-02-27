@@ -12,7 +12,7 @@ class SkeletonCharacter : public BaseEnemy
 public:
     SkeletonCharacter(Vector& spawnPosition);
     ~SkeletonCharacter() override;
-    
+
     void move();
     void close() override;
     bool checkForCollision();
@@ -23,10 +23,11 @@ public:
     Texture spriteSheet;
     Animator animation;
     Vector lastValidPos;
+    Vector moveDir;
 
     float pfCooldown = 0.5f;
     float pfCurrentCooldown = 0.f;
-    float movementSpeed = 100.f;
+    float movementSpeed = 50.f;
 
     bool isMoving = true;
 };

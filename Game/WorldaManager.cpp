@@ -33,7 +33,7 @@ void WorldManager::createAssets()
     enemyStart = Vector(playerStartPosX, 50.f + 19.f);
 
     skeletonSpawner = new EnemySpawnerFor<SkeletonCharacter>();
-    skeletonSpawner->spawnEnemy(enemyStart);
+    // skeletonSpawner->spawnEnemy(enemyStart);
 }
 
 void WorldManager::update()
@@ -41,14 +41,19 @@ void WorldManager::update()
     Object::update();
 
     static float cooldown = 0;
+    static int ammount = 3;
 
-    // if (cooldown <= 0)
-    // {
-    //     cooldown = 1.f;
-    //     skeletonSpawner->spawnEnemy(enemyStart);
-    // }
-    // else
-    // {
-    //     cooldown -= DELTA_TIME;
-    // }
+    if (ammount > 0)
+    {
+        if (cooldown <= 0)
+        {
+            cooldown = 1.f;
+            skeletonSpawner->spawnEnemy(enemyStart);
+            ammount--;
+        }
+        else
+        {
+            cooldown -= DELTA_TIME;
+        }
+    }
 }

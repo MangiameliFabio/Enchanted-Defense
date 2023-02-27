@@ -32,7 +32,7 @@ SkeletonCharacter::~SkeletonCharacter()
 void SkeletonCharacter::update()
 {
     velocity.Zero();
-    
+
     auto timer = new MeasurePerformance;
     if (MEASURE_PERFORMANCE) { timer->start(); }
     BaseCharacter::update();
@@ -56,14 +56,7 @@ void SkeletonCharacter::update()
     if (MEASURE_PERFORMANCE) { timer->end("     Pathfinding: "); }
 
     if (isMoving)
-    {
-        lastValidPos = position;
         move();
-        if (checkForCollision())
-        {
-            position = lastValidPos;
-        }
-    }
 
     if (MEASURE_PERFORMANCE) { timer->start(); }
     animation.update();
@@ -72,6 +65,7 @@ void SkeletonCharacter::update()
 
 void SkeletonCharacter::move()
 {
+    moveDir.Zero();
     if (!path.empty())
     {
         if (Vector::dist(path[0], position) <= 20.f)
@@ -80,10 +74,13 @@ void SkeletonCharacter::move()
         }
         if (!path.empty())
         {
-            velocity = (path[0] - position).normalize() * movementSpeed;
-            position = position + velocity * DELTA_TIME;
+            moveDir += (path[0] - position).normalize();
+            velocity = moveDir.normalize() * movementSpeed;
         }
     }
+    checkForCollision();
+    velocity = moveDir.normalize() * movementSpeed;
+    position = position + velocity * DELTA_TIME;
 }
 
 void SkeletonCharacter::close()
@@ -99,18 +96,17 @@ bool SkeletonCharacter::checkForCollision()
         {
             if (Vector::dist(SINGLETON->gEnemiesList[enemy]->position, position) <= 100.f)
             {
+                RaycastHit hit;
                 if (collision->checkForIntersection(SINGLETON->gEnemiesList[enemy]->collision))
                 {
-                    return true;
+                    if (collision->calculateCollisionPoint(SINGLETON->gEnemiesList[enemy]->collision, hit))
+                    {
+                        moveDir += hit.normal;
+                        return true;
+                    }
                 }
             }
         }
-        if (Vector::dist(PLAYER->position, position) <= 100.f)
-            if (collision->checkForIntersection(PLAYER->collision))
-            {
-                // close();
-                return true;
-            }
     }
     return false;
 }

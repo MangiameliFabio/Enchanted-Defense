@@ -23,13 +23,12 @@ public:
 
     bool checkForIntersection(CollisionObject* otherObject);
     bool checkForIntersection(const Vector& topLeft, const Vector& bottomRight);
-    bool collisionResponse(CollisionObject* otherObject);
 
     void createCollisionShape(float shapeHeight, float shapeWidth, Vector* shapeCenter);
     void updatePosition();
     void updatePixelBorder();
 
-    Vector calculateCollisionNormal(CollisionObject* otherObject);
+    bool calculateCollisionPoint(CollisionObject* otherObject, RaycastHit& hit);
 
     Vector topLeft;
     Vector bottomRight;

@@ -13,7 +13,10 @@ struct Collider
 struct RaycastHit
 {
     Collider collider;
+
     Vector point;
+    Vector normal;
+
     float distance;
 };
 
@@ -49,6 +52,7 @@ static RaycastHit Raycast(Vector origin, Vector direction, std::vector<Collider>
             // If this is the closest intersection so far, update the hit
             if (distance < hit.distance)
             {
+                hit.normal = (origin - closestPoint).normalize();
                 hit.collider = collider;
                 hit.point = closestPoint;
                 hit.distance = distance;

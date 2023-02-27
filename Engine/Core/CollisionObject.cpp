@@ -24,8 +24,6 @@ bool CollisionObject::checkForIntersection(CollisionObject* otherObject)
         || otherObject->bottomRight.y <= topLeft.y) //Checks the top
         return false;
 
-    calculateCollisionNormal(otherObject);
-
     return true;
 }
 
@@ -39,11 +37,6 @@ bool CollisionObject::checkForIntersection(const Vector& topLeftOther, const Vec
         || bottomRightOther.y <= topLeft.y) //Checks the top
         return false;
 
-    return true;
-}
-
-bool CollisionObject::collisionResponse(CollisionObject* otherObject)
-{
     return true;
 }
 
@@ -102,11 +95,9 @@ void CollisionObject::updatePixelBorder()
     }
 }
 
-Vector CollisionObject::calculateCollisionNormal(CollisionObject* otherObject)
+bool CollisionObject::calculateCollisionPoint(CollisionObject* otherObject, RaycastHit& hit)
 {
-    auto measure = new MeasurePerformance;
     std::vector<Vector*> collisions;
-    measure->start();
 
     updatePixelBorder();
     otherObject->updatePixelBorder();
@@ -115,7 +106,7 @@ Vector CollisionObject::calculateCollisionNormal(CollisionObject* otherObject)
     {
         for (size_t j = 0; j < otherObject->pixelBorder.size(); ++j)
         {
-            if (Vector::compare(pixelBorder[i].position, otherObject->pixelBorder[j].position, 1.f))
+            if (Vector::compare(pixelBorder[i].position, otherObject->pixelBorder[j].position, 0.5f))
             {
                 collisions.push_back(&pixelBorder[i].position);
                 break;
@@ -129,12 +120,12 @@ Vector CollisionObject::calculateCollisionNormal(CollisionObject* otherObject)
         Vector relVelocityNorm = relVelocity.normalize();
 
         Vector origin = Vector::middleBetweenVec(*collisions[0], *collisions[collisions.size() - 1]);
-        RaycastHit hit = Raycast(origin, relVelocityNorm, pixelBorder);
+        hit = Raycast(origin, relVelocityNorm, pixelBorder);
 
         auto rect = new DebugRectangle(hit.point.x, hit.point.y, 5, 5, Color(255, 0, 0, 255));
         rect->persistent = false;
+        return true;
     }
-    measure->end("Time for update: ");
 
-    return {};
+    return false;
 }
