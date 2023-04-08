@@ -1,8 +1,0 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: Das Zwischenverzeichnis (Debug\) enthält freigegebene Dateien aus einem anderen Projekt (LazyFooEngine.vcxproj). Dies kann zu einem falschen Bereinigungs- und Neuerstellungsverhalten führen.
-  Animator.cpp
-C:\Users\fabio\Documents\GitHub\TopDownShooter\Engine\Core\Texture.h(2,10): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL_render.h": No such file or directory
-  PlayerASM.cpp
-C:\Users\fabio\Documents\GitHub\TopDownShooter\Engine\Core\Texture.h(2,10): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL_render.h": No such file or directory
-  PlayerCharacter.cpp
-C:\Users\fabio\Documents\GitHub\TopDownShooter\Engine\Core\Texture.h(2,10): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL_render.h": No such file or directory
-  Code wird generiert...
