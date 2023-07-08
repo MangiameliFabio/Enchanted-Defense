@@ -1,10 +1,11 @@
 ﻿#include "SkeletonCharacter.h"
 
-#include "../../Engine/Singelton.h"
-#include "../../Engine/Pathfinding.h"
+#include "..\GameSingleton.h"
+#include "..\..\Engine\EngineSingelton.h"
 #include "../../Engine/Core/MeasurePerformance.h"
 #include "../../Engine/Core/CollisionObject.h"
 #include "../../Engine/Debuging/DebugRectangle.h"
+#include "../Pathfinding.h"
 
 SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
 {
@@ -46,10 +47,14 @@ void SkeletonCharacter::update()
     if (pfCurrentCooldown <= 0)
     {
         pfCurrentCooldown = pfCooldown;
-        if (!SINGLETON->pathfindingGrid->findPath(position, PLAYER->position, path, this))
+        printf("Player position: %f, %f\n", PLAYER->position.x, PLAYER->position.y);
+        printf("Own position: %f, %f\n", position.x, position.y);
+
+        if (!GAME->pathfindingGrid->findPath(position, PLAYER->position, path, this))
         {
             printf("no path found in: %s \n", name.c_str());
         }
+        printf("Size: %llu\n", path.size());
     }
     else
     {
@@ -64,6 +69,7 @@ void SkeletonCharacter::update()
     }
     else
     {
+        printf("failed to set move dir to path");
         velocity.Zero();
     }
     lastValidPos = position;
@@ -93,13 +99,13 @@ void SkeletonCharacter::close()
 
 bool SkeletonCharacter::checkForCollision()
 {
-    for (int enemy = 0; enemy < SINGLETON->sizeEnemiesList; ++enemy)
+    for (int enemy = 0; enemy < GAME->sizeEnemiesList; ++enemy)
     {
-        if (SINGLETON->gEnemiesList[enemy] != this)
+        if (GAME->gEnemiesList[enemy] != this)
         {
-            if (Vector::dist(SINGLETON->gEnemiesList[enemy]->position, position) <= 100.f)
+            if (Vector::dist(GAME->gEnemiesList[enemy]->position, position) <= 100.f)
             {
-                if (collision->checkForIntersection(SINGLETON->gEnemiesList[enemy]->collision))
+                if (collision->checkForIntersection(GAME->gEnemiesList[enemy]->collision))
                 {
                     // if (collision->calculateCollisionPoint(SINGLETON->gEnemiesList[enemy]->collision, hit))
                     // {
@@ -107,7 +113,7 @@ bool SkeletonCharacter::checkForCollision()
                     //     return true;
                     // }
                     position = lastValidPos;
-                    collision->collisionResponse(SINGLETON->gEnemiesList[enemy]->collision);
+                    collision->collisionResponse(GAME->gEnemiesList[enemy]->collision);
                     return true;
                 }
             }

@@ -6,7 +6,7 @@
 #include <SDL_image.h>
 #include <string>
 #include "../Debuging/DebugShape.h"
-#include "../Singelton.h"
+#include "..\EngineSingelton.h"
 
 bool Renderer::init()
 {
@@ -23,8 +23,8 @@ bool Renderer::init()
     {
         //Create window
         gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                   SINGLETON->SCREEN_WIDTH,
-                                   SINGLETON->SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+                                   ENGINE->SCREEN_WIDTH,
+                                   ENGINE->SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
         if (gWindow == nullptr)
         {
             printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -33,9 +33,9 @@ bool Renderer::init()
         else
         {
             //Create vsynced renderer for window
-            SINGLETON->gSDL_Renderer =
+            ENGINE->gSDL_Renderer =
                 SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-            if (SINGLETON->gSDL_Renderer == nullptr)
+            if (ENGINE->gSDL_Renderer == nullptr)
             {
                 printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
                 success = false;
@@ -43,7 +43,7 @@ bool Renderer::init()
             else
             {
                 //Initialize renderer color
-                SDL_SetRenderDrawColor(SINGLETON->gSDL_Renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                SDL_SetRenderDrawColor(ENGINE->gSDL_Renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
                 //Initialize PNG loading
                 int imgFlags = IMG_INIT_PNG;
@@ -62,8 +62,8 @@ bool Renderer::init()
 void Renderer::renderUpdate()
 {
     //Clear Screen
-    SDL_SetRenderDrawColor(SINGLETON->gSDL_Renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderClear(SINGLETON->gSDL_Renderer);
+    SDL_SetRenderDrawColor(ENGINE->gSDL_Renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderClear(ENGINE->gSDL_Renderer);
 
     //Render all textures
     for (int i = 0; i < numTextures; ++i)
@@ -93,7 +93,7 @@ void Renderer::renderUpdate()
     }
 
     //Update screen
-    SDL_RenderPresent(SINGLETON->gSDL_Renderer);
+    SDL_RenderPresent(ENGINE->gSDL_Renderer);
 }
 
 void Renderer::addTexture(Texture* texture)
@@ -138,10 +138,10 @@ void Renderer::removeDebugShape(DebugShape* debugShape)
 void Renderer::close()
 {
     //Destroy window    
-    SDL_DestroyRenderer(SINGLETON->gSDL_Renderer);
+    SDL_DestroyRenderer(ENGINE->gSDL_Renderer);
     SDL_DestroyWindow(gWindow);
     gWindow = nullptr;
-    SINGLETON->gSDL_Renderer = nullptr;
+    ENGINE->gSDL_Renderer = nullptr;
 
     IMG_Quit();
     SDL_Quit();

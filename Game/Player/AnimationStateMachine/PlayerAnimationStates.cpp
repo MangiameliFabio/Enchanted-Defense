@@ -1,5 +1,6 @@
 ﻿#include "PlayerAnimationStates.h"
-#include "../../../Engine/Singelton.h"
+
+#include "..\..\GameSingleton.h"
 #include "../../../Engine/Animator.h"
 
 PlayerIdle::PlayerIdle()

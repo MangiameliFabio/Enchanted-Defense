@@ -1,14 +1,14 @@
 ﻿#include "BaseEnemy.h"
 
-#include "../Engine/Singelton.h"
+#include "GameSingleton.h"
 
 BaseEnemy::BaseEnemy()
 {
-    SINGLETON->addEnemy(this);
+    GAME->addEnemy(this);
 }
 
 BaseEnemy::~BaseEnemy()
 {
-    SINGLETON->enemyCount--;
-    SINGLETON->removeEnemy(this);
+    GAME->enemyCount--;
+    GAME->removeEnemy(this);
 }

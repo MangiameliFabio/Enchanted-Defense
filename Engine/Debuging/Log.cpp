@@ -1,0 +1,25 @@
+﻿#include "Log.h"
+
+#include <cstdio>
+#include "../Core/Vector.h"
+
+void Log::print(float floatToPrint, std::string message)
+{
+    printf("%s %f\n", message.c_str(), static_cast<double>(floatToPrint));
+}
+
+void Log::print(int intToPrint, const std::string& message)
+{
+    printf("%s %f\n", message.c_str(), static_cast<double>(intToPrint));
+}
+
+void Log::print(const Vector& vectorToPrint, std::string message)
+{
+    printf("%s x: %f y: %f\n", message.c_str(), static_cast<double>(vectorToPrint.x),
+           static_cast<double>(vectorToPrint.y));
+}
+
+void Log::print(std::string stringToPrint)
+{
+    printf("%s\n", stringToPrint.c_str());
+}

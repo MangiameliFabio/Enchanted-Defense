@@ -1,7 +1,8 @@
 ﻿#include "Projectile.h"
 
 #include "BaseEnemy.h"
-#include "../Engine/Singelton.h"
+#include "GameSingleton.h"
+#include "../Engine/EngineSingelton.h"
 
 void Projectile::update()
 {
@@ -9,13 +10,13 @@ void Projectile::update()
 
     pos = pos + (velocity * DELTA_TIME);
 
-    if (pos.x < 50.f || pos.y < 50.f || pos.x > SINGLETON->SCREEN_WIDTH - 50.f || pos.y > SINGLETON->SCREEN_WIDTH -
+    if (pos.x < 50.f || pos.y < 50.f || pos.x > ENGINE->SCREEN_WIDTH - 50.f || pos.y > ENGINE->SCREEN_WIDTH -
         50.f)
     {
         close();
         return;
     }
-    for (auto enemy : SINGLETON->gEnemiesList)
+    for (auto enemy : GAME->gEnemiesList)
     {
         if (Vector::dist(enemy->position, pos) <= 200.f)
         {

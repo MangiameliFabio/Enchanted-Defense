@@ -3,7 +3,7 @@
 #include <SDL_image.h>
 #include <SDL_render.h>
 
-#include "../Singelton.h"
+#include "..\EngineSingelton.h"
 
 bool Texture::loadTexture(std::string _path)
 {
@@ -27,7 +27,7 @@ bool Texture::loadTexture(std::string _path)
         SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
 
         //Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(SINGLETON->gSDL_Renderer, loadedSurface);
+        newTexture = SDL_CreateTextureFromSurface(ENGINE->gSDL_Renderer, loadedSurface);
         if (newTexture == nullptr)
         {
             printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -45,7 +45,7 @@ bool Texture::loadTexture(std::string _path)
 
     //Return success
     mTexture = newTexture;
-    SINGLETON->gRenderer->addTexture(this);
+    ENGINE->gRenderer->addTexture(this);
 
     return mTexture != nullptr;
 }
@@ -84,7 +84,7 @@ void Texture::render(double angle, SDL_Point* center)
     }
 
     //Render to screen
-    SDL_RenderCopyEx(SINGLETON->gSDL_Renderer, mTexture, clip, &renderQuad, angle, center, flip);
+    SDL_RenderCopyEx(ENGINE->gSDL_Renderer, mTexture, clip, &renderQuad, angle, center, flip);
 }
 
 void Texture::free()
@@ -100,7 +100,7 @@ void Texture::free()
         mHeight = 0;
         staticX = 0;
         staticY = 0;
-        SINGLETON->gRenderer->removeTexture(this);
+        ENGINE->gRenderer->removeTexture(this);
     }
 }
 
@@ -113,7 +113,7 @@ Texture::~Texture()
     mTexture = nullptr;
     dynamicX = nullptr;
     dynamicY = nullptr;
-    SINGLETON->gRenderer->removeTexture(this);
+    ENGINE->gRenderer->removeTexture(this);
 }
 
 void Texture::setDynamicX(float* x)

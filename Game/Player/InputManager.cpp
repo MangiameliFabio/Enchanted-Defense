@@ -2,7 +2,7 @@
 #include <SDL_keyboard.h>
 
 #include "PlayerCommands.h"
-#include "../../Engine/Singelton.h"
+#include "..\..\Engine\EngineSingelton.h"
 
 InputManager::InputManager()
 {
@@ -27,6 +27,8 @@ Command* InputManager::handleInput()
         if (currentKeyStates[SDL_SCANCODE_RIGHT]) buttonRight->execute();
     }
     if (currentKeyStates[SDL_SCANCODE_ESCAPE]) buttonESC->execute();
+
+    ENGINE->notify(ALL_INPUTS_HANDLED);
 
     return nullptr;
 }

@@ -1,8 +1,8 @@
 ﻿#include "Object.h"
 
-#include "../Singelton.h"
+#include "..\EngineSingelton.h"
 
-void Object::start()
+void Object::init()
 {
 }
 
@@ -13,13 +13,13 @@ void Object::update()
 void Object::close()
 {
     queuedForDelete = true;
-    SINGLETON->removeObject(this);
-    SINGLETON->addToDeleteQueue(this);
+    ENGINE->removeObject(this);
+    ENGINE->addToDeleteQueue(this);
 }
 
 Object::Object()
 {
-    SINGLETON->addObject(this);
+    ENGINE->addObject(this);
 }
 
 Object::~Object()

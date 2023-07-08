@@ -3,9 +3,9 @@
 
 #include <cstdio>
 
-void AnimationStateMachine::start()
+void AnimationStateMachine::init()
 {
-    Object::start();
+    Object::init();
     name = typeid(this).name();
 
     if (!currentState)

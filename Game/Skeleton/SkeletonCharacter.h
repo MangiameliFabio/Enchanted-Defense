@@ -33,5 +33,4 @@ public:
     float movementSpeed = 50.f;
 
     bool isMoving = true;
-
 };

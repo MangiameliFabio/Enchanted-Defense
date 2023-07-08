@@ -1,6 +1,6 @@
 ﻿#include "CollisionObject.h"
 
-#include "../Pathfinding.h"
+#include "Object.h"
 #include "../Debuging/DebugPoint.h"
 
 bool CollisionObject::checkForIntersection(CollisionObject* otherObject)

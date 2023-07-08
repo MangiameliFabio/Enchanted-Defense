@@ -1,15 +1,15 @@
 ﻿#include "DebugShape.h"
 
-#include "../Singelton.h"
+#include "..\EngineSingelton.h"
 
 DebugShape::DebugShape()
 {
-    SINGLETON->gRenderer->addDebugShape(this);
+    ENGINE->gRenderer->addDebugShape(this);
 }
 
 DebugShape::~DebugShape()
 {
-    SINGLETON->gRenderer->removeDebugShape(this);
+    ENGINE->gRenderer->removeDebugShape(this);
 }
 
 void DebugShape::render()

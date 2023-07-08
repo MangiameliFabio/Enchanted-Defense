@@ -3,6 +3,7 @@
 enum Event
 {
     NULL_EVENT,
+    HANDLE_INPUT,
     ALL_INPUTS_HANDLED,
     PLAYER_DIED,
 };

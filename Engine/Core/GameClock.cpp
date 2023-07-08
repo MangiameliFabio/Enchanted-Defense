@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "../Singelton.h"
+#include "..\EngineSingelton.h"
 
 void GameClock::init()
 {

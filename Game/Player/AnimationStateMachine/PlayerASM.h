@@ -16,7 +16,7 @@ class PlayerASM : public AnimationStateMachine, public Observer
 public:
     PlayerASM(){}
 
-    void start() override;
+    void init() override;
     void close() override;
     void onNotify(const Event event) override;
     

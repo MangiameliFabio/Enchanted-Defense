@@ -1,18 +1,21 @@
 ﻿#include "PlayerCharacter.h"
 
-#include "../../../Engine/Singelton.h"
+#include "InputManager.h"
+#include "..\..\Engine\EngineSingelton.h"
 #include "../../Engine/Animator.h"
 #include "AnimationStateMachine/PlayerASM.h"
 #include "../../../Engine/Core/CollisionObject.h"
+#include "../Projectile.h"
 
-void PlayerCharacter::start()
+void PlayerCharacter::init()
 {
-    BaseCharacter::start();
+    BaseCharacter::init();
 
     PLAYER = this;
+    ENGINE->addObserver(this);
 
     stateMachine = new PlayerASM;
-    stateMachine->start();
+    stateMachine->init();
 
     spriteHeight = static_cast<float>(stateMachine->currentState->animation->spriteSheet->getHeight());
     spriteWidth = static_cast<float>(stateMachine->currentState->animation->spriteSheet->getWidth());
@@ -20,6 +23,8 @@ void PlayerCharacter::start()
     collision = new CollisionObject(this);
     collision->createCollisionShape(spriteHeight, spriteWidth - 10, &position);
     collision->updatePixelBorder();
+
+    inputManager = new InputManager;
 }
 
 void PlayerCharacter::update()
@@ -48,19 +53,24 @@ void PlayerCharacter::move()
     {
         position.x = 50.f + spriteWidth / 2;
     }
-    if (position.x + spriteWidth / 2 > SINGLETON->SCREEN_WIDTH - 50.f)
+    if (position.x + spriteWidth / 2 > ENGINE->SCREEN_WIDTH - 50.f)
     {
-        position.x = SINGLETON->SCREEN_WIDTH - 50.f - spriteWidth / 2;
+        position.x = ENGINE->SCREEN_WIDTH - 50.f - spriteWidth / 2;
     }
 
     if (position.y - spriteHeight / 2 < 50.f)
     {
         position.y = 50.f + spriteHeight / 2;
     }
-    if (position.y + spriteHeight / 2 > SINGLETON->SCREEN_HEIGHT - 50.f)
+    if (position.y + spriteHeight / 2 > ENGINE->SCREEN_HEIGHT - 50.f)
     {
-        position.y = SINGLETON->SCREEN_HEIGHT - 50.f - spriteHeight / 2;
+        position.y = ENGINE->SCREEN_HEIGHT - 50.f - spriteHeight / 2;
     }
+}
+
+void PlayerCharacter::spawnProjectile(Vector& pos, Vector& dir)
+{
+    new Projectile(pos, dir);
 }
 
 PlayerCharacter::PlayerCharacter(Vector& spawnPos)
@@ -71,11 +81,15 @@ PlayerCharacter::PlayerCharacter(Vector& spawnPos)
 
 PlayerCharacter::~PlayerCharacter()
 {
+    inputManager->close();
     printf("Player has been deleted \n");
 }
 
 void PlayerCharacter::onNotify(const Event event)
 {
+    if (event == HANDLE_INPUT)
+        inputManager->handleInput();
+
     if (event == ALL_INPUTS_HANDLED)
     {
         if (isMoveing)
@@ -93,7 +107,7 @@ void PlayerCharacter::onNotify(const Event event)
                 attackCooldown = attackSpeed;
                 Vector aimNormalized = aimDir.normalize();
 
-                projectileSpawner.spawnProjectile(position, aimNormalized);
+                spawnProjectile(position, aimNormalized);
             }
         }
         aimDir.Zero();

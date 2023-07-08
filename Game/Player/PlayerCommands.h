@@ -1,6 +1,6 @@
 ﻿#pragma once
+#include "..\GameSingleton.h"
 #include "../../Engine/Core/Patterns/Command.h"
-#include "../../Engine/Singelton.h"
 
 class PlayerASM;
 class AnimationSubject;

@@ -9,6 +9,7 @@ public:
     ~WorldManager();
 
     void init();
+    void startGame();
     void onNotify(const Event event) override;
     Vector& chooseRandomSpawn();
     float setRandomWaveCountDown(float min, float max);

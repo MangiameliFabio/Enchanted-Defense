@@ -1,8 +1,8 @@
 ﻿#include "PlayerASM.h"
 #include "PlayerAnimationStates.h"
-#include "../../../Engine/Singelton.h"
+#include "..\..\GameSingleton.h"
 
-void PlayerASM::start()
+void PlayerASM::init()
 {
     idleState = new PlayerIdle;
     leftState = new PlayerLeft;
@@ -14,7 +14,7 @@ void PlayerASM::start()
 
     PLAYER->addObserver(this);
 
-    AnimationStateMachine::start();
+    AnimationStateMachine::init();
 }
 
 void PlayerASM::close()
