@@ -8,6 +8,7 @@
 #include "Core/Renderer.h"
 #include "Core/Patterns/Subject.h"
 #include "../Game/Player/PlayerCharacter.h"
+#include <SDL_ttf.h>
 
 class Pathfinding;
 class BaseEnemy;
@@ -32,7 +33,7 @@ public:
 
     //The window renderer
     SDL_Renderer* gSDL_Renderer = nullptr;
-
+    
     Renderer* gRenderer = nullptr;
 
     //Update functions

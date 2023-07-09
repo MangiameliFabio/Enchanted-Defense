@@ -6,16 +6,20 @@
 
 class Texture
 {
+public:
     void free();
 
-public:
     bool loadTexture(std::string _path);
+    bool loadTexture(SDL_Surface* textureSurface);
     void render(double angle = 0, SDL_Point* center = nullptr);
 
     void setWidth(int m_width);
     void setHeight(int m_height);
     int getWidth() const;
     int getHeight() const;
+    
+    int getZindex() const;
+    void setZindex(int _zIndex);
 
     //Create a reference to Object position
     void setDynamicX(float* x);
@@ -27,11 +31,11 @@ public:
     ~Texture();
     SDL_RendererFlip flip = SDL_FLIP_NONE;
 
-    int staticX = 0;
-    int staticY = 0;
+    float staticX = 0;
+    float staticY = 0;
 
     bool markForRender = true;
-    
+
     SDL_Rect* clip = nullptr;
 
 private:
@@ -45,4 +49,6 @@ private:
     //Dynamic positions for player and enemies
     float* dynamicX = nullptr;
     float* dynamicY = nullptr;
+
+    int zIndex = 0;
 };

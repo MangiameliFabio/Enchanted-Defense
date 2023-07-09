@@ -6,12 +6,29 @@
 #include <SDL_image.h>
 #include <string>
 #include "../Debuging/DebugShape.h"
-#include "..\EngineSingelton.h"
+#include "../EngineSingelton.h"
+#include "../UI/TextBox.h"
+
 
 bool Renderer::init()
 {
     //Initialization flag
     bool success = true;
+
+    //Initialize PNG loading
+    int imgFlags = IMG_INIT_PNG;
+    if (!(IMG_Init(imgFlags) & imgFlags))
+    {
+        printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+        success = false;
+    }
+
+    //Initialize SDL_ttf
+    if (TTF_Init() == -1)
+    {
+        printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+        success = false;
+    }
 
     //Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -99,6 +116,10 @@ void Renderer::renderUpdate()
 void Renderer::addTexture(Texture* texture)
 {
     textureContainer.push_back(texture);
+    std::sort(textureContainer.begin(), textureContainer.end(), [](const Texture* a, const Texture* b)
+    {
+        return a->getZindex() < b->getZindex();
+    });
     numTextures++;
 }
 
@@ -145,6 +166,7 @@ void Renderer::close()
 
     IMG_Quit();
     SDL_Quit();
+    TTF_Quit();
 
     delete this;
 }

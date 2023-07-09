@@ -1,6 +1,7 @@
 ﻿#include <chrono>
 #include <cstdio>
 #include <SDL.h>
+#include <SDL_image.h>
 
 #include "EngineSingelton.h"
 #include "Core/Patterns/Subject.h"
@@ -23,6 +24,7 @@ int main(int argc, char* args[])
     {
         printf("failed to initialize renderer \n");
     }
+    
     const auto worldManager = new WorldManager;
     worldManager->init();
     const auto gameClock = new GameClock;

@@ -605,6 +605,7 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Engine\UI\TextBox.cpp" />
     <ClCompile Include="Game\BaseCharacter.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -997,6 +998,7 @@
     <ClInclude Include="Engine\Debuging\Log.h" />
     <ClInclude Include="Engine\Enums.h" />
     <ClInclude Include="Engine\EngineSingelton.h" />
+    <ClInclude Include="Engine\UI\TextBox.h" />
     <ClInclude Include="Game\BaseCharacter.h" />
     <ClInclude Include="Game\BaseEnemy.h" />
     <ClInclude Include="Game\EnemySpawner.h" />

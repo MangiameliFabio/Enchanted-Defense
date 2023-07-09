@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "../Engine/UI/TextBox.h"
+
 class EnemySpawner;
 
 class WorldManager : public Object, public Observer
@@ -19,6 +21,7 @@ private:
 
     EnemySpawner* skeletonSpawner;
 
+    TextBox titel;
     Texture background;
     Texture player;
     Texture arrow;

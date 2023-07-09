@@ -5,6 +5,7 @@
 #include "Projectile.h"
 #include "..\Engine\EngineSingelton.h"
 #include "WorldMAnager.h"
+#include "../Engine/UI/TextBox.h"
 #include "Pathfinding.h"
 #include "Player/PlayerCharacter.h"
 #include "Skeleton/SkeletonCharacter.h"
@@ -26,6 +27,11 @@ void WorldManager::init()
     background.staticX = (ENGINE->SCREEN_WIDTH - background.getWidth()) / 2;
     background.staticY = (ENGINE->SCREEN_HEIGHT - background.getHeight()) / 2;
 
+    const SDL_Color textColor = {113, 0, 0};
+    titel.init("Enchanted Defense", &textColor, 48);
+    titel.loadFromFile("assets/fonts/pixelfont.TTF");
+    titel.setPosition(Vector(ENGINE->SCREEN_WIDTH / 2 - titel.getTexture()->getWidth() / 2, 200));
+
     // startGame();
 }
 
@@ -34,20 +40,20 @@ void WorldManager::startGame()
     background.loadTexture("assets/textures/environment/background.png");
     background.staticX = (ENGINE->SCREEN_WIDTH - background.getWidth()) / 2;
     background.staticY = (ENGINE->SCREEN_HEIGHT - background.getHeight()) / 2;
-    
+
     GAME->pathfindingGrid = new Pathfinding(65, 65, 50, 50);
     GAME->pathfindingGrid->init();
-    
+
     const float playerStartPosX = ENGINE->SCREEN_WIDTH / 2;
     const float playerStartPosY = ENGINE->SCREEN_HEIGHT / 2;
-    
+
     playerStart = Vector(playerStartPosX, playerStartPosY);
     auto player = new PlayerCharacter(playerStart);
     player->init();
     PLAYER->addObserver(this);
-    
+
     skeletonSpawner = new EnemySpawnerFor<SkeletonCharacter>();
-    
+
     spawnPoints[0] = Vector(ENGINE->SCREEN_WIDTH / 2, 70);
     spawnPoints[1] = Vector(70,ENGINE->SCREEN_HEIGHT / 2);
     spawnPoints[2] = Vector(ENGINE->SCREEN_WIDTH / 2, ENGINE->SCREEN_HEIGHT - 70);

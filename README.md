@@ -17,6 +17,10 @@ These libraries need to be installed to run the code.
 
 ## Music
 
-Music by <a href="https://pixabay.com/de/users/lesiakower-25701529/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=153400">Lesiakower</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=153400">Pixabay</a>
-Music by <a href="https://pixabay.com/de/users/dream-protocol-9556087/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=116820">Dream-Protocol</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=116820">Pixabay</a>
-Music by <a href="https://pixabay.com/de/users/lucadialessandro-25927643/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=146875">lucadialessandro</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=146875">Pixabay</a>
+Music by <a href="https://pixabay.com/de/users/lesiakower-25701529/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=153400">Lesiakower</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=153400">Pixabay</a> <br>
+Music by <a href="https://pixabay.com/de/users/dream-protocol-9556087/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=116820">Dream-Protocol</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=116820">Pixabay</a> <br>
+Music by <a href="https://pixabay.com/de/users/lucadialessandro-25927643/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=146875">lucadialessandro</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=146875">Pixabay</a> <br>
+
+## Fonts
+
+Pixel font by <a href="https://www.1001fonts.com/fff-forward-font.html">fff-forward</a> from <a href="https://www.1001fonts.com">1001fonts</a> <br>
