@@ -42,7 +42,7 @@ bool TextBox::loadFromFile(const std::string& path)
     }
     else
     {
-        if (loadFromRenderedText())
+        if (!loadFromRenderedText())
         {
             printf("Failed to render text texture!\n");
             success = false;

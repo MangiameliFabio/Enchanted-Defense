@@ -81,9 +81,6 @@
     <ClCompile Include="Engine\Debuging\DebugShape.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Pathfinding.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Game\BaseCharacter.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -97,6 +94,15 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Game\Skeleton\SkeletonCharacter.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Debuging\Log.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\TextBox.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Pathfinding.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -132,9 +138,6 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Enums.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Singelton.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Game\GameCommands.h">
@@ -188,9 +191,6 @@
     <ClInclude Include="Engine\Debuging\DebugShape.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Pathfinding.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Game\BaseCharacter.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -207,6 +207,21 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Game\Skeleton\SkeletonCharacter.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Debuging\Log.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EngineSingelton.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\TextBox.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Pathfinding.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameSingleton.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

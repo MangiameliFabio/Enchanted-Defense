@@ -29,7 +29,7 @@ void WorldManager::init()
 
     const SDL_Color textColor = {113, 0, 0};
     titel.init("Enchanted Defense", &textColor, 48);
-    titel.loadFromFile("assets/fonts/pixelfont.TTF");
+    titel.loadFromFile("assets/fonts/alagard.ttf");
     titel.setPosition(Vector(ENGINE->SCREEN_WIDTH / 2 - titel.getTexture()->getWidth() / 2, 200));
 
     // startGame();

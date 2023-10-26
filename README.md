@@ -23,4 +23,4 @@ Music by <a href="https://pixabay.com/de/users/lucadialessandro-25927643/?utm_so
 
 ## Fonts
 
-Pixel font by <a href="https://www.1001fonts.com/fff-forward-font.html">fff-forward</a> from <a href="https://www.1001fonts.com">1001fonts</a> <br>
+Pixel font by <a href="https://www.deviantart.com/pix3m/gallery">Pix3M</a> from <a href="https://www.deviantart.com/pix3m/art/Bitmap-font-Alagard-381110713">Deviantart</a> <br>
