@@ -2,7 +2,7 @@
 
 #include "InputManager.h"
 #include "..\..\Engine\EngineSingelton.h"
-#include "../../Engine/Animator.h"
+#include "../../Engine/Animation/Animator.h"
 #include "AnimationStateMachine/PlayerASM.h"
 #include "../../../Engine/Core/CollisionObject.h"
 #include "../Projectile.h"

@@ -1,6 +1,8 @@
 ﻿#pragma once
+#include <cstdio>
+#include <vcruntime_typeinfo.h>
+
 #include "Animator.h"
-#include <typeinfo>
 
 class Animator;
 

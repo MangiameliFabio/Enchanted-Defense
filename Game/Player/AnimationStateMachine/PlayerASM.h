@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "PlayerAnimationStates.h"
 #include "../../../Engine/Enums.h"
-#include "../../../Engine/AnimationStateMachine.h"
+#include "../../../Engine/Animation/AnimationStateMachine.h"
 #include "../../../Engine/Core/Patterns/Observer.h"
 
 class PlayerUp;

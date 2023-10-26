@@ -7,7 +7,7 @@
 #include "Core/Patterns/Subject.h"
 #include "Core/Renderer.h"
 #include "Core/GameClock.h"
-#include "../Game/WorldMAnager.h"
+#include "..\Game\GameManager.h"
 #include "Core/MeasurePerformance.h"
 
 EngineSingleton* EngineSingleton::instance = nullptr;
@@ -25,7 +25,7 @@ int main(int argc, char* args[])
         printf("failed to initialize renderer \n");
     }
     
-    const auto worldManager = new WorldManager;
+    const auto worldManager = new GameManager;
     worldManager->init();
     const auto gameClock = new GameClock;
     gameClock->init();

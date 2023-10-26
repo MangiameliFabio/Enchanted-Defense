@@ -5,6 +5,7 @@
 
 #include "../Game/Player/PlayerCharacter.h"
 
+class SceneManager;
 class Pathfinding;
 class BaseEnemy;
 
@@ -23,14 +24,17 @@ public:
         return instance;
     }
 
+    
+    //All enemies currently in the game
+    std::vector<BaseEnemy*> gEnemiesList;
+    
     //Player Refrence
     PlayerCharacter* gPlayer;
 
     //Pathfinding Grid
     Pathfinding* pathfindingGrid;
-    
-    //All enemies currently in the game
-    std::vector<BaseEnemy*> gEnemiesList;
+
+    SceneManager* sceneManager;
     
     int sizeEnemiesList = 0;
 
@@ -45,12 +49,12 @@ public:
 
     void removeEnemy(BaseEnemy* enemy)
     {
-        //Find Texture in vector
-        const auto position = std::find(gEnemiesList.begin(), gEnemiesList.end(), enemy);
+        //Find Iterator of enemy
+        const auto iterator = std::find(gEnemiesList.begin(), gEnemiesList.end(), enemy);
 
         //Remove Object
-        if (position != gEnemiesList.end())
-            gEnemiesList.erase(position);
+        if (iterator != gEnemiesList.end())
+            gEnemiesList.erase(iterator);
         sizeEnemiesList--;
     }
 };

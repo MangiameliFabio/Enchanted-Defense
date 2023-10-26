@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "Core/Object.h"
+
+#include "../Core/Object.h"
 
 class BaseState;
-
 class AnimationStateMachine : public Object
 {
 protected:

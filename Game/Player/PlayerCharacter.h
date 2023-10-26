@@ -42,6 +42,4 @@ public:
 
     bool isMoveing = false;
     bool isShooting = false;
-
-    bool died = false;
 };

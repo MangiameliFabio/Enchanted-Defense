@@ -30,6 +30,7 @@ public:
     void setPosition(const Vector& _pos);
     
     Texture* getTexture();
+    void free();   
 
 
 private:

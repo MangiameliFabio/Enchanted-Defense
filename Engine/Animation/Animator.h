@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Core/Texture.h"
+#include "../Core/Texture.h"
 
 class Animator
 {

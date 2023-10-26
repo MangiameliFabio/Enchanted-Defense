@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "../../../Engine/Animator.h"
-#include "../../../Engine/BaseState.h"
+#include "../../../Engine/Animation/Animator.h"
+#include "../../../Engine/Animation/AnimationBaseState.h"
 
 class PlayerIdle : public BaseState
 {

@@ -91,3 +91,10 @@ Texture* TextBox::getTexture()
 {
     return &mTexture;
 }
+
+void TextBox::free()
+{
+    mTexture.free();
+    mFont = nullptr;
+    mInitalized = false;
+}

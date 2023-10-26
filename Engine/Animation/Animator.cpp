@@ -1,5 +1,5 @@
 ﻿#include "Animator.h"
-#include "EngineSingelton.h"
+#include "../EngineSingelton.h"
 
 void Animator::update()
 {

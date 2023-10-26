@@ -3,7 +3,7 @@
 
 #include "../BaseCharacter.h"
 #include "../BaseEnemy.h"
-#include "../../Engine/Animator.h"
+#include "../../Engine/Animation/Animator.h"
 #include "../../Engine/Core/Patterns/Observer.h"
 
 class SkeletonCharacter : public BaseEnemy, public Observer

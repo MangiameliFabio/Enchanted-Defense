@@ -36,31 +36,23 @@ SkeletonCharacter::~SkeletonCharacter()
 void SkeletonCharacter::update()
 {
     lastValidPos = position;
-
-    auto timer = new MeasurePerformance;
-    if (MEASURE_PERFORMANCE) { timer->start(); }
+    
     BaseCharacter::update();
-    if (MEASURE_PERFORMANCE) { timer->end("     Base Character Constructor: "); }
 
     //Search new Path whenever cooldown is 0
-    if (MEASURE_PERFORMANCE) { timer->start(); }
     if (pfCurrentCooldown <= 0)
     {
         pfCurrentCooldown = pfCooldown;
-        printf("Player position: %f, %f\n", PLAYER->position.x, PLAYER->position.y);
-        printf("Own position: %f, %f\n", position.x, position.y);
 
         if (!GAME->pathfindingGrid->findPath(position, PLAYER->position, path, this))
         {
             printf("no path found in: %s \n", name.c_str());
         }
-        printf("Size: %llu\n", path.size());
     }
     else
     {
         pfCurrentCooldown -= DELTA_TIME;
     }
-    if (MEASURE_PERFORMANCE) { timer->end("     Pathfinding: "); }
 
     //Set direction to next path node
     if (setDirToPath())
@@ -78,11 +70,7 @@ void SkeletonCharacter::update()
     {
         move();
     }
-
-
-    if (MEASURE_PERFORMANCE) { timer->start(); }
     animation.update();
-    if (MEASURE_PERFORMANCE) { timer->end("     Animation: "); }
 }
 
 void SkeletonCharacter::move()
