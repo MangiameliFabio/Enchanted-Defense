@@ -17,19 +17,19 @@ void PlayerIdle::updateState()
 {
     BaseState::updateState();
 
-    switch (PLAYER->stateMachine->stateEnum)
+    switch (PLAYER->stateMachine.stateEnum)
     {
     case LEFT:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->leftState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.leftState);
         break;
     case RIGHT:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->rightState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.rightState);
         break;
     case UP:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->upState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.upState);
         break;
     case DOWN:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->downState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.downState);
         break;
     default
     : break;
@@ -52,19 +52,19 @@ void PlayerLeft::updateState()
 {
     BaseState::updateState();
 
-    switch (PLAYER->stateMachine->stateEnum)
+    switch (PLAYER->stateMachine.stateEnum)
     {
     case IDLE:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->idleState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.idleState);
         break;
     case RIGHT:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->rightState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.rightState);
         break;
     case UP:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->upState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.upState);
         break;
     case DOWN:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->downState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.downState);
         break;
     default
     : break;
@@ -85,19 +85,19 @@ void PlayerRight::updateState()
 {
     BaseState::updateState();
 
-    switch (PLAYER->stateMachine->stateEnum)
+    switch (PLAYER->stateMachine.stateEnum)
     {
     case IDLE:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->idleState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.idleState);
         break;
     case LEFT:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->leftState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.leftState);
         break;
     case UP:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->upState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.upState);
         break;
     case DOWN:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->downState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.downState);
         break;
     default
     : break;
@@ -118,19 +118,19 @@ void PlayerUp::updateState()
 {
     BaseState::updateState();
 
-    switch (PLAYER->stateMachine->stateEnum)
+    switch (PLAYER->stateMachine.stateEnum)
     {
     case IDLE:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->idleState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.idleState);
         break;
     case LEFT:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->leftState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.leftState);
         break;
     case RIGHT:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->rightState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.rightState);
         break;
     case DOWN:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->downState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.downState);
         break;
     default
     : break;
@@ -151,19 +151,19 @@ void PlayerDown::updateState()
 {
     BaseState::updateState();
 
-    switch (PLAYER->stateMachine->stateEnum)
+    switch (PLAYER->stateMachine.stateEnum)
     {
     case IDLE:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->idleState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.idleState);
         break;
     case RIGHT:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->rightState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.rightState);
         break;
     case LEFT:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->leftState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.leftState);
         break;
     case UP:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->upState);
+        PLAYER->stateMachine.stateTransition(PLAYER->stateMachine.upState);
         break;
     default
     : break;

@@ -7,7 +7,7 @@ class BaseEnemy;
 class EnemySpawner
 {
 public:
-    ~EnemySpawner() {}
+    virtual ~EnemySpawner() = default;
     virtual BaseEnemy* spawnEnemy(Vector& spawnPoint) = 0;
 };
 
@@ -15,5 +15,6 @@ template <class T>
 class EnemySpawnerFor : public EnemySpawner
 {
 public:
-    virtual BaseEnemy* spawnEnemy(Vector& spawnPoint) { return new T(spawnPoint); }
+    ~EnemySpawnerFor() override = default;
+    BaseEnemy* spawnEnemy(Vector& spawnPoint) override { return new T(spawnPoint); }
 };

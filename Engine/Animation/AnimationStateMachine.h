@@ -9,6 +9,7 @@ protected:
     void update() override;
 
 public:
+    ~AnimationStateMachine() override;
     void init() override;
     virtual void stop();
     void stateTransition(BaseState* state);

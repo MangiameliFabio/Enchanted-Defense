@@ -2,7 +2,7 @@
 
 #include "GameSingleton.h"
 
-BaseEnemy::BaseEnemy()
+BaseEnemy::BaseEnemy() : BaseCharacter()
 {
     GAME->addEnemy(this);
 }

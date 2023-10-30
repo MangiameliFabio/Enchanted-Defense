@@ -7,6 +7,7 @@
 #include "../../Engine/EngineSingelton.h"
 #include "../Pathfinding.h"
 #include "../../Engine/Scenes/SceneManager.h"
+#include "../Player/PlayerCharacter.h"
 
 #include "../Skeleton/SkeletonCharacter.h"
 
@@ -32,8 +33,7 @@ void GameScene::startScene()
     BaseScene::startScene();
 
     background.loadTexture("assets/textures/environment/background.png");
-    background.staticX = (ENGINE->SCREEN_WIDTH - background.getWidth()) / 2;
-    background.staticY = (ENGINE->SCREEN_HEIGHT - background.getHeight()) / 2;
+    background.setStaticPosition({(ENGINE->SCREEN_WIDTH - background.getWidth()) / 2,(ENGINE->SCREEN_HEIGHT - background.getHeight()) / 2});
 
     GAME->pathfindingGrid = new Pathfinding(65, 65, 50, 50);
     GAME->pathfindingGrid->init();
@@ -42,7 +42,8 @@ void GameScene::startScene()
     const float playerStartPosY = ENGINE->SCREEN_HEIGHT / 2;
 
     playerStart = Vector(playerStartPosX, playerStartPosY);
-    auto player = new PlayerCharacter(playerStart);
+    auto* player = new PlayerCharacter();
+    player->position = playerStart;
     player->init();
     player->addObserver(this);
 
@@ -58,6 +59,7 @@ void GameScene::endScene()
 {
     BaseScene::endScene();
 
+    delete skeletonSpawner;
     skeletonSpawner = nullptr;
     background.free();
 
@@ -66,7 +68,11 @@ void GameScene::endScene()
         enemy->close();
     }
 
-    GAME->gPlayer->close();
+    if (GAME->gPlayer)
+    {
+        GAME->gPlayer->removeObserver(this);
+        GAME->gPlayer->close();
+    }
 }
 
 Vector& GameScene::chooseRandomSpawn()

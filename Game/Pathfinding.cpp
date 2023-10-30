@@ -211,7 +211,7 @@ void Pathfinding::update()
                 bottomRight.x += cellSize / 2;
                 bottomRight.y -= cellSize / 2;
 
-                if (GAME->gEnemiesList[enemy]->collision->checkForIntersection(topLeft, bottomRight))
+                if (GAME->gEnemiesList[enemy]->collision.checkForIntersection(topLeft, bottomRight))
                 {
                     nodes[y * mapWidth + x].blocked = true;
                     nodes[y * mapWidth + x].blockingObject = GAME->gEnemiesList[enemy];

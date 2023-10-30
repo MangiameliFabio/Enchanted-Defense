@@ -19,7 +19,15 @@ void Log::print(const Vector& vectorToPrint, std::string message)
            static_cast<double>(vectorToPrint.y));
 }
 
-void Log::print(std::string stringToPrint)
+void Log::print(const std::string& stringToPrint)
 {
     printf("%s\n", stringToPrint.c_str());
+}
+
+void Log::printBool(bool boolToPrint)
+{
+    if (boolToPrint)
+        printf("true");
+    else
+        printf("false");
 }

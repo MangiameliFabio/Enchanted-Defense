@@ -11,7 +11,6 @@ class BaseState
 public:
     virtual ~BaseState()
     {
-        delete animation;
     }
 
     virtual void startState()

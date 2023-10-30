@@ -2,14 +2,15 @@
 
 #define GAME GameSingleton::getInstance()
 #define PLAYER GameSingleton::getInstance()->gPlayer
+#include <vector>
 
-#include "../Game/Player/PlayerCharacter.h"
+#include "Player/PlayerCharacter.h"
 
-class SceneManager;
-class Pathfinding;
 class BaseEnemy;
+class Pathfinding;
+class SceneManager;
 
-class GameSingleton : public Subject
+class GameSingleton
 {
     static GameSingleton* instance;
 
@@ -24,18 +25,18 @@ public:
         return instance;
     }
 
-    
+
     //All enemies currently in the game
     std::vector<BaseEnemy*> gEnemiesList;
-    
-    //Player Refrence
-    PlayerCharacter* gPlayer;
+
+    //Player Reference
+    PlayerCharacter* gPlayer = nullptr;
 
     //Pathfinding Grid
-    Pathfinding* pathfindingGrid;
+    Pathfinding* pathfindingGrid = nullptr;
 
-    SceneManager* sceneManager;
-    
+    SceneManager* sceneManager = nullptr;
+
     int sizeEnemiesList = 0;
 
     //Enemies to kill for win

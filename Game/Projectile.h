@@ -14,7 +14,7 @@ public:
 
     void close() override;
 
-    CollisionObject* projectileCollision;
+    CollisionObject projectileCollision;
 
     Vector dir;
     Vector pos;

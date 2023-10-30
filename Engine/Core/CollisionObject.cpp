@@ -3,6 +3,15 @@
 #include "Object.h"
 #include "../Debuging/DebugPoint.h"
 
+CollisionObject::CollisionObject()
+{
+}
+
+void CollisionObject::init(Object* parent)
+{
+    mParent = parent;
+}
+
 bool CollisionObject::checkForIntersection(CollisionObject* otherObject)
 {
     updatePosition();
@@ -38,20 +47,20 @@ bool CollisionObject::checkForIntersection(const Vector& topLeftOther, const Vec
 
 void CollisionObject::createCollisionShape(float shapeHeight, float shapeWidth, Vector* shapeCenter)
 {
-    height = shapeHeight;
-    width = shapeWidth;
+    mHeight = shapeHeight;
+    mWidth = shapeWidth;
 
-    center = shapeCenter;
+    mCenter = shapeCenter;
 
-    pixelBorder.resize(static_cast<int>(shapeHeight * 2 + shapeWidth * 2 - 4));
+    mPixelBorder.resize(static_cast<int>(shapeHeight * 2 + shapeWidth * 2 - 4));
 }
 
 void CollisionObject::updatePosition()
 {
-    topLeft.x = center->x - width / 2;
-    topLeft.y = center->y - height / 2;
-    bottomRight.x = center->x + width / 2;
-    bottomRight.y = center->y + height / 2;
+    topLeft.x = mCenter->x - mWidth / 2;
+    topLeft.y = mCenter->y - mHeight / 2;
+    bottomRight.x = mCenter->x + mWidth / 2;
+    bottomRight.y = mCenter->y + mHeight / 2;
 }
 
 //Update pixels used for collision response
@@ -60,35 +69,42 @@ void CollisionObject::updatePixelBorder()
     int heightCounter = 0;
     int widthCounter = 0;
 
-    for (size_t pixel = 0; pixel < pixelBorder.size(); ++pixel)
+    for (size_t pixel = 0; pixel < mPixelBorder.size(); ++pixel)
     {
-        if (pixel < width - 1)
+        if (pixel < mWidth - 1)
         {
-            pixelBorder[pixel].position.y = center->y - height / 2;
-            pixelBorder[pixel].position.x = center->x - width / 2 + pixel;
+            mPixelBorder[pixel].position.y = mCenter->y - mHeight / 2;
+            mPixelBorder[pixel].position.x = mCenter->x - mWidth / 2 + pixel;
         }
-        else if (heightCounter < height - 1)
+        else if (heightCounter < mHeight - 1)
         {
-            pixelBorder[pixel].position.y = center->y - height / 2 + heightCounter;
-            pixelBorder[pixel].position.x = center->x - width / 2;
+            mPixelBorder[pixel].position.y = mCenter->y - mHeight / 2 + heightCounter;
+            mPixelBorder[pixel].position.x = mCenter->x - mWidth / 2;
             heightCounter++;
         }
-        else if (heightCounter < (height - 1) * 2)
+        else if (heightCounter < (mHeight - 1) * 2)
         {
-            pixelBorder[pixel].position.y = center->y - height / 2 + heightCounter - (height - 1);
-            pixelBorder[pixel].position.x = center->x + width / 2 - 1;
+            mPixelBorder[pixel].position.y = mCenter->y - mHeight / 2 + heightCounter - (mHeight - 1);
+            mPixelBorder[pixel].position.x = mCenter->x + mWidth / 2 - 1;
             heightCounter++;
         }
         else
         {
-            pixelBorder[pixel].position.y = center->y + height / 2 - 1;
-            pixelBorder[pixel].position.x = center->x - width / 2 + widthCounter;
+            mPixelBorder[pixel].position.y = mCenter->y + mHeight / 2 - 1;
+            mPixelBorder[pixel].position.x = mCenter->x - mWidth / 2 + widthCounter;
             widthCounter++;
         }
 
-        auto point = new DebugPoint(pixelBorder[pixel].position.x, pixelBorder[pixel].position.y);
+        auto point = new DebugPoint(mPixelBorder[pixel].position.x, mPixelBorder[pixel].position.y);
         point->persistent = false;
     }
+}
+
+void CollisionObject::close()
+{
+    mCenter = nullptr;
+    mPixelBorder.clear();
+    mParent = nullptr;
 }
 
 bool CollisionObject::calculateCollisionPoint(CollisionObject* otherObject, RaycastHit& hit)
@@ -98,13 +114,13 @@ bool CollisionObject::calculateCollisionPoint(CollisionObject* otherObject, Rayc
     updatePixelBorder();
     otherObject->updatePixelBorder();
 
-    for (size_t i = 0; i < pixelBorder.size(); ++i)
+    for (size_t i = 0; i < mPixelBorder.size(); ++i)
     {
-        for (size_t j = 0; j < otherObject->pixelBorder.size(); ++j)
+        for (size_t j = 0; j < otherObject->mPixelBorder.size(); ++j)
         {
-            if (Vector::compare(pixelBorder[i].position, otherObject->pixelBorder[j].position, 0.5f))
+            if (Vector::compare(mPixelBorder[i].position, otherObject->mPixelBorder[j].position, 0.5f))
             {
-                collisions.push_back(&pixelBorder[i].position);
+                collisions.push_back(&mPixelBorder[i].position);
                 break;
             }
         }
@@ -112,11 +128,11 @@ bool CollisionObject::calculateCollisionPoint(CollisionObject* otherObject, Rayc
 
     if (!collisions.empty() && collisions.size() >= 2)
     {
-        Vector relVelocity = parent->velocity - otherObject->parent->velocity;
+        Vector relVelocity = mParent->velocity - otherObject->mParent->velocity;
         Vector relVelocityNorm = relVelocity.normalize();
 
         Vector origin = Vector::middleBetweenVec(*collisions[0], *collisions[collisions.size() - 1]);
-        hit = Raycast(origin, relVelocityNorm, pixelBorder);
+        hit = Raycast(origin, relVelocityNorm, mPixelBorder);
 
         return true;
     }
@@ -127,8 +143,8 @@ bool CollisionObject::calculateCollisionPoint(CollisionObject* otherObject, Rayc
 void CollisionObject::collisionResponse(CollisionObject* otherObject)
 {
     //Calculate collision normal and relative velocity
-    Vector collNormal = (*center - *otherObject->center).normalize();
-    Vector relativeVel = parent->velocity - otherObject->parent->velocity;
+    Vector collNormal = (*mCenter - *otherObject->mCenter).normalize();
+    Vector relativeVel = mParent->velocity - otherObject->mParent->velocity;
 
     //Calculate change of momentum
     float restitution = 0.f;
@@ -142,6 +158,6 @@ void CollisionObject::collisionResponse(CollisionObject* otherObject)
     }
 
     //Apply impulse on velocities
-    parent->velocity += impulse * collNormal;
-    otherObject->parent->velocity -= impulse * collNormal;
+    mParent->velocity += impulse * collNormal;
+    otherObject->mParent->velocity -= impulse * collNormal;
 }

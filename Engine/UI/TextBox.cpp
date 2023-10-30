@@ -10,7 +10,7 @@ TextBox::~TextBox()
 {
     TTF_CloseFont(mFont);
     mFont = NULL;
-    mTexture.~Texture();
+    getTexture()->free();
 }
 
 void TextBox::init(const std::string& _text, const SDL_Color* _textColor, int _fontSize, int _zIndex)
@@ -27,7 +27,7 @@ bool TextBox::loadFromFile(const std::string& path)
     //Loading success flag
     bool success = true;
 
-    if(!mInitalized)
+    if (!mInitalized)
     {
         printf("Text box was not initialized. Abort!\n");
         return false;
@@ -52,10 +52,18 @@ bool TextBox::loadFromFile(const std::string& path)
     return success;
 }
 
+void TextBox::free()
+{
+    UIElement::free();
+
+    mFont = nullptr;
+    mInitalized = false;
+}
+
 bool TextBox::loadFromRenderedText()
 {
     //Get rid of preexisting texture
-    mTexture.free();
+    getTexture()->free();
 
     //Render text surface
     SDL_Surface* textSurface = TTF_RenderText_Solid(mFont, mText.c_str(), mTextColor);
@@ -66,7 +74,7 @@ bool TextBox::loadFromRenderedText()
     }
 
     //Create texture from surface pixels
-    if (!mTexture.loadTexture(textSurface))
+    if (!getTexture()->loadTexture(textSurface))
     {
         printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
         return false;
@@ -76,25 +84,8 @@ bool TextBox::loadFromRenderedText()
     return true;
 }
 
-void TextBox::setZIndex(const int _zIndex)
+void TextBox::setText(const std::string& text)
 {
-    mTexture.setZindex(_zIndex);
-}
-
-void TextBox::setPosition(const Vector& _pos)
-{
-    mTexture.staticX = _pos.x;
-    mTexture.staticY = _pos.y;
-}
-
-Texture* TextBox::getTexture()
-{
-    return &mTexture;
-}
-
-void TextBox::free()
-{
-    mTexture.free();
-    mFont = nullptr;
-    mInitalized = false;
+    mText = text;
+    loadFromRenderedText();
 }

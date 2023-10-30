@@ -12,9 +12,12 @@ void Object::update()
 
 void Object::close()
 {
-    queuedForDelete = true;
-    ENGINE->removeObject(this);
-    ENGINE->addToDeleteQueue(this);
+    if (!queuedForDelete)
+    {
+        queuedForDelete = true;
+        ENGINE->removeObject(this);
+        ENGINE->addToDeleteQueue(this);
+    }
 }
 
 Object::Object()

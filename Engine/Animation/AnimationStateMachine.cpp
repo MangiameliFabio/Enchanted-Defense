@@ -3,6 +3,8 @@
 
 #include <cstdio>
 
+#include "../EngineSingelton.h"
+
 void AnimationStateMachine::init()
 {
     Object::init();
@@ -29,6 +31,11 @@ void AnimationStateMachine::update()
     Object::update();
 
     currentState->updateState();
+}
+
+AnimationStateMachine::~AnimationStateMachine()
+{
+    ENGINE->removeObject(this);
 }
 
 void AnimationStateMachine::stateTransition(BaseState* state)

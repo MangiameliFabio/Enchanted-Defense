@@ -91,13 +91,13 @@ bool Texture::loadTexture(SDL_Surface* textureSurface)
 void Texture::render(double angle, SDL_Point* center)
 {
     SDL_Rect renderQuad;
-    if (dynamicX && dynamicY)
+    if (mDynamicPos)
     {
         //Rendering for dynamic textures like the player or enemies
 
         //Convert float pos into int for rendering
-        int tempX = static_cast<int>(*dynamicX);
-        int tempY = static_cast<int>(*dynamicY);
+        int tempX = static_cast<int>(mDynamicPos->x);
+        int tempY = static_cast<int>(mDynamicPos->y);
 
         //Center Texture in the middle of the Object
         tempX = tempX - getWidth() / 2;
@@ -111,7 +111,7 @@ void Texture::render(double angle, SDL_Point* center)
         //Rendering for static textures like the background
 
         //Set rendering space and render to screen
-        renderQuad = {static_cast<int>(staticX), static_cast<int>(staticY), mWidth, mHeight};
+        renderQuad = {static_cast<int>(mStaticPos.x), static_cast<int>(mStaticPos.y), mWidth, mHeight};
     }
 
     //Set clip rendering dimensions
@@ -132,25 +132,18 @@ void Texture::free()
     {
         SDL_DestroyTexture(mTexture);
         mTexture = nullptr;
-        dynamicX = nullptr;
-        dynamicY = nullptr;
+        mDynamicPos = nullptr;
         mWidth = 0;
         mHeight = 0;
-        staticX = 0;
-        staticY = 0;
+        mStaticPos = {0, 0};
         ENGINE->gRenderer->removeTexture(this);
     }
-}
-
-Texture::Texture()
-{
 }
 
 Texture::~Texture()
 {
     mTexture = nullptr;
-    dynamicX = nullptr;
-    dynamicY = nullptr;
+    mDynamicPos = nullptr;
     ENGINE->gRenderer->removeTexture(this);
 }
 
@@ -164,20 +157,14 @@ void Texture::setZindex(int _zIndex)
     zIndex = _zIndex;
 }
 
-void Texture::setDynamicX(float* x)
-{
-    this->dynamicX = x;
-}
-
-void Texture::setDynamicY(float* y)
-{
-    this->dynamicY = y;
-}
-
 void Texture::setDynamicPosition(Vector* v)
 {
-    this->dynamicX = &v->x;
-    this->dynamicY = &v->y;
+    mDynamicPos = v;
+}
+
+void Texture::setStaticPosition(const Vector& v)
+{
+    mStaticPos = v;
 }
 
 int Texture::getWidth() const

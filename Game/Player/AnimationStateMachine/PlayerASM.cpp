@@ -1,6 +1,7 @@
 ﻿#include "PlayerASM.h"
 #include "PlayerAnimationStates.h"
-#include "..\..\GameSingleton.h"
+#include "../../GameSingleton.h"
+#include "../PlayerCharacter.h"
 
 void PlayerASM::init()
 {
@@ -19,13 +20,23 @@ void PlayerASM::init()
 
 void PlayerASM::close()
 {
+    queuedForDelete = true;
+    
     AnimationStateMachine::close();
+
+    delete idleState;
+    delete leftState;
+    delete rightState;
+    delete upState;
+    delete downState;
 
     idleState = nullptr;
     leftState = nullptr;
     rightState = nullptr;
     upState = nullptr;
     downState = nullptr;
+
+    PLAYER->removeObserver(this);
 }
 
 void PlayerASM::onNotify(const Event event)

@@ -2,13 +2,11 @@
 
 #include "../BaseCharacter.h"
 #include "../../Engine/Core/Patterns/Observer.h"
-#include "../../Engine/Core/Vector.h"
-#include "../../Engine/Enums.h"
 #include "../../Engine/Core/Patterns/Subject.h"
-#include "AnimationStateMachine/PlayerASM.h"
 
-class InputManager;
-class Animator;
+#include "AnimationStateMachine/PlayerASM.h"
+#include "InputManager.h"
+
 struct Vector;
 
 class PlayerCharacter : public BaseCharacter, public Observer, public Subject
@@ -25,16 +23,16 @@ public:
     void addAimDirection(Vector& v);
     void disablePlayer();
 
-    PlayerCharacter(Vector& spawnPos);
+    PlayerCharacter();
     ~PlayerCharacter() override;
 
-    PlayerASM* stateMachine{};
-    InputManager* inputManager;
+    PlayerASM stateMachine;
+    InputManager inputManager;
 
     Vector aimDir;
 
-    float spriteHeight{};
-    float spriteWidth{};
+    float spriteHeight = 0.f;
+    float spriteWidth = 0.f;
 
     float movementSpeed = 150.f;
     float attackSpeed = 0.5f;

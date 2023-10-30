@@ -1,7 +1,8 @@
 ﻿#include "PlayerCharacter.h"
 
 #include "InputManager.h"
-#include "..\..\Engine\EngineSingelton.h"
+#include "../GameSingleton.h"
+#include "../../Engine/EngineSingelton.h"
 #include "../../Engine/Animation/Animator.h"
 #include "AnimationStateMachine/PlayerASM.h"
 #include "../../../Engine/Core/CollisionObject.h"
@@ -14,17 +15,14 @@ void PlayerCharacter::init()
     PLAYER = this;
     ENGINE->addObserver(this);
 
-    stateMachine = new PlayerASM;
-    stateMachine->init();
+    inputManager.init();
+    stateMachine.init();
 
-    spriteHeight = static_cast<float>(stateMachine->currentState->animation->spriteSheet->getHeight());
-    spriteWidth = static_cast<float>(stateMachine->currentState->animation->spriteSheet->getWidth());
-
-    collision = new CollisionObject(this);
-    collision->createCollisionShape(spriteHeight, spriteWidth - 10, &position);
-    collision->updatePixelBorder();
-
-    inputManager = new InputManager;
+    spriteHeight = static_cast<float>(stateMachine.currentState->animation->spriteSheet->getHeight());
+    spriteWidth = static_cast<float>(stateMachine.currentState->animation->spriteSheet->getWidth());
+    
+    collision.createCollisionShape(spriteHeight, spriteWidth - 10, &position);
+    collision.updatePixelBorder();
 }
 
 void PlayerCharacter::update()
@@ -41,7 +39,11 @@ void PlayerCharacter::close()
 {
     BaseCharacter::close();
 
-    stateMachine->close();
+    stateMachine.close();
+    inputManager.close();
+
+    GAME->gPlayer = nullptr;
+    ENGINE->removeObserver(this);
 }
 
 void PlayerCharacter::move()
@@ -73,22 +75,19 @@ void PlayerCharacter::spawnProjectile(Vector& pos, Vector& dir)
     new Projectile(pos, dir);
 }
 
-PlayerCharacter::PlayerCharacter(Vector& spawnPos)
+PlayerCharacter::PlayerCharacter(): BaseCharacter()
 {
-    position = spawnPos;
-    name = typeid(this).name();
 }
 
 PlayerCharacter::~PlayerCharacter()
 {
-    inputManager->close();
     printf("Player has been deleted \n");
 }
 
 void PlayerCharacter::onNotify(const Event event)
 {
     if (event == HANDLE_INPUT)
-        inputManager->handleInput();
+        inputManager.handleInput();
 
     if (event == ALL_INPUTS_HANDLED)
     {

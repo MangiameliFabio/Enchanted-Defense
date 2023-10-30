@@ -7,8 +7,10 @@
 #include "Core/Patterns/Subject.h"
 #include "Core/Renderer.h"
 #include "Core/GameClock.h"
-#include "..\Game\GameManager.h"
+#include "../Game/GameManager.h"
 #include "Core/MeasurePerformance.h"
+#include "Debuging/Log.h"
+#include "UI/Button.h"
 
 EngineSingleton* EngineSingleton::instance = nullptr;
 
@@ -24,15 +26,16 @@ int main(int argc, char* args[])
     {
         printf("failed to initialize renderer \n");
     }
-    
-    const auto worldManager = new GameManager;
-    worldManager->init();
+
+    const auto gameManager = new GameManager;
+    gameManager->init();
     const auto gameClock = new GameClock;
     gameClock->init();
-    
+
     //Event handler
     SDL_Event e;
     if (MEASURE_PERFORMANCE) { meassureMain->end("Time for initialization: "); }
+
 
     while (!ENGINE->gQuit)
     {
@@ -43,7 +46,7 @@ int main(int argc, char* args[])
 
         //Clear everything in delete queue
         ENGINE->gQueueForDelete.clear();
-        ENGINE->sizeQueueForDelete = 0;
+        ENGINE->gSizeQueueForDelete = 0;
 
         //Handle events on queue
         while (SDL_PollEvent(&e) != 0)
@@ -51,7 +54,14 @@ int main(int argc, char* args[])
             //User requests quit
             if (e.type == SDL_QUIT)
             {
+                Log::print("Quit in main");
                 ENGINE->gQuit = true;
+            }
+
+            //Handle button events
+            for (int i = 0; i < ENGINE->gTotalButtons; ++i)
+            {
+                ENGINE->gButtons[i]->handleEvent(&e);
             }
         }
 
@@ -62,7 +72,7 @@ int main(int argc, char* args[])
         //Update alle Objects
         if (MEASURE_PERFORMANCE) { meassureMain->start(); }
 
-        for (int object = 0; object < ENGINE->sizeObjectList; ++object)
+        for (int object = 0; object < ENGINE->gTotalObjects; ++object)
         {
             if (MEASURE_PERFORMANCE)
             {
@@ -81,9 +91,12 @@ int main(int argc, char* args[])
 
         //Delete Objects waiting in queue
         if (MEASURE_PERFORMANCE) { meassureMain->start(); }
-        for (int object = 0; object < ENGINE->sizeQueueForDelete; ++object)
+        for (int object = 0; object < ENGINE->gSizeQueueForDelete; ++object)
         {
-            delete ENGINE->gQueueForDelete[object];
+            if (ENGINE->gQueueForDelete[object])
+            {
+                delete ENGINE->gQueueForDelete[object];
+            }
         }
         if (MEASURE_PERFORMANCE) { meassureMain->end("handle queue for delete: "); }
 

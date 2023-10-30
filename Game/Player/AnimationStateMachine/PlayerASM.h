@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include "PlayerAnimationStates.h"
 #include "../../../Engine/Enums.h"
 #include "../../../Engine/Animation/AnimationStateMachine.h"
@@ -14,12 +15,13 @@ class BaseState;
 class PlayerASM : public AnimationStateMachine, public Observer
 {
 public:
-    PlayerASM(){}
+    PlayerASM() = default;
+    ~PlayerASM() override = default;
 
     void init() override;
     void close() override;
     void onNotify(const Event event) override;
-    
+
     PlayerIdle* idleState = nullptr;
     PlayerLeft* leftState = nullptr;
     PlayerRight* rightState = nullptr;

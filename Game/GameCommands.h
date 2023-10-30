@@ -1,7 +1,6 @@
 ﻿#pragma once
-#pragma once
+#include "../Engine/EngineSingelton.h"
 #include "../Engine/Core/Patterns/Command.h"
-#include "..\Engine\EngineSingelton.h"
 
 class CloseGameCommand : public Command
 {

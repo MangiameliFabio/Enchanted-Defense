@@ -6,9 +6,11 @@
 #include <SDL_render.h>
 #include <SDL_ttf.h>
 #include <string>
+
+#include "UIElement.h"
 #include "../Core/Texture.h"
 
-class TextBox
+class TextBox : public UIElement
 {
 public:
     //Initializes variables
@@ -18,24 +20,16 @@ public:
     ~TextBox();
 
     void init(const std::string& _text, const SDL_Color* _textColor, int _fontSize = 24, int _zIndex = 500.f);
+    
+    void setText(const std::string& text);
 
     //Loads image at specified path
     bool loadFromFile(const std::string& _path);
-
-    //Creates image from font string
-    bool loadFromRenderedText();
-
-    //Set set index of texture
-    void setZIndex(int _zIndex);
-    void setPosition(const Vector& _pos);
     
-    Texture* getTexture();
-    void free();   
+    void free() override;
 
 
 private:
-    //The actual hardware texture
-    Texture mTexture;
     SDL_Color mTextColor;
     std::string mText;
 
@@ -43,6 +37,8 @@ private:
 
     //Image dimensions
     int mFontSize;
-
     bool mInitalized = false;
+
+    //Creates image from font string
+    bool loadFromRenderedText();
 };

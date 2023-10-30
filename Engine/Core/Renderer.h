@@ -10,7 +10,6 @@ class Renderer
 {
     //Textures to render
     std::vector<Texture*> textureContainer;
-    std::vector<Texture*> uiElementsContainer;
     std::vector<DebugShape*> debugContainer;
 
     int numTextures = 0;

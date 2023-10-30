@@ -1,24 +1,26 @@
 ﻿#pragma once
-#include "PlayerCommands.h"
-#include "../GameCommands.h"
+#include "../../Engine/Core/Patterns/Observer.h"
+
 class Command;
 
 class InputManager : public Observer
 {
-    Command* buttonW = new MoveUpCommand;
-    Command* buttonA = new MoveLeftCommand;
-    Command* buttonS = new MoveDownCommand;
-    Command* buttonD = new MoveRightCommand;
-    Command* buttonUp = new AimUpCommand;
-    Command* buttonLeft = new AimLeftCommand;
-    Command* buttonDown = new AimDownCommand;
-    Command* buttonRight = new AimRightCommand;
-    Command* buttonESC = new CloseGameCommand;
-    
+    Command* buttonW = nullptr;
+    Command* buttonA = nullptr;
+    Command* buttonS = nullptr;
+    Command* buttonD = nullptr;
+    Command* buttonUp = nullptr;
+    Command* buttonLeft = nullptr;
+    Command* buttonDown = nullptr;
+    Command* buttonRight = nullptr;
+    Command* buttonESC = nullptr;
+
 public:
     InputManager();
-    ~InputManager() override = default;
-    
+    ~InputManager() override;
+
+    void init();
+
     Command* handleInput();
     void close();
     void onNotify(const Event event) override;

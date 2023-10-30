@@ -10,19 +10,19 @@ struct AStarNode;
 
 class CollisionObject
 {
-    Vector* center = nullptr;
-    std::vector<Collider> pixelBorder;
-    Object* parent;
+    std::vector<Collider> mPixelBorder;
 
-    float width = 0;
-    float height = 0;
+    Object* mParent = nullptr;
+    Vector* mCenter = nullptr;
+
+    float mWidth = 0;
+    float mHeight = 0;
 
 public:
-    CollisionObject(Object* parent) : parent(parent)
-    {
-    }
-
+    CollisionObject();
     ~CollisionObject() = default;
+
+    void init(Object* parent);
 
     bool checkForIntersection(CollisionObject* otherObject);
     bool checkForIntersection(const Vector& topLeft, const Vector& bottomRight);
@@ -34,6 +34,7 @@ public:
     void updatePosition();
     void updatePixelBorder();
 
+    void close();
 
     Vector topLeft;
     Vector bottomRight;

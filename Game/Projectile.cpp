@@ -20,7 +20,7 @@ void Projectile::update()
     {
         if (Vector::dist(enemy->position, pos) <= 200.f)
         {
-            if (projectileCollision->checkForIntersection(enemy->collision))
+            if (projectileCollision.checkForIntersection(&enemy->collision))
             {
                 if (!enemy->queuedForDelete)
                 {
@@ -41,9 +41,8 @@ Projectile::Projectile(const Vector& pos_, const Vector& dir_)
 
     texture.loadTexture("assets/textures/projectile.png");
     texture.setDynamicPosition(&pos);
-
-    projectileCollision = new CollisionObject(this);
-    projectileCollision->createCollisionShape(texture.getHeight(), texture.getWidth(), &pos);
+    
+    projectileCollision.createCollisionShape(texture.getHeight(), texture.getWidth(), &pos);
 
     name = typeid(this).name();
 }
@@ -51,7 +50,4 @@ Projectile::Projectile(const Vector& pos_, const Vector& dir_)
 void Projectile::close()
 {
     Object::close();
-
-    delete projectileCollision;
-    projectileCollision = nullptr;
 }

@@ -1,9 +1,6 @@
 ﻿#pragma once
-#include "..\GameSingleton.h"
+#include "../GameSingleton.h"
 #include "../../Engine/Core/Patterns/Command.h"
-
-class PlayerASM;
-class AnimationSubject;
 
 class MoveLeftCommand : public Command
 {
@@ -12,9 +9,9 @@ public:
     {
         Vector dir = Vector(-1, 0);
         
-        PLAYER->addMoveDirection(dir);
+        GameSingleton::getInstance()->gPlayer->addMoveDirection(dir);
         PLAYER->isMoveing = true;
-        PLAYER->stateMachine->stateEnum = LEFT;
+        PLAYER->stateMachine.stateEnum = LEFT;
     }
 };
 
@@ -27,7 +24,7 @@ public:
 
         PLAYER->addMoveDirection(dir);
         PLAYER->isMoveing = true;
-        PLAYER->stateMachine->stateEnum = RIGHT;
+        PLAYER->stateMachine.stateEnum = RIGHT;
     }
 };
 
@@ -40,7 +37,7 @@ public:
 
         PLAYER->addMoveDirection(dir);
         PLAYER->isMoveing = true;
-        PLAYER->stateMachine->stateEnum = UP;
+        PLAYER->stateMachine.stateEnum = UP;
     }
 };
 
@@ -53,7 +50,7 @@ public:
 
         PLAYER->addMoveDirection(dir);
         PLAYER->isMoveing = true;
-        PLAYER->stateMachine->stateEnum = DOWN;
+        PLAYER->stateMachine.stateEnum = DOWN;
     }
 };
 

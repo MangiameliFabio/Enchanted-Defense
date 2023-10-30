@@ -21,34 +21,29 @@ public:
     int getZindex() const;
     void setZindex(int _zIndex);
 
-    //Create a reference to Object position
-    void setDynamicX(float* x);
-    void setDynamicY(float* y);
-
     void setDynamicPosition(Vector* v);
+    void setStaticPosition(const Vector& v);
 
-    Texture();
     ~Texture();
     SDL_RendererFlip flip = SDL_FLIP_NONE;
-
-    float staticX = 0;
-    float staticY = 0;
 
     bool markForRender = true;
 
     SDL_Rect* clip = nullptr;
 
 private:
-    SDL_Texture* mTexture;
+    SDL_Texture* mTexture = nullptr;
 
     std::string path;
 
     int mWidth = 0;
     int mHeight = 0;
 
-    //Dynamic positions for player and enemies
-    float* dynamicX = nullptr;
-    float* dynamicY = nullptr;
+    //Dynamic positions for player and enemies. Safe the reference of a position instead of an actual value
+    Vector* mDynamicPos = nullptr;
+
+    //Static position if the texture won't move and therefore doesn't need to be updated
+    Vector mStaticPos = {0,0};
 
     int zIndex = 0;
 };

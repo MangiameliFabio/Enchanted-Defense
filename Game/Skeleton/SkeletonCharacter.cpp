@@ -1,11 +1,12 @@
 ﻿#include "SkeletonCharacter.h"
 
-#include "..\GameSingleton.h"
-#include "..\..\Engine\EngineSingelton.h"
+#include "../GameSingleton.h"
+#include "../../Engine/EngineSingelton.h"
 #include "../../Engine/Core/MeasurePerformance.h"
 #include "../../Engine/Core/CollisionObject.h"
 #include "../../Engine/Debuging/DebugRectangle.h"
 #include "../Pathfinding.h"
+#include "../Player/PlayerCharacter.h"
 
 SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
 {
@@ -21,8 +22,7 @@ SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
     animation.enable();
     animation.setFrameRate(8.f);
 
-    collision = new CollisionObject(this);
-    collision->createCollisionShape(spriteSheet.getHeight(), spriteSheet.getWidth(), &position);
+    collision.createCollisionShape(spriteSheet.getHeight(), spriteSheet.getWidth(), &position);
 
     name = typeid(this).name();
 
@@ -93,7 +93,7 @@ bool SkeletonCharacter::checkForCollision()
         {
             if (Vector::dist(GAME->gEnemiesList[enemy]->position, position) <= 100.f)
             {
-                if (collision->checkForIntersection(GAME->gEnemiesList[enemy]->collision))
+                if (collision.checkForIntersection(&GAME->gEnemiesList[enemy]->collision))
                 {
                     // if (collision->calculateCollisionPoint(SINGLETON->gEnemiesList[enemy]->collision, hit))
                     // {
@@ -101,13 +101,13 @@ bool SkeletonCharacter::checkForCollision()
                     //     return true;
                     // }
                     position = lastValidPos;
-                    collision->collisionResponse(GAME->gEnemiesList[enemy]->collision);
+                    collision.collisionResponse(&GAME->gEnemiesList[enemy]->collision);
                     return true;
                 }
             }
             if (Vector::dist(PLAYER->position, position) <= 100.f)
             {
-                if (collision->checkForIntersection(PLAYER->collision))
+                if (collision.checkForIntersection(&PLAYER->collision))
                 {
                     // if (collision->calculateCollisionPoint(SINGLETON->gEnemiesList[enemy]->collision, hit))
                     // {
