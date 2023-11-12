@@ -17,5 +17,5 @@ class EnemySpawnerFor : public EnemySpawner
 {
 public:
     ~EnemySpawnerFor() override = default;
-    std::shared_ptr<BaseEnemy> spawnEnemy(Vector& spawnPoint) override { return std::make_shared<BaseEnemy>(T(spawnPoint)); }
+    std::shared_ptr<BaseEnemy> spawnEnemy(Vector& spawnPoint) override { return std::make_shared<T>(spawnPoint); }
 };

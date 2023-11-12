@@ -17,7 +17,6 @@ EngineSingleton* EngineSingleton::instance = nullptr;
 
 int main(int argc, char* args[])
 {
-    
 #if MEASURE_PERFORMANCE
     //Create timer for performance measurement;
     const auto measureMain = std::make_shared<MeasurePerformance>();
@@ -85,7 +84,7 @@ int main(int argc, char* args[])
 
         for (int object = 0; object < ENGINE->gTotalObjects; ++object)
         {
-            if(object)
+            if (ENGINE->gObjectList[object])
             {
 #if MEASURE_PERFORMANCE
                 measureObjects->start();
@@ -97,38 +96,37 @@ int main(int argc, char* args[])
 #if MEASURE_PERFORMANCE
                 measureObjects->end("  " + std::to_string(object) + ". " + ENGINE->gObjectList[object]->name + ":");
 #endif
-#if MEASURE_PERFORMANCE
-                measureMain->end("All objects updated: ");
-#endif
             }
-
-            //Delete Objects waiting in queue
+#if MEASURE_PERFORMANCE
+            measureMain->end("All objects updated: ");
+#endif
+        }
+        //Delete Objects waiting in queue
 #if MEASURE_PERFORMANCE
             measureMain->start();
 #endif
-            for (int objectIndex = 0; objectIndex < ENGINE->gSizeQueueForDelete; ++objectIndex)
+        for (int objectIndex = 0; objectIndex < ENGINE->gSizeQueueForDelete; ++objectIndex)
+        {
+            if (ENGINE->gQueueForDelete[objectIndex])
             {
-                if (ENGINE->gQueueForDelete[objectIndex])
-                {
-                    delete ENGINE->gQueueForDelete[objectIndex];
-                }
+                delete ENGINE->gQueueForDelete[objectIndex];
             }
+        }
 #if MEASURE_PERFORMANCE
             measureMain->end("handle queue for delete: ");
 #endif
 
-            //Render Scene
+        //Render Scene
 #if MEASURE_PERFORMANCE
             measureMain->start();
 #endif
-            ENGINE->gRenderer->renderUpdate();
+        ENGINE->gRenderer->renderUpdate();
 #if MEASURE_PERFORMANCE
             measureMain->end("render loop finished: ");
 #endif
 
-            //End of Tick
-            gameClock->endTick();
-        }
+        //End of Tick
+        gameClock->endTick();
     }
 
     //Shutdown Systems

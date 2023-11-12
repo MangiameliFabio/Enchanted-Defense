@@ -77,17 +77,6 @@ void GameScene::endScene()
     }
 }
 
-void GameScene::removeEnemyFromList(const std::shared_ptr<BaseEnemy>& enemy)
-{
-    //Find observer in vector
-    const auto position = std::find(enemyList.begin(), enemyList.end(), enemy);
-
-    //Remove Observer
-    if (position != enemyList.end())
-        enemyList.erase(position);
-    numEnemiesInLevel--;
-}
-
 Vector& GameScene::chooseRandomSpawn()
 {
     std::random_device rd; // Get a random seed from the operating system
@@ -111,6 +100,17 @@ void GameScene::addEnemyToList(const std::shared_ptr<BaseEnemy>& enemy)
 {
     enemyList.push_back(enemy);
     numEnemiesInLevel++;
+}
+
+void GameScene::removeEnemyFromList(const std::shared_ptr<BaseEnemy>& enemy)
+{
+    //Find enemy in vector
+    const auto position = std::find(enemyList.begin(), enemyList.end(), enemy);
+
+    //Remove enemy
+    if (position != enemyList.end())
+        enemyList.erase(position);
+    numEnemiesInLevel--;
 }
 
 void GameScene::updateScene()
