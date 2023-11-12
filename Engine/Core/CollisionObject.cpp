@@ -17,12 +17,6 @@ bool CollisionObject::checkForIntersection(CollisionObject* otherObject)
     updatePosition();
     otherObject->updatePosition();
 
-    // auto rect = new DebugRectangle(10, 10, topLeft.x, topLeft.y, Color(255, 0, 0, 255));
-    // rect->persistent = false;
-    //
-    // auto rect2 = new DebugRectangle(10, 10, bottomRight.x, bottomRight.y, Color(255, 0, 0, 255));
-    // rect2->persistent = false;
-
     if (otherObject->topLeft.x >= bottomRight.x //Checks the right
         || otherObject->bottomRight.x <= topLeft.x //Checks the left
         || otherObject->topLeft.y >= bottomRight.y //Checks the bottom
@@ -94,9 +88,6 @@ void CollisionObject::updatePixelBorder()
             mPixelBorder[pixel].position.x = mCenter->x - mWidth / 2 + widthCounter;
             widthCounter++;
         }
-
-        auto point = new DebugPoint(mPixelBorder[pixel].position.x, mPixelBorder[pixel].position.y);
-        point->persistent = false;
     }
 }
 

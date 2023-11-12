@@ -12,6 +12,7 @@ public:
     virtual void init();
     virtual void update();
     virtual void close();
+    virtual void markForDelete();
 
     Object();
     virtual ~Object();

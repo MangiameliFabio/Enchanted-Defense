@@ -167,6 +167,4 @@ void Renderer::close()
     IMG_Quit();
     SDL_Quit();
     TTF_Quit();
-
-    delete this;
 }

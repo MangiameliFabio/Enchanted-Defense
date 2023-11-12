@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <chrono>
+#include <memory>
 
 class GameClock
 {
@@ -9,13 +10,13 @@ class GameClock
     std::chrono::time_point<std::chrono::steady_clock> tickBeginning;
     std::chrono::time_point<std::chrono::steady_clock> tickEnd;
 
-    const size_t numFrameTimes = 60;
-    size_t frameTimeIndex = 0;
+    static constexpr int numFrameTimes = 60;
+    int frameTimeIndex = 0;
 
 
 public:
     void init();
-    void close();
+    void close() const;
 
     void startTick();
     void endTick();

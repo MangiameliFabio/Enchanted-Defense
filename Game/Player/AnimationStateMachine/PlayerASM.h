@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <memory>
+
 #include "PlayerAnimationStates.h"
 #include "../../../Engine/Enums.h"
 #include "../../../Engine/Animation/AnimationStateMachine.h"
@@ -22,11 +24,11 @@ public:
     void close() override;
     void onNotify(const Event event) override;
 
-    PlayerIdle* idleState = nullptr;
-    PlayerLeft* leftState = nullptr;
-    PlayerRight* rightState = nullptr;
-    PlayerUp* upState = nullptr;
-    PlayerDown* downState = nullptr;
+    std::shared_ptr<PlayerIdle> idleState = nullptr;
+    std::shared_ptr<PlayerLeft> leftState = nullptr;
+    std::shared_ptr<PlayerRight> rightState = nullptr;
+    std::shared_ptr<PlayerUp> upState = nullptr;
+    std::shared_ptr<PlayerDown> downState = nullptr;
 
     playerAnim stateEnum = IDLE;
 };

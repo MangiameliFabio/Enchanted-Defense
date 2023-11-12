@@ -977,7 +977,6 @@
     </ClCompile>
     <ClCompile Include="Game\Player\PlayerCharacter.cpp" />
     <ClCompile Include="Game\Projectile.cpp" />
-    <ClCompile Include="Game\ProjectileSpawner.cpp" />
     <ClCompile Include="Game\Scenes\GameScene.cpp" />
     <ClCompile Include="Game\Scenes\MainMenu.cpp" />
     <ClCompile Include="Game\Skeleton\SkeletonCharacter.cpp" />
@@ -1094,7 +1093,6 @@
     <ClInclude Include="Game\Player\PlayerCharacter.h" />
     <ClInclude Include="Game\Player\PlayerCommands.h" />
     <ClInclude Include="Game\Projectile.h" />
-    <ClInclude Include="Game\ProjectileSpawner.h" />
     <ClInclude Include="Game\GameSingleton.h" />
     <ClInclude Include="Game\Scenes\GameScene.h" />
     <ClInclude Include="Game\Scenes\MainMenu.h" />

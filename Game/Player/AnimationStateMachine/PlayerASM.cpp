@@ -1,15 +1,18 @@
 ﻿#include "PlayerASM.h"
+
+#include <memory>
+
 #include "PlayerAnimationStates.h"
 #include "../../GameSingleton.h"
 #include "../PlayerCharacter.h"
 
 void PlayerASM::init()
 {
-    idleState = new PlayerIdle;
-    leftState = new PlayerLeft;
-    rightState = new PlayerRight;
-    downState = new PlayerDown;
-    upState = new PlayerUp;
+    idleState = std::make_shared<PlayerIdle>();
+    leftState = std::make_shared<PlayerLeft>();
+    rightState = std::make_shared<PlayerRight>();
+    downState = std::make_shared<PlayerDown>();
+    upState = std::make_shared<PlayerUp>();
 
     currentState = idleState;
 
@@ -21,20 +24,8 @@ void PlayerASM::init()
 void PlayerASM::close()
 {
     queuedForDelete = true;
-    
+
     AnimationStateMachine::close();
-
-    delete idleState;
-    delete leftState;
-    delete rightState;
-    delete upState;
-    delete downState;
-
-    idleState = nullptr;
-    leftState = nullptr;
-    rightState = nullptr;
-    upState = nullptr;
-    downState = nullptr;
 
     PLAYER->removeObserver(this);
 }

@@ -9,16 +9,13 @@ void GameClock::init()
     pFrameTimes = new std::chrono::duration<double> [numFrameTimes];
 
     //fill pFrame Times with 0.0167
-    for (size_t t = 0; t < numFrameTimes; ++t)
+    for (int t = 0; t < numFrameTimes; ++t)
         pFrameTimes[t] = std::chrono::duration<double>{1.0 / 60.0};
 }
 
-void GameClock::close()
+void GameClock::close() const
 {
-    //Clear pointer
-    pFrameTimes = nullptr;
-
-    delete this;
+    delete[] pFrameTimes;
 }
 
 void GameClock::startTick()
@@ -43,7 +40,7 @@ void GameClock::endTick()
     elapsedTime = std::chrono::duration<double>{0.0};
 
     //Calc Average
-    for (size_t t = 0; t < numFrameTimes; ++t)
+    for (int t = 0; t < numFrameTimes; ++t)
         elapsedTime += pFrameTimes[t];
     elapsedTime /= static_cast<double>(numFrameTimes) * 1000;
 

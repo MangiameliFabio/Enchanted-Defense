@@ -32,7 +32,7 @@ void MainMenu::startScene()
     startButton.init(&textColor);
     startButton.setButtonText("START", 48);
     startButton.setPosition(Vector((ENGINE->SCREEN_WIDTH - startButton.getWidth()) / 2, 300));
-    startButton.setCallback([]() { GAME->sceneManager->changeScene("GameScene"); });
+    startButton.setCallback([] { GAME->sceneManager->changeScene("GameScene"); });
 }
 
 void MainMenu::updateScene()

@@ -1,5 +1,6 @@
 ﻿#include <chrono>
 #include <cstdio>
+#include <memory>
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -16,10 +17,14 @@ EngineSingleton* EngineSingleton::instance = nullptr;
 
 int main(int argc, char* args[])
 {
+    
+#if MEASURE_PERFORMANCE
     //Create timer for performance measurement;
-    const auto meassureMain = new MeasurePerformance;
-    const auto measureObjects = new MeasurePerformance;
-    if (MEASURE_PERFORMANCE) { meassureMain->start(); }
+    const auto measureMain = std::make_shared<MeasurePerformance>();
+    const auto measureObjects = std::make_shared<MeasurePerformance>();
+    measureMain->start();
+#endif
+
 
     //Initialize
     if (!ENGINE->gRenderer->init())
@@ -27,21 +32,24 @@ int main(int argc, char* args[])
         printf("failed to initialize renderer \n");
     }
 
-    const auto gameManager = new GameManager;
+    const auto gameManager = std::make_shared<GameManager>();
     gameManager->init();
-    const auto gameClock = new GameClock;
+    const auto gameClock = std::make_shared<GameClock>();
     gameClock->init();
 
     //Event handler
     SDL_Event e;
-    if (MEASURE_PERFORMANCE) { meassureMain->end("Time for initialization: "); }
-
+#if MEASURE_PERFORMANCE
+    measureMain->end("Time for initialization: ");
+#endif
 
     while (!ENGINE->gQuit)
     {
-        if (MEASURE_PERFORMANCE) { printf("--------------------------------------------------- \n"); }
+#if MEASURE_PERFORMANCE
+        printf("--------------------------------------------------- \n"); 
+        measureMain->start();
+#endif
 
-        if (MEASURE_PERFORMANCE) { meassureMain->start(); }
         gameClock->startTick();
 
         //Clear everything in delete queue
@@ -64,49 +72,63 @@ int main(int argc, char* args[])
                 ENGINE->gButtons[i]->handleEvent(&e);
             }
         }
-
-        if (MEASURE_PERFORMANCE) { meassureMain->end("Start main loop and handle input: "); }
+#if MEASURE_PERFORMANCE
+        measureMain->end("Start main loop and handle input: ");
+#endif
 
         ENGINE->notify(HANDLE_INPUT);
 
         //Update alle Objects
-        if (MEASURE_PERFORMANCE) { meassureMain->start(); }
+#if MEASURE_PERFORMANCE
+        measureMain->start();
+#endif
 
         for (int object = 0; object < ENGINE->gTotalObjects; ++object)
         {
-            if (MEASURE_PERFORMANCE)
+            if(object)
             {
+#if MEASURE_PERFORMANCE
                 measureObjects->start();
-            }
-            if (ENGINE->gObjectList[object]->shouldUpdate)
-            {
-                ENGINE->gObjectList[object]->update();
-            }
-            if (MEASURE_PERFORMANCE)
-            {
+#endif
+                if (ENGINE->gObjectList[object]->shouldUpdate)
+                {
+                    ENGINE->gObjectList[object]->update();
+                }
+#if MEASURE_PERFORMANCE
                 measureObjects->end("  " + std::to_string(object) + ". " + ENGINE->gObjectList[object]->name + ":");
+#endif
+#if MEASURE_PERFORMANCE
+                measureMain->end("All objects updated: ");
+#endif
             }
-        }
-        if (MEASURE_PERFORMANCE) { meassureMain->end("All objects updated: "); }
 
-        //Delete Objects waiting in queue
-        if (MEASURE_PERFORMANCE) { meassureMain->start(); }
-        for (int object = 0; object < ENGINE->gSizeQueueForDelete; ++object)
-        {
-            if (ENGINE->gQueueForDelete[object])
+            //Delete Objects waiting in queue
+#if MEASURE_PERFORMANCE
+            measureMain->start();
+#endif
+            for (int objectIndex = 0; objectIndex < ENGINE->gSizeQueueForDelete; ++objectIndex)
             {
-                delete ENGINE->gQueueForDelete[object];
+                if (ENGINE->gQueueForDelete[objectIndex])
+                {
+                    delete ENGINE->gQueueForDelete[objectIndex];
+                }
             }
+#if MEASURE_PERFORMANCE
+            measureMain->end("handle queue for delete: ");
+#endif
+
+            //Render Scene
+#if MEASURE_PERFORMANCE
+            measureMain->start();
+#endif
+            ENGINE->gRenderer->renderUpdate();
+#if MEASURE_PERFORMANCE
+            measureMain->end("render loop finished: ");
+#endif
+
+            //End of Tick
+            gameClock->endTick();
         }
-        if (MEASURE_PERFORMANCE) { meassureMain->end("handle queue for delete: "); }
-
-        //Render Scene
-        if (MEASURE_PERFORMANCE) { meassureMain->start(); }
-        ENGINE->gRenderer->renderUpdate();
-        if (MEASURE_PERFORMANCE) { meassureMain->end("render loop finished: "); }
-
-        //End of Tick
-        gameClock->endTick();
     }
 
     //Shutdown Systems

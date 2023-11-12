@@ -49,5 +49,5 @@ Projectile::Projectile(const Vector& pos_, const Vector& dir_)
 
 void Projectile::close()
 {
-    Object::close();
+    Object::markForDelete();
 }

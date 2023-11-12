@@ -2,8 +2,10 @@
 
 #define ENGINE EngineSingleton::getInstance()
 #define DELTA_TIME EngineSingleton::getInstance()->gDeltaTime
-#define MEASURE_PERFORMANCE EngineSingleton::getInstance()->measurePerformance
+#define MEASURE_PERFORMANCE false
 #define DEBUG EngineSingleton::getInstance()->debug
+
+#include <memory>
 #include "Core/Renderer.h"
 #include "Core/Patterns/Subject.h"
 
@@ -18,7 +20,7 @@ class EngineSingleton : public Subject
 
     EngineSingleton()
     {
-        gRenderer = new Renderer;
+        gRenderer = std::make_shared<Renderer>();
     }
 
 public:
@@ -33,7 +35,7 @@ public:
     //The window renderer
     SDL_Renderer* gSDL_Renderer = nullptr;
     
-    Renderer* gRenderer = nullptr;
+    std::shared_ptr<Renderer> gRenderer = nullptr;
 
     //Update functions
     std::vector<Object*> gObjectList;
@@ -46,8 +48,8 @@ public:
     float gDeltaTime = 1.f / 60.f;
 
     //Screen dimension constants
-    const int SCREEN_WIDTH = 750;
-    const int SCREEN_HEIGHT = 750;
+    static constexpr int SCREEN_WIDTH = 750;
+    static constexpr int SCREEN_HEIGHT = 750;
 
     //Container sizes
     int gTotalObjects = 0;
@@ -56,9 +58,7 @@ public:
 
     //Quit Game
     bool gQuit = false;
-
-    //True for performance stats
-    bool measurePerformance = false;
+    
     //True to activate rendering of debugShapes
     bool debug = false;
 

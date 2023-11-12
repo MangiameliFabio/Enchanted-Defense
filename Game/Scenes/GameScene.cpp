@@ -22,7 +22,7 @@ GameScene::~GameScene()
 
 void GameScene::onNotify(const Event event)
 {
-    if(event == PLAYER_DIED)
+    if (event == PLAYER_DIED)
     {
         GAME->sceneManager->changeScene("MainMenu");
     }
@@ -33,7 +33,9 @@ void GameScene::startScene()
     BaseScene::startScene();
 
     background.loadTexture("assets/textures/environment/background.png");
-    background.setStaticPosition({(ENGINE->SCREEN_WIDTH - background.getWidth()) / 2,(ENGINE->SCREEN_HEIGHT - background.getHeight()) / 2});
+    background.setStaticPosition({
+        (ENGINE->SCREEN_WIDTH - background.getWidth()) / 2, (ENGINE->SCREEN_HEIGHT - background.getHeight()) / 2
+    });
 
     GAME->pathfindingGrid = new Pathfinding(65, 65, 50, 50);
     GAME->pathfindingGrid->init();
@@ -75,6 +77,17 @@ void GameScene::endScene()
     }
 }
 
+void GameScene::removeEnemyFromList(const std::shared_ptr<BaseEnemy>& enemy)
+{
+    //Find observer in vector
+    const auto position = std::find(enemyList.begin(), enemyList.end(), enemy);
+
+    //Remove Observer
+    if (position != enemyList.end())
+        enemyList.erase(position);
+    numEnemiesInLevel--;
+}
+
 Vector& GameScene::chooseRandomSpawn()
 {
     std::random_device rd; // Get a random seed from the operating system
@@ -94,6 +107,12 @@ float GameScene::setRandomWaveCountDown(float min, float max)
     return dis(gen); // Generate a random float between min and max
 }
 
+void GameScene::addEnemyToList(const std::shared_ptr<BaseEnemy>& enemy)
+{
+    enemyList.push_back(enemy);
+    numEnemiesInLevel++;
+}
+
 void GameScene::updateScene()
 {
     BaseScene::updateScene();
@@ -103,7 +122,9 @@ void GameScene::updateScene()
         if (waveCountDown <= 0)
         {
             waveCountDown = setRandomWaveCountDown(0.5f, 2.f);
-            skeletonSpawner->spawnEnemy(chooseRandomSpawn());
+            std::shared_ptr<BaseEnemy> enemy = skeletonSpawner->spawnEnemy(chooseRandomSpawn());
+            addEnemyToList(enemy);
+            enemy->onDeath([this, enemy] { removeEnemyFromList(enemy); });
         }
         else
         {

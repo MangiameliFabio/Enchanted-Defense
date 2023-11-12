@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <memory>
+
 #include "../Core/Object.h"
 
 class BaseState;
@@ -12,9 +14,9 @@ public:
     ~AnimationStateMachine() override;
     void init() override;
     virtual void stop();
-    void stateTransition(BaseState* state);
+    void stateTransition(std::shared_ptr<BaseState> state);
 
-    BaseState* currentState = nullptr;
+    std::shared_ptr<BaseState> currentState = nullptr;
 
     bool paused = false;
 };

@@ -12,12 +12,19 @@ void Object::update()
 
 void Object::close()
 {
-    if (!queuedForDelete)
+    /*if (!queuedForDelete)
     {
         queuedForDelete = true;
         ENGINE->removeObject(this);
         ENGINE->addToDeleteQueue(this);
-    }
+    }*/
+}
+
+void Object::markForDelete()
+{
+    queuedForDelete = true;
+    ENGINE->removeObject(this);
+    ENGINE->addToDeleteQueue(this);
 }
 
 Object::Object()

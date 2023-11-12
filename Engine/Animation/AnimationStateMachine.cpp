@@ -38,7 +38,7 @@ AnimationStateMachine::~AnimationStateMachine()
     ENGINE->removeObject(this);
 }
 
-void AnimationStateMachine::stateTransition(BaseState* state)
+void AnimationStateMachine::stateTransition(std::shared_ptr<BaseState> state)
 {
     currentState->endState();
     currentState = state;

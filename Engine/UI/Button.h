@@ -30,7 +30,7 @@ private:
     TextBox mButtonText;
     SDL_Color mButtonColor = {0, 0, 0, 0};
 
-    std::function<void()> mCallback;
+    std::function<void()> mCallback = nullptr;
 
     int mTextOffset = 4;
     
