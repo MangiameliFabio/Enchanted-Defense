@@ -142,9 +142,6 @@ void Texture::free()
 
 Texture::~Texture()
 {
-    mTexture = nullptr;
-    mDynamicPos = nullptr;
-    ENGINE->gRenderer->removeTexture(this);
 }
 
 int Texture::getZindex() const

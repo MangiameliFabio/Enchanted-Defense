@@ -14,7 +14,7 @@ public:
 
     void close() override;
 
-    CollisionObject projectileCollision;
+    std::shared_ptr<CollisionObject> projectileCollision;
 
     Vector dir;
     Vector pos;

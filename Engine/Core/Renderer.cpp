@@ -7,6 +7,7 @@
 #include <string>
 #include "../Debuging/DebugShape.h"
 #include "../EngineSingelton.h"
+#include "../Debuging/Log.h"
 #include "../UI/TextBox.h"
 
 

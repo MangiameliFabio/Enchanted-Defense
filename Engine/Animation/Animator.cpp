@@ -28,6 +28,11 @@ void Animator::update()
 
 void Animator::addSpriteSheet(Texture* texture, int spriteCount, int widthSprite, int heightSprite)
 {
+    animationFrame.w = widthSprite;
+    animationFrame.h = heightSprite;
+    animationFrame.y = 0;
+    animationFrame.x = 0;
+    
     spriteSheet = texture;
     spriteSheet->markForRender = false;
     spriteSheet->clip = &animationFrame;
@@ -35,10 +40,6 @@ void Animator::addSpriteSheet(Texture* texture, int spriteCount, int widthSprite
     spriteSheet->setWidth(widthSprite);
 
     maxSprites = spriteCount;
-
-    animationFrame.w = widthSprite;
-    animationFrame.h = heightSprite;
-    animationFrame.y = 0;
 }
 
 void Animator::setFrameRate(float framesPerSecond)

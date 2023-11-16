@@ -26,7 +26,7 @@ public:
     std::vector<BaseCharacter*> nearCharacter;
 
     Texture spriteSheet;
-    Animator animation;
+    std::shared_ptr<Animator> animation;
     Vector lastValidPos;
 
     float pfCooldown = 0.5f;

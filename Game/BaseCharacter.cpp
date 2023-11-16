@@ -2,7 +2,6 @@
 
 BaseCharacter::BaseCharacter()
 {
-    name = typeid(this).name();
-
-    collision.init(this);
+    collision = std::make_shared<CollisionObject>();
+    collision->init(this);
 }

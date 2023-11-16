@@ -12,12 +12,7 @@ void Object::update()
 
 void Object::close()
 {
-    /*if (!queuedForDelete)
-    {
-        queuedForDelete = true;
-        ENGINE->removeObject(this);
-        ENGINE->addToDeleteQueue(this);
-    }*/
+    markForDelete();
 }
 
 void Object::markForDelete()
@@ -30,6 +25,7 @@ void Object::markForDelete()
 Object::Object()
 {
     ENGINE->addObject(this);
+    name = typeid(this).name();
 }
 
 Object::~Object()

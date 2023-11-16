@@ -21,13 +21,13 @@ public:
     void onNotify(const Event event) override;
     void addMoveDirection(Vector& v);
     void addAimDirection(Vector& v);
-    void disablePlayer();
+    void die();
 
     PlayerCharacter();
     ~PlayerCharacter() override;
 
-    PlayerASM stateMachine;
-    InputManager inputManager;
+    std::shared_ptr<PlayerASM> stateMachine;
+    std::shared_ptr<InputManager> inputManager;
 
     Vector aimDir;
 

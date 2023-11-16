@@ -13,5 +13,5 @@ public:
     Vector position;
     Vector moveDir;
 
-    CollisionObject collision;
+    std::shared_ptr<CollisionObject> collision;
 };

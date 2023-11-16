@@ -14,10 +14,10 @@ class TextBox : public UIElement
 {
 public:
     //Initializes variables
-    TextBox();
+    TextBox() = default;
 
     //Deallocates memory
-    ~TextBox();
+    ~TextBox() override = default;
 
     void init(const std::string& _text, const SDL_Color* _textColor, int _fontSize = 24, int _zIndex = 500.f);
     

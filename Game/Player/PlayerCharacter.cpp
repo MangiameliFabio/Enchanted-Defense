@@ -1,5 +1,7 @@
 ﻿#include "PlayerCharacter.h"
 
+#include <memory>
+
 #include "InputManager.h"
 #include "../GameSingleton.h"
 #include "../../Engine/EngineSingelton.h"
@@ -11,23 +13,26 @@
 void PlayerCharacter::init()
 {
     BaseCharacter::init();
-
-    PLAYER = this;
+    
     ENGINE->addObserver(this);
 
-    inputManager.init();
-    stateMachine.init();
+    inputManager = std::make_shared<InputManager>();
+    inputManager->init();
+    stateMachine = std::make_shared<PlayerASM>();
+    stateMachine->init();
 
-    spriteHeight = static_cast<float>(stateMachine.currentState->animation->spriteSheet->getHeight());
-    spriteWidth = static_cast<float>(stateMachine.currentState->animation->spriteSheet->getWidth());
+    spriteHeight = static_cast<float>(stateMachine->currentState->animation->spriteSheet->getHeight());
+    spriteWidth = static_cast<float>(stateMachine->currentState->animation->spriteSheet->getWidth());
     
-    collision.createCollisionShape(spriteHeight, spriteWidth - 10, &position);
-    collision.updatePixelBorder();
+    collision->createCollisionShape(spriteHeight, spriteWidth - 10, &position);
+    collision->updatePixelBorder();
 }
 
 void PlayerCharacter::update()
 {
     BaseCharacter::update();
+
+    stateMachine->update();
 
     if (attackCooldown > 0)
     {
@@ -39,10 +44,6 @@ void PlayerCharacter::close()
 {
     BaseCharacter::close();
 
-    stateMachine.close();
-    inputManager.close();
-
-    GAME->gPlayer = nullptr;
     ENGINE->removeObserver(this);
 }
 
@@ -87,7 +88,7 @@ PlayerCharacter::~PlayerCharacter()
 void PlayerCharacter::onNotify(const Event event)
 {
     if (event == HANDLE_INPUT)
-        inputManager.handleInput();
+        inputManager->handleInput();
 
     if (event == ALL_INPUTS_HANDLED)
     {
@@ -127,7 +128,7 @@ void PlayerCharacter::addAimDirection(Vector& v)
     aimDir += v;
 }
 
-void PlayerCharacter::disablePlayer()
+void PlayerCharacter::die()
 {
     notify(PLAYER_DIED);
 }

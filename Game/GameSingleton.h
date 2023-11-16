@@ -27,35 +27,35 @@ public:
 
 
     //All enemies currently in the game
-    std::vector<BaseEnemy*> gEnemiesList;
+    std::vector<std::shared_ptr<BaseEnemy>> gEnemyList;
 
     //Player Reference
-    PlayerCharacter* gPlayer = nullptr;
+    std::shared_ptr<PlayerCharacter> gPlayer = nullptr;
 
     //Pathfinding Grid
-    Pathfinding* pathfindingGrid = nullptr;
+    std::shared_ptr<Pathfinding> pathfindingGrid = nullptr;
 
-    SceneManager* sceneManager = nullptr;
+    std::shared_ptr<SceneManager> sceneManager = nullptr;
 
     int sizeEnemiesList = 0;
 
     //Enemies to kill for win
     int enemyCount = 50;
 
-    void addEnemy(BaseEnemy* enemy)
+    void addEnemy(const std::shared_ptr<BaseEnemy>& enemy)
     {
-        gEnemiesList.push_back(enemy);
+        gEnemyList.push_back(enemy);
         sizeEnemiesList++;
     }
 
-    void removeEnemy(BaseEnemy* enemy)
+    void removeEnemy(const std::shared_ptr<BaseEnemy>& enemy)
     {
         //Find Iterator of enemy
-        const auto iterator = std::find(gEnemiesList.begin(), gEnemiesList.end(), enemy);
+        const auto iterator = std::find(gEnemyList.begin(), gEnemyList.end(), enemy);
 
         //Remove Object
-        if (iterator != gEnemiesList.end())
-            gEnemiesList.erase(iterator);
+        if (iterator != gEnemyList.end())
+            gEnemyList.erase(iterator);
         sizeEnemiesList--;
     }
 };

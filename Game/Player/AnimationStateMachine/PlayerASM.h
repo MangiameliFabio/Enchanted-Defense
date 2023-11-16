@@ -18,10 +18,9 @@ class PlayerASM : public AnimationStateMachine, public Observer
 {
 public:
     PlayerASM() = default;
-    ~PlayerASM() override = default;
+    ~PlayerASM() override;
 
     void init() override;
-    void close() override;
     void onNotify(const Event event) override;
 
     std::shared_ptr<PlayerIdle> idleState = nullptr;

@@ -1,5 +1,7 @@
 ﻿#include "SkeletonCharacter.h"
 
+#include <memory>
+
 #include "../GameSingleton.h"
 #include "../../Engine/EngineSingelton.h"
 #include "../../Engine/Core/MeasurePerformance.h"
@@ -18,13 +20,12 @@ SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
     spriteSheet.setDynamicPosition(&position);
 
     //Create Animation
-    animation.addSpriteSheet(&spriteSheet, 4, 36, spriteSheet.getHeight());
-    animation.enable();
-    animation.setFrameRate(8.f);
+    animation = std::make_shared<Animator>();
+    animation->addSpriteSheet(&spriteSheet, 4, 36, spriteSheet.getHeight());
+    animation->enable();
+    animation->setFrameRate(8.f);
 
-    collision.createCollisionShape(spriteSheet.getHeight(), spriteSheet.getWidth(), &position);
-
-    name = typeid(this).name();
+    collision->createCollisionShape(spriteSheet.getHeight(), spriteSheet.getWidth(), &position);
 
     PLAYER->addObserver(this);
 }
@@ -70,7 +71,7 @@ void SkeletonCharacter::update()
     {
         move();
     }
-    animation.update();
+    animation->update();
 }
 
 void SkeletonCharacter::move()
@@ -89,11 +90,12 @@ bool SkeletonCharacter::checkForCollision()
 {
     for (int enemy = 0; enemy < GAME->sizeEnemiesList; ++enemy)
     {
-        if (GAME->gEnemiesList[enemy] != this)
+        if(GAME->gEnemyList.empty()){ return false;}
+        if (GAME->gEnemyList[enemy].get() != this)
         {
-            if (Vector::dist(GAME->gEnemiesList[enemy]->position, position) <= 100.f)
+            if (Vector::dist(GAME->gEnemyList[enemy]->position, position) <= 100.f)
             {
-                if (collision.checkForIntersection(&GAME->gEnemiesList[enemy]->collision))
+                if (collision->checkForIntersection(GAME->gEnemyList[enemy]->collision.get()))
                 {
                     // if (collision->calculateCollisionPoint(SINGLETON->gEnemiesList[enemy]->collision, hit))
                     // {
@@ -101,20 +103,20 @@ bool SkeletonCharacter::checkForCollision()
                     //     return true;
                     // }
                     position = lastValidPos;
-                    collision.collisionResponse(&GAME->gEnemiesList[enemy]->collision);
+                    collision->collisionResponse(GAME->gEnemyList[enemy]->collision.get());
                     return true;
                 }
             }
             if (Vector::dist(PLAYER->position, position) <= 100.f)
             {
-                if (collision.checkForIntersection(&PLAYER->collision))
+                if (collision->checkForIntersection(GAME->gEnemyList[enemy]->collision.get()))
                 {
                     // if (collision->calculateCollisionPoint(SINGLETON->gEnemiesList[enemy]->collision, hit))
                     // {
                     //     moveDir += hit.normal;
                     //     return true;
                     // }
-                    PLAYER->disablePlayer();
+                    PLAYER->die();
                     return true;
                 }
             }

@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <string>
 
+#include "../Debuging/Log.h"
+
 class BaseScene
 {
 protected:
@@ -11,7 +13,10 @@ public:
     void setSceneName(const std::string& scene_mame);
 
     BaseScene(){}
-    virtual ~BaseScene(){}
+    virtual ~BaseScene()
+    {
+        Log::print("I was destroyed");
+    }
     
     virtual void startScene(){}
     virtual void updateScene(){}

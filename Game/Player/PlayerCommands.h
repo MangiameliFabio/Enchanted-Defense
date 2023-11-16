@@ -11,7 +11,7 @@ public:
         
         GameSingleton::getInstance()->gPlayer->addMoveDirection(dir);
         PLAYER->isMoveing = true;
-        PLAYER->stateMachine.stateEnum = LEFT;
+        PLAYER->stateMachine->stateEnum = LEFT;
     }
 };
 
@@ -24,7 +24,7 @@ public:
 
         PLAYER->addMoveDirection(dir);
         PLAYER->isMoveing = true;
-        PLAYER->stateMachine.stateEnum = RIGHT;
+        PLAYER->stateMachine->stateEnum = RIGHT;
     }
 };
 
@@ -37,7 +37,7 @@ public:
 
         PLAYER->addMoveDirection(dir);
         PLAYER->isMoveing = true;
-        PLAYER->stateMachine.stateEnum = UP;
+        PLAYER->stateMachine->stateEnum = UP;
     }
 };
 
@@ -50,7 +50,7 @@ public:
 
         PLAYER->addMoveDirection(dir);
         PLAYER->isMoveing = true;
-        PLAYER->stateMachine.stateEnum = DOWN;
+        PLAYER->stateMachine->stateEnum = DOWN;
     }
 };
 

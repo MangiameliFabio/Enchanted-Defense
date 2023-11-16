@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <cstdio>
 #include <vcruntime_typeinfo.h>
+#include <memory>
 
 #include "Animator.h"
 
@@ -9,6 +10,8 @@ class Animator;
 class BaseState
 {
 public:
+    std::shared_ptr<Animator> animation = nullptr;
+
     virtual ~BaseState()
     {
     }
@@ -42,6 +45,4 @@ public:
         }
         animation->disable();
     }
-
-    Animator* animation = nullptr;
 };

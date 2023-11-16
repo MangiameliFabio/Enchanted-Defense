@@ -7,9 +7,6 @@
 
 void AnimationStateMachine::init()
 {
-    Object::init();
-    name = typeid(this).name();
-
     if (!currentState)
     {
         printf("Current State is invalid");
@@ -22,23 +19,20 @@ void AnimationStateMachine::init()
 
 void AnimationStateMachine::stop()
 {
-    shouldUpdate = false;
     currentState->animation->disable();
 }
 
 void AnimationStateMachine::update()
 {
-    Object::update();
-
     currentState->updateState();
 }
 
 AnimationStateMachine::~AnimationStateMachine()
 {
-    ENGINE->removeObject(this);
+    currentState = nullptr;
 }
 
-void AnimationStateMachine::stateTransition(std::shared_ptr<BaseState> state)
+void AnimationStateMachine::stateTransition(BaseState* state)
 {
     currentState->endState();
     currentState = state;

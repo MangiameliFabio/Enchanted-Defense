@@ -7,11 +7,6 @@
 
 #include "../EngineSingelton.h"
 
-Button::~Button()
-{
-    Button::free();
-}
-
 void Button::init(const SDL_Color* buttonColor)
 {
     ENGINE->addButton(this);
@@ -22,9 +17,10 @@ void Button::init(const SDL_Color* buttonColor)
 
 void Button::setButtonText(const std::string& text, const int fontSize)
 {
-    mButtonText.init(text, &mButtonColor, fontSize);
-    mButtonText.loadFromFile("assets/fonts/alagard.ttf");
-    mButtonText.setPosition(getPosition().x + mTextOffset, getPosition().y + mTextOffset);
+    mButtonText = std::make_shared<TextBox>();
+    mButtonText->init(text, &mButtonColor, fontSize);
+    mButtonText->loadFromFile("assets/fonts/alagard.ttf");
+    mButtonText->setPosition(getPosition().x + mTextOffset, getPosition().y + mTextOffset);
 
     updateDimension();
 }
@@ -57,13 +53,13 @@ void Button::free()
     UIElement::free();
     
     ENGINE->removeButton(this);
-    mButtonText.free();
+    mButtonText->free();
 }
 
 void Button::updateDimension()
 {
-    mWidth = mButtonText.getTexture()->getWidth() + mTextOffset * 2;
-    mHeight = mButtonText.getTexture()->getHeight() + mTextOffset * 2;
+    mWidth = mButtonText->getTexture()->getWidth() + mTextOffset * 2;
+    mHeight = mButtonText->getTexture()->getHeight() + mTextOffset * 2;
 }
 
 int Button::getWidth() const
@@ -80,12 +76,12 @@ void Button::setPosition(float x, float y)
 {
     UIElement::setPosition(x, y);
 
-    mButtonText.setPosition(x,y);
+    mButtonText->setPosition(x,y);
 }
 
 void Button::setPosition(const Vector& pos)
 {
     UIElement::setPosition(pos);
 
-    mButtonText.setPosition(pos);
+    mButtonText->setPosition(pos);
 }

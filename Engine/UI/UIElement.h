@@ -5,7 +5,7 @@
 class UIElement
 {
 public:
-    ~UIElement();
+    virtual ~UIElement();
     
     //Sets top left position
     virtual void setPosition(float x, float y);

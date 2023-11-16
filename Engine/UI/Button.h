@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <functional>
+#include <memory>
 #include <SDL_events.h>
 
 #include "TextBox.h"
@@ -10,7 +11,7 @@ class TextBox;
 class Button : public UIElement
 {
 public:
-    ~Button();
+    ~Button() override = default;
 
     void init(const SDL_Color* buttonColor = nullptr);
     void setButtonText(const std::string& text, int fontSize);
@@ -27,7 +28,7 @@ public:
 
 private:
     //Text displayed in the button
-    TextBox mButtonText;
+    std::shared_ptr<TextBox> mButtonText;
     SDL_Color mButtonColor = {0, 0, 0, 0};
 
     std::function<void()> mCallback = nullptr;

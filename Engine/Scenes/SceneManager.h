@@ -1,21 +1,27 @@
 ﻿#pragma once
-#include <string>
-#include <vector>
+#include <memory>
 
-class BaseScene;
+#include "BaseScene.h"
 
 class SceneManager
 {
-    std::vector<BaseScene*> scenes;
-    BaseScene* currentScene = nullptr;
-    
-    BaseScene* findSceneByName(const std::string& name) const;
+    std::shared_ptr<BaseScene> currentScene = nullptr;
 
 public:
-    void changeScene(std::string sceneName);
-    void update();
-    void addNewScene(BaseScene* newScene);
-    
     SceneManager();
     ~SceneManager();
+    
+    void update();
+    
+    template <class T>
+    void changeScene()
+    {
+        //Only end scene if its valid
+        if (currentScene)
+        {
+            currentScene->endScene();
+        }
+        currentScene = std::make_shared<T>();
+        currentScene->startScene();
+    }
 };

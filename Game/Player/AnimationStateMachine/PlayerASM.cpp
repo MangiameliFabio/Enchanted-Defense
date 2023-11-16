@@ -5,6 +5,12 @@
 #include "PlayerAnimationStates.h"
 #include "../../GameSingleton.h"
 #include "../PlayerCharacter.h"
+#include "../../../Engine/EngineSingelton.h"
+
+PlayerASM::~PlayerASM()
+{
+    ENGINE->removeObserver(this);
+}
 
 void PlayerASM::init()
 {
@@ -14,20 +20,11 @@ void PlayerASM::init()
     downState = std::make_shared<PlayerDown>();
     upState = std::make_shared<PlayerUp>();
 
-    currentState = idleState;
+    currentState = idleState.get();
 
     PLAYER->addObserver(this);
 
     AnimationStateMachine::init();
-}
-
-void PlayerASM::close()
-{
-    queuedForDelete = true;
-
-    AnimationStateMachine::close();
-
-    PLAYER->removeObserver(this);
 }
 
 void PlayerASM::onNotify(const Event event)

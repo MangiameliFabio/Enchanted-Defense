@@ -1,22 +1,16 @@
 ﻿#pragma once
 
-#include <memory>
-
-#include "../Core/Object.h"
-
 class BaseState;
-class AnimationStateMachine : public Object
+class AnimationStateMachine
 {
-protected:
-    void update() override;
-
 public:
-    ~AnimationStateMachine() override;
-    void init() override;
+    virtual ~AnimationStateMachine();
+    virtual void init();
     virtual void stop();
-    void stateTransition(std::shared_ptr<BaseState> state);
+    void stateTransition(BaseState* state);
+    virtual void update();
 
-    std::shared_ptr<BaseState> currentState = nullptr;
+    BaseState* currentState = nullptr;
 
     bool paused = false;
 };

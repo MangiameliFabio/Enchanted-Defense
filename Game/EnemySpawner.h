@@ -13,7 +13,7 @@ public:
 };
 
 template <class T>
-class EnemySpawnerFor : public EnemySpawner
+class EnemySpawnerFor: public EnemySpawner
 {
 public:
     ~EnemySpawnerFor() override = default;

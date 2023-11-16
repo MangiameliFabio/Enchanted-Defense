@@ -3,6 +3,7 @@
 #include "BaseEnemy.h"
 #include "GameSingleton.h"
 #include "../Engine/EngineSingelton.h"
+#include "../Engine/Debuging/Log.h"
 
 void Projectile::update()
 {
@@ -16,11 +17,11 @@ void Projectile::update()
         close();
         return;
     }
-    for (auto enemy : GAME->gEnemiesList)
+    for (const auto& enemy : GAME->gEnemyList)
     {
         if (Vector::dist(enemy->position, pos) <= 200.f)
         {
-            if (projectileCollision.checkForIntersection(&enemy->collision))
+            if (projectileCollision->checkForIntersection(enemy->collision.get()))
             {
                 if (!enemy->queuedForDelete)
                 {
@@ -31,9 +32,11 @@ void Projectile::update()
             }
         }
     }
+
+    Log::print("I'm alive");
 }
 
-Projectile::Projectile(const Vector& pos_, const Vector& dir_)
+Projectile::Projectile(const Vector& pos_, const Vector& dir_) : Object()
 {
     pos = pos_;
     dir = dir_;
@@ -41,8 +44,9 @@ Projectile::Projectile(const Vector& pos_, const Vector& dir_)
 
     texture.loadTexture("assets/textures/projectile.png");
     texture.setDynamicPosition(&pos);
-    
-    projectileCollision.createCollisionShape(texture.getHeight(), texture.getWidth(), &pos);
+
+    projectileCollision = std::make_shared<CollisionObject>();
+    projectileCollision->createCollisionShape(texture.getHeight(), texture.getWidth(), &pos);
 
     name = typeid(this).name();
 }

@@ -19,11 +19,8 @@ GameManager::~GameManager()
 
 void GameManager::init()
 {
-    GAME->sceneManager = new SceneManager();
-    GAME->sceneManager->addNewScene(new MainMenu);
-    GAME->sceneManager->addNewScene(new GameScene);
-
-    GAME->sceneManager->changeScene("MainMenu");
+    GAME->sceneManager = std::make_shared<SceneManager>();
+    GAME->sceneManager->changeScene<MainMenu>();
 }
 
 void GameManager::update()

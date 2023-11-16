@@ -7,9 +7,9 @@ class GameManager : public Object
 {
 public:
     GameManager();
-    ~GameManager();
+    ~GameManager() override;
 
-    void init();
+    void init() override;
 
 private:
     void update() override;

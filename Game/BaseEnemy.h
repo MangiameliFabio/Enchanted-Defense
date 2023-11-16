@@ -9,6 +9,7 @@ public:
     BaseEnemy();
     ~BaseEnemy();
     virtual void die();
+    virtual void clone();
 
     void onDeath(std::function<void()> callback);
 
