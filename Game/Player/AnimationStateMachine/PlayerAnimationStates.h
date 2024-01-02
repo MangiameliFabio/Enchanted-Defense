@@ -4,9 +4,6 @@
 
 class PlayerIdle : public BaseState
 {
-    //Sprites
-    Texture idleSpriteSheet;
-
     void updateState();
 
 public:
@@ -15,8 +12,6 @@ public:
 
 class PlayerLeft : public BaseState
 {
-    Texture leftSpriteSheet;
-
 public:
     PlayerLeft();
 
@@ -25,8 +20,6 @@ public:
 
 class PlayerRight : public BaseState
 {
-    Texture rightSpriteSheet;
-
 public:
     PlayerRight();
 
@@ -35,8 +28,6 @@ public:
 
 class PlayerUp : public BaseState
 {
-    Texture upSpriteSheet;
-
 public:
     PlayerUp();
 
@@ -45,8 +36,6 @@ public:
 
 class PlayerDown : public BaseState
 {
-    Texture downSpriteSheet;
-
 public:
     PlayerDown();
 

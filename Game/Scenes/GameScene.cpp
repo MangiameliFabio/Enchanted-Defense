@@ -2,14 +2,15 @@
 
 #include <random>
 
+#include "GameOverScene.h"
 #include "MainMenu.h"
+#include "WinScene.h"
 #include "../EnemySpawner.h"
 #include "../GameSingleton.h"
 #include "../../Engine/EngineSingelton.h"
 #include "../Pathfinding.h"
 #include "../../Engine/Scenes/SceneManager.h"
 #include "../Player/PlayerCharacter.h"
-
 #include "../Skeleton/SkeletonCharacter.h"
 
 GameScene::GameScene()
@@ -25,7 +26,7 @@ void GameScene::onNotify(const Event event)
 {
     if (event == PLAYER_DIED)
     {
-        GAME->sceneManager->changeScene<MainMenu>();
+        GAME->sceneManager->changeScene<GameOverScene>();
     }
 }
 
@@ -38,8 +39,18 @@ void GameScene::startScene()
         (ENGINE->SCREEN_WIDTH - background.getWidth()) / 2, (ENGINE->SCREEN_HEIGHT - background.getHeight()) / 2
     });
 
+    skeletonIcon.loadTexture("assets/textures/enemies/SkeletonIcon.png");
+    skeletonIcon.setStaticPosition({
+        25, 15
+    });
+    
+    textEnemyCount.init("x" + std::to_string(GAME->enemyCount), {255, 255, 255, 0}, 32);
+    textEnemyCount.loadFromFile("assets/fonts/alagard.ttf");
+    textEnemyCount.setPosition(75, 15);
+
     GAME->pathfindingGrid = std::make_shared<Pathfinding>(65, 65, 50, 50);
     GAME->pathfindingGrid->init();
+    GAME->currentEnemyCount = GAME->enemyCount;
 
     const float playerStartPosX = ENGINE->SCREEN_WIDTH / 2;
     const float playerStartPosY = ENGINE->SCREEN_HEIGHT / 2;
@@ -61,14 +72,19 @@ void GameScene::startScene()
 void GameScene::endScene()
 {
     BaseScene::endScene();
-    
-    background.free();
 
-    if(!GAME->gEnemyList.empty())
+    background.free();
+    skeletonIcon.free();
+    textEnemyCount.free();
+
+    GAME->pathfindingGrid = nullptr;
+    GAME->sizeEnemiesList = 0;
+    GAME->currentEnemyCount = 0;
+
+    if (!GAME->gEnemyList.empty())
     {
         GAME->gEnemyList.clear();
     }
-    GAME->enemyCount = 0;
 
     if (GAME->gPlayer)
     {
@@ -100,14 +116,22 @@ void GameScene::updateScene()
 {
     BaseScene::updateScene();
 
-    if (GAME->enemyCount >= 0)
+    textEnemyCount.setText("x" + std::to_string(GAME->currentEnemyCount));
+
+    if (GAME->currentEnemyCount > 0)
     {
         if (waveCountDown <= 0)
         {
             waveCountDown = setRandomWaveCountDown(0.5f, 2.f);
             std::shared_ptr<BaseEnemy> enemy = skeletonSpawner->spawnEnemy(chooseRandomSpawn());
             GAME->addEnemy(enemy);
-            enemy->onDeath([this, enemy] { GAME->removeEnemy(enemy); });
+
+            std::weak_ptr<BaseEnemy> enemyTemp(enemy);
+            enemy->setEventOnDeath([this, enemyTemp]
+            {
+                GAME->removeEnemy(enemyTemp);
+                GAME->currentEnemyCount--;
+            });
         }
         else
         {
@@ -116,6 +140,6 @@ void GameScene::updateScene()
     }
     else
     {
-        printf("YOU HAVE WON!");
+        GAME->sceneManager->changeScene<WinScene>();
     }
 }

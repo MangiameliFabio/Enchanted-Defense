@@ -21,8 +21,8 @@ void PlayerCharacter::init()
     stateMachine = std::make_shared<PlayerASM>();
     stateMachine->init();
 
-    spriteHeight = static_cast<float>(stateMachine->currentState->animation->spriteSheet->getHeight());
-    spriteWidth = static_cast<float>(stateMachine->currentState->animation->spriteSheet->getWidth());
+    spriteHeight = static_cast<float>(stateMachine->currentState->animation->getSpriteSheet()->getHeight());
+    spriteWidth = static_cast<float>(stateMachine->currentState->animation->getSpriteSheet()->getWidth());
     
     collision->createCollisionShape(spriteHeight, spriteWidth - 10, &position);
     collision->updatePixelBorder();
@@ -43,8 +43,8 @@ void PlayerCharacter::update()
 void PlayerCharacter::close()
 {
     BaseCharacter::close();
-
-    ENGINE->removeObserver(this);
+    
+    
 }
 
 void PlayerCharacter::move()
@@ -82,6 +82,8 @@ PlayerCharacter::PlayerCharacter(): BaseCharacter()
 
 PlayerCharacter::~PlayerCharacter()
 {
+    ENGINE->removeObserver(this);
+
     printf("Player has been deleted \n");
 }
 

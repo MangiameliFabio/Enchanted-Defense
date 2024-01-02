@@ -8,10 +8,9 @@ class BaseEnemy : public BaseCharacter
 public:
     BaseEnemy();
     ~BaseEnemy();
-    virtual void die();
-    virtual void clone();
 
-    void onDeath(std::function<void()> callback);
+    void onDeath() const;
+    void setEventOnDeath(std::function<void()> callback);
 
 private:
     std::function<void()> mOnDeath = nullptr;

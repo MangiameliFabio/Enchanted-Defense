@@ -10,13 +10,12 @@ BaseEnemy::~BaseEnemy()
 {
 }
 
-void BaseEnemy::die()
+void BaseEnemy::onDeath() const
 {
-    GAME->enemyCount--;
     mOnDeath();
 }
 
-void BaseEnemy::onDeath(std::function<void()> callback)
+void BaseEnemy::setEventOnDeath(std::function<void()> callback)
 {
     mOnDeath = std::move(callback);
 }

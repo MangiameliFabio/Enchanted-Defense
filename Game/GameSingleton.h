@@ -40,7 +40,8 @@ public:
     int sizeEnemiesList = 0;
 
     //Enemies to kill for win
-    int enemyCount = 50;
+    int enemyCount = 10;
+    int currentEnemyCount = enemyCount;
 
     void addEnemy(const std::shared_ptr<BaseEnemy>& enemy)
     {
@@ -48,10 +49,10 @@ public:
         sizeEnemiesList++;
     }
 
-    void removeEnemy(const std::shared_ptr<BaseEnemy>& enemy)
+    void removeEnemy(const std::weak_ptr<BaseEnemy>& enemy)
     {
         //Find Iterator of enemy
-        const auto iterator = std::find(gEnemyList.begin(), gEnemyList.end(), enemy);
+        const auto iterator = std::find(gEnemyList.begin(), gEnemyList.end(), static_cast<std::shared_ptr<BaseEnemy>>(enemy));
 
         //Remove Object
         if (iterator != gEnemyList.end())

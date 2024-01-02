@@ -5,6 +5,7 @@
 #include "../../Engine/Core/Texture.h"
 #include "../../Engine/Core/Patterns/Observer.h"
 #include "../../Engine/Scenes/BaseScene.h"
+#include "../../Engine/UI/TextBox.h"
 
 class BaseEnemy;
 enum Event : int;
@@ -15,6 +16,9 @@ class GameScene : public BaseScene, Observer
     std::shared_ptr<EnemySpawner> skeletonSpawner = nullptr;
 
     Texture background;
+    Texture skeletonIcon;
+
+    TextBox textEnemyCount;
 
     Vector playerStart;
     Vector enemyStart;

@@ -1,19 +1,21 @@
 ﻿#include "TextBox.h"
 
 #include "../EngineSingelton.h"
-void TextBox::init(const std::string& _text, const SDL_Color* _textColor, int _fontSize, int _zIndex)
+void TextBox::init(const std::string& _text, const SDL_Color& _textColor, int _fontSize, int _zIndex)
 {
     mInitalized = true;
     mText = _text;
-    mTextColor = *_textColor;
+    mTextColor = _textColor;
     mFontSize = _fontSize;
     setZIndex(_zIndex);
 }
 
-bool TextBox::loadFromFile(const std::string& path)
+bool TextBox::loadFromFile(const std::string& _path)
 {
     //Loading success flag
     bool success = true;
+
+    path = _path;
 
     if (!mInitalized)
     {
@@ -78,5 +80,6 @@ bool TextBox::loadFromRenderedText()
 void TextBox::setText(const std::string& text)
 {
     mText = text;
-    loadFromRenderedText();
+    loadFromFile(path);
+    setPosition(getPosition());
 }

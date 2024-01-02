@@ -1,16 +1,20 @@
 ﻿#pragma once
 
+#include <memory>
+
 #include "../Core/Texture.h"
 
 class Animator
 {
     SDL_Rect animationFrame;
-    
+
     float currentFrameTime = 0.f;
     float frameRate = 1.f;
-    
+
     int currentSprite = 0;
     int maxSprites = 0;
+
+    std::shared_ptr<Texture> spriteSheet;
 
 public:
     void update();
@@ -20,8 +24,8 @@ public:
     void disable();
     void enable();
 
-    Animator();
-    ~Animator();
+    Texture* getSpriteSheet() const;
 
-    Texture* spriteSheet;
+    Animator() = default;
+    ~Animator();
 };

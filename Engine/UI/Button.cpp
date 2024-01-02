@@ -18,7 +18,7 @@ void Button::init(const SDL_Color* buttonColor)
 void Button::setButtonText(const std::string& text, const int fontSize)
 {
     mButtonText = std::make_shared<TextBox>();
-    mButtonText->init(text, &mButtonColor, fontSize);
+    mButtonText->init(text, mButtonColor, fontSize);
     mButtonText->loadFromFile("assets/fonts/alagard.ttf");
     mButtonText->setPosition(getPosition().x + mTextOffset, getPosition().y + mTextOffset);
 

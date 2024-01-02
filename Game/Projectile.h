@@ -10,9 +10,7 @@ class Projectile : public Object
 
 public:
     Projectile(const Vector& pos_, const Vector& dir_);
-    ~Projectile() override = default;
-
-    void close() override;
+    ~Projectile() override;
 
     std::shared_ptr<CollisionObject> projectileCollision;
 

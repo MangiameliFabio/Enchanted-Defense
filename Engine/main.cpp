@@ -101,28 +101,28 @@ int main(int argc, char* args[])
             measureMain->end("All objects updated: ");
 #endif
         }
-        //Delete Objects waiting in queue
-#if MEASURE_PERFORMANCE
-            measureMain->start();
-#endif
-        for (int objectIndex = 0; objectIndex < ENGINE->gSizeQueueForDelete; ++objectIndex)
-        {
-            if (ENGINE->gQueueForDelete[objectIndex])
-            {
-                delete ENGINE->gQueueForDelete[objectIndex];
-            }
-        }
-#if MEASURE_PERFORMANCE
-            measureMain->end("handle queue for delete: ");
-#endif
-
         //Render Scene
 #if MEASURE_PERFORMANCE
-            measureMain->start();
+        measureMain->start();
 #endif
         ENGINE->gRenderer->renderUpdate();
 #if MEASURE_PERFORMANCE
-            measureMain->end("render loop finished: ");
+        measureMain->end("render loop finished: ");
+#endif
+        
+        //Delete Objects waiting in queue
+// #if MEASURE_PERFORMANCE
+//             measureMain->start();
+// #endif
+//         for (int objectIndex = 0; objectIndex < ENGINE->gSizeQueueForDelete; ++objectIndex)
+//         {
+//             if (ENGINE->gQueueForDelete[objectIndex])
+//             {
+//                 // ENGINE->gQueueForDelete[objectIndex]->close();
+//             }
+//         }
+#if MEASURE_PERFORMANCE
+            measureMain->end("handle queue for delete: ");
 #endif
 
         //End of Tick

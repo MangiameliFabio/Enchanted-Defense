@@ -12,12 +12,9 @@ public:
     std::string getSceneName() const;
     void setSceneName(const std::string& scene_mame);
 
-    BaseScene(){}
-    virtual ~BaseScene()
-    {
-        Log::print("I was destroyed");
-    }
-    
+    BaseScene() = default;
+    virtual ~BaseScene() = default;
+
     virtual void startScene(){}
     virtual void updateScene(){}
     virtual void endScene(){}

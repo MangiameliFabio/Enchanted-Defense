@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Animator.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Core\GameClock.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -49,12 +46,6 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Game\Player\PlayerCharacter.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\WorldaManager.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\AnimationStateMachine.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Core\CollisionObject.cpp">
@@ -105,11 +96,32 @@
     <ClCompile Include="Game\Pathfinding.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Animation\AnimationStateMachine.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Animation\Animator.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scenes\SceneManager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\Button.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIElement.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\GameScene.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\MainMenu.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameManager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Animator.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Core\GameClock.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -156,15 +168,6 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Game\Player\PlayerCommands.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\WorldManager.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\AnimationStateMachine.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\BaseState.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\CollisionObject.h">
@@ -222,6 +225,36 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Game\GameSingleton.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\AnimationBaseState.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\AnimationStateMachine.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\Animator.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scenes\BaseScene.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scenes\SceneManager.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\Button.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIElement.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\GameScene.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\MainMenu.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameManager.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

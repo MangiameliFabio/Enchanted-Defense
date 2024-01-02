@@ -10,6 +10,12 @@
 PlayerASM::~PlayerASM()
 {
     ENGINE->removeObserver(this);
+
+    idleState->free();
+    leftState->free();
+    rightState->free();
+    downState->free();
+    upState->free();
 }
 
 void PlayerASM::init()
@@ -32,5 +38,27 @@ void PlayerASM::onNotify(const Event event)
     if (event == PLAYER_DIED)
     {
         stop();
+    }
+}
+
+void PlayerASM::update()
+{
+    switch (stateEnum)
+    {
+    case LEFT:
+        stateTransition(leftState.get());
+        break;
+    case RIGHT:
+        stateTransition(rightState.get());
+        break;
+    case UP:
+        stateTransition(upState.get());
+        break;
+    case DOWN:
+        stateTransition(downState.get());
+        break;
+    case IDLE:
+        stateTransition(idleState.get());
+        break;
     }
 }

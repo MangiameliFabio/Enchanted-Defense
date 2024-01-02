@@ -3,10 +3,9 @@
 #include "BaseEnemy.h"
 #include "GameSingleton.h"
 #include "../Engine/EngineSingelton.h"
-#include "../Engine/Debuging/Log.h"
 
 void Projectile::update()
-{
+{    
     Object::update();
 
     pos = pos + (velocity * DELTA_TIME);
@@ -14,7 +13,7 @@ void Projectile::update()
     if (pos.x < 50.f || pos.y < 50.f || pos.x > ENGINE->SCREEN_WIDTH - 50.f || pos.y > ENGINE->SCREEN_WIDTH -
         50.f)
     {
-        close();
+        delete this;
         return;
     }
     for (const auto& enemy : GAME->gEnemyList)
@@ -25,15 +24,13 @@ void Projectile::update()
             {
                 if (!enemy->queuedForDelete)
                 {
-                    enemy->close();
-                    close();
+                    enemy->onDeath();
+                    delete this;
                     break;
                 }
             }
         }
     }
-
-    Log::print("I'm alive");
 }
 
 Projectile::Projectile(const Vector& pos_, const Vector& dir_) : Object()
@@ -51,7 +48,7 @@ Projectile::Projectile(const Vector& pos_, const Vector& dir_) : Object()
     name = typeid(this).name();
 }
 
-void Projectile::close()
+Projectile::~Projectile()
 {
-    Object::markForDelete();
+    texture.free();
 }

@@ -24,8 +24,7 @@ public:
 
     std::vector<Vector> path;
     std::vector<BaseCharacter*> nearCharacter;
-
-    Texture spriteSheet;
+    
     std::shared_ptr<Animator> animation;
     Vector lastValidPos;
 

@@ -1,49 +1,36 @@
-﻿#include "PlayerAnimationStates.h"
+﻿/*
+#include "PlayerAnimationStates.h"
 
 #include "../../GameSingleton.h"
 #include "../../../Engine/Animation/Animator.h"
 
 PlayerIdle::PlayerIdle()
 {
-    idleSpriteSheet.loadTexture("assets/textures/player/Idle.png");
-    idleSpriteSheet.setDynamicPosition(&PLAYER->position);
+    Texture spriteSheet;
+    spriteSheet.loadTexture("assets/textures/player/Idle.png");
+    spriteSheet.setDynamicPosition(&PLAYER->position);
     
     animation = std::make_shared<Animator>();
     animation->setFrameRate(4.f);
-    animation->addSpriteSheet(&idleSpriteSheet, 2, 56, idleSpriteSheet.getHeight());
+    animation->addSpriteSheet(&spriteSheet, 2, 56, getSpriteSheet()->getHeight());
 }
 
 void PlayerIdle::updateState()
 {
     BaseState::updateState();
 
-    switch (PLAYER->stateMachine->stateEnum)
-    {
-    case LEFT:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->leftState.get());
-        break;
-    case RIGHT:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->rightState.get());
-        break;
-    case UP:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->upState.get());
-        break;
-    case DOWN:
-        PLAYER->stateMachine->stateTransition(PLAYER->stateMachine->downState.get());
-        break;
-    default
-    : break;
-    }
+    
 }
 
 PlayerLeft::PlayerLeft()
 {
-    leftSpriteSheet.loadTexture("assets/textures/player/MoveRight_Left.png");
-    leftSpriteSheet.setDynamicPosition(&PLAYER->position);
+    Texture spriteSheet;
+    spriteSheet.loadTexture("assets/textures/player/MoveRight_Left.png");
+    spriteSheet.setDynamicPosition(&PLAYER->position);
     
     animation = std::make_shared<Animator>();
     animation->setFrameRate(8.f);
-    animation->addSpriteSheet(&leftSpriteSheet, 2, 56, leftSpriteSheet.getHeight());
+    animation->addSpriteSheet(&spriteSheet, 2, 56, spriteSheet.getHeight());
 
     animation->flip(SDL_FLIP_HORIZONTAL);
 }
@@ -73,12 +60,12 @@ void PlayerLeft::updateState()
 
 PlayerRight::PlayerRight()
 {
-    rightSpriteSheet.loadTexture("assets/textures/player/MoveRight_Left.png");
-    rightSpriteSheet.setDynamicPosition(&PLAYER->position);
+    getSpriteSheet()->loadTexture("assets/textures/player/MoveRight_Left.png");
+    getSpriteSheet()->setDynamicPosition(&PLAYER->position);
     
     animation = std::make_shared<Animator>();
     animation->setFrameRate(8.f);
-    animation->addSpriteSheet(&rightSpriteSheet, 2, 56, rightSpriteSheet.getHeight());
+    animation->addSpriteSheet(getSpriteSheet(), 2, 56, getSpriteSheet()->getHeight());
 }
 
 void PlayerRight::updateState()
@@ -106,12 +93,12 @@ void PlayerRight::updateState()
 
 PlayerUp::PlayerUp()
 {
-    upSpriteSheet.loadTexture("assets/textures/player/MoveUp.png");
-    upSpriteSheet.setDynamicPosition(&PLAYER->position);
+    getSpriteSheet()->loadTexture("assets/textures/player/MoveUp.png");
+    getSpriteSheet()->setDynamicPosition(&PLAYER->position);
     
     animation = std::make_shared<Animator>();
     animation->setFrameRate(8.f);
-    animation->addSpriteSheet(&upSpriteSheet, 2, 56, upSpriteSheet.getHeight());
+    animation->addSpriteSheet(getSpriteSheet(), 2, 56, getSpriteSheet()->getHeight());
 }
 
 void PlayerUp::updateState()
@@ -139,12 +126,12 @@ void PlayerUp::updateState()
 
 PlayerDown::PlayerDown()
 {
-    downSpriteSheet.loadTexture("assets/textures/player/MoveDown.png");
-    downSpriteSheet.setDynamicPosition(&PLAYER->position);
+    getSpriteSheet()->loadTexture("assets/textures/player/MoveDown.png");
+    getSpriteSheet()->setDynamicPosition(&PLAYER->position);
     
     animation = std::make_shared<Animator>();
     animation->setFrameRate(16.f);
-    animation->addSpriteSheet(&downSpriteSheet, 5, 56, downSpriteSheet.getHeight());
+    animation->addSpriteSheet(getSpriteSheet(), 5, 56, getSpriteSheet()->getHeight());
 }
 
 void PlayerDown::updateState()
@@ -169,3 +156,4 @@ void PlayerDown::updateState()
     : break;
     }
 }
+*/

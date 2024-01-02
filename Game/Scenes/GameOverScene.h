@@ -1,22 +1,18 @@
 ﻿#pragma once
-#include <memory>
 
+#include "../../Engine/Core/Texture.h"
 #include "../../Engine/Scenes/BaseScene.h"
 #include "../../Engine/UI/Button.h"
 #include "../../Engine/UI/TextBox.h"
 
-class MainMenu : public BaseScene
+class GameOverScene : public BaseScene
 {
-    TextBox title;
-    Button  startButton;
-    Button  creditsButton;
-    Button  quitButton;
-
     Texture background;
-    
+    TextBox title;
+
+    Button  restartButton;
+    Button  menuButton;
 public:
-    MainMenu() = default;
-    ~MainMenu() override = default;
     void startScene() override;
     void endScene() override;
 };

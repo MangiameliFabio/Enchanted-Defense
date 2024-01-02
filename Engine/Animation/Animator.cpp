@@ -1,4 +1,7 @@
 ﻿#include "Animator.h"
+
+#include <memory>
+
 #include "../EngineSingelton.h"
 
 void Animator::update()
@@ -33,13 +36,18 @@ void Animator::addSpriteSheet(Texture* texture, int spriteCount, int widthSprite
     animationFrame.y = 0;
     animationFrame.x = 0;
     
-    spriteSheet = texture;
+    spriteSheet = std::make_shared<Texture>(*texture);
     spriteSheet->markForRender = false;
     spriteSheet->clip = &animationFrame;
     spriteSheet->setHeight(heightSprite);
     spriteSheet->setWidth(widthSprite);
 
     maxSprites = spriteCount;
+}
+
+Animator::~Animator()
+{
+    spriteSheet->free();
 }
 
 void Animator::setFrameRate(float framesPerSecond)
@@ -68,10 +76,7 @@ void Animator::enable()
     spriteSheet->markForRender = true;
 }
 
-Animator::Animator()
+Texture* Animator::getSpriteSheet() const
 {
-}
-
-Animator::~Animator()
-{
+    return spriteSheet.get();
 }

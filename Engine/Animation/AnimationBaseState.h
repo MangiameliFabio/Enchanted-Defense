@@ -9,6 +9,8 @@ class Animator;
 
 class BaseState
 {
+    Texture mSpriteSheet;
+    
 public:
     std::shared_ptr<Animator> animation = nullptr;
 
@@ -44,5 +46,15 @@ public:
             return;
         }
         animation->disable();
+    }
+
+    Texture* getSpriteSheet()
+    {
+        return &mSpriteSheet;
+    }
+
+    void free()
+    {
+        mSpriteSheet.free();
     }
 };

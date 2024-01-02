@@ -12,7 +12,6 @@ void Object::update()
 
 void Object::close()
 {
-    markForDelete();
 }
 
 void Object::markForDelete()
@@ -30,4 +29,5 @@ Object::Object()
 
 Object::~Object()
 {
+    ENGINE->removeObject(this);
 }

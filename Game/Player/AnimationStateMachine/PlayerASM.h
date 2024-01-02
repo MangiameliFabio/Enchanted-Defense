@@ -23,6 +23,8 @@ public:
     void init() override;
     void onNotify(const Event event) override;
 
+    void update() override;
+
     std::shared_ptr<PlayerIdle> idleState = nullptr;
     std::shared_ptr<PlayerLeft> leftState = nullptr;
     std::shared_ptr<PlayerRight> rightState = nullptr;

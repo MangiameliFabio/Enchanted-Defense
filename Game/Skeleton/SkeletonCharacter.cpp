@@ -16,6 +16,7 @@ SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
     position = SpawnPosition;
 
     //Load sprite sheet
+    Texture spriteSheet;
     spriteSheet.loadTexture("assets/textures/enemies/skeleton.png");
     spriteSheet.setDynamicPosition(&position);
 
@@ -32,6 +33,7 @@ SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
 
 SkeletonCharacter::~SkeletonCharacter()
 {
+    PLAYER->removeObserver(this);
 }
 
 void SkeletonCharacter::update()
@@ -66,12 +68,15 @@ void SkeletonCharacter::update()
         velocity.Zero();
     }
     lastValidPos = position;
+    
     move();
+
+    animation->update();
+    
     if (checkForCollision())
     {
         move();
     }
-    animation->update();
 }
 
 void SkeletonCharacter::move()
@@ -82,8 +87,6 @@ void SkeletonCharacter::move()
 void SkeletonCharacter::close()
 {
     BaseEnemy::close();
-
-    PLAYER->removeObserver(this);
 }
 
 bool SkeletonCharacter::checkForCollision()
@@ -109,7 +112,7 @@ bool SkeletonCharacter::checkForCollision()
             }
             if (Vector::dist(PLAYER->position, position) <= 100.f)
             {
-                if (collision->checkForIntersection(GAME->gEnemyList[enemy]->collision.get()))
+                if (collision->checkForIntersection(PLAYER->collision.get()))
                 {
                     // if (collision->calculateCollisionPoint(SINGLETON->gEnemiesList[enemy]->collision, hit))
                     // {
