@@ -6,6 +6,8 @@
 #include "../../GameSingleton.h"
 #include "../PlayerCharacter.h"
 #include "../../../Engine/EngineSingelton.h"
+#include "../../../Engine/Animation/AnimationBaseState.h"
+#include "../../../Engine/Debuging/Log.h"
 
 PlayerASM::~PlayerASM()
 {
@@ -20,11 +22,12 @@ PlayerASM::~PlayerASM()
 
 void PlayerASM::init()
 {
-    idleState = std::make_shared<PlayerIdle>();
-    leftState = std::make_shared<PlayerLeft>();
-    rightState = std::make_shared<PlayerRight>();
-    downState = std::make_shared<PlayerDown>();
-    upState = std::make_shared<PlayerUp>();
+    idleState = std::make_shared<BaseState>(&PLAYER->position, "assets/textures/player/Idle.png", 4.f, 2);
+    leftState = std::make_shared<BaseState>(&PLAYER->position, "assets/textures/player/MoveRight_Left.png", 8.f, 2, 
+                                            SDL_FLIP_HORIZONTAL);
+    rightState = std::make_shared<BaseState>(&PLAYER->position, "assets/textures/player/MoveRight_Left.png", 8.f, 2);
+    downState = std::make_shared<BaseState>(&PLAYER->position, "assets/textures/player/MoveDown.png", 16.f, 5);
+    upState = std::make_shared<BaseState>(&PLAYER->position, "assets/textures/player/MoveUp.png", 8.f, 2);
 
     currentState = idleState.get();
 
@@ -43,22 +46,32 @@ void PlayerASM::onNotify(const Event event)
 
 void PlayerASM::update()
 {
-    switch (stateEnum)
+    AnimationStateMachine::update();
+    
+    if(stateEnum != lastStateEnum)
     {
-    case LEFT:
-        stateTransition(leftState.get());
-        break;
-    case RIGHT:
-        stateTransition(rightState.get());
-        break;
-    case UP:
-        stateTransition(upState.get());
-        break;
-    case DOWN:
-        stateTransition(downState.get());
-        break;
-    case IDLE:
-        stateTransition(idleState.get());
-        break;
+        switch (stateEnum)
+        {
+        case LEFT:
+            lastStateEnum = stateEnum;
+            stateTransition(leftState.get());
+            break;
+        case RIGHT:
+            lastStateEnum = stateEnum;
+            stateTransition(rightState.get());
+            break;
+        case UP:
+            lastStateEnum = stateEnum;
+            stateTransition(upState.get());
+            break;
+        case DOWN:
+            lastStateEnum = stateEnum;
+            stateTransition(downState.get());
+            break;
+        case IDLE:
+            lastStateEnum = stateEnum;
+            stateTransition(idleState.get());
+            break;
+        }
     }
 }

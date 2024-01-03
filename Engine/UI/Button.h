@@ -3,6 +3,7 @@
 #include <memory>
 #include <SDL_events.h>
 
+#include "StyledText.h"
 #include "TextBox.h"
 #include "../Debuging/Log.h"
 
@@ -28,7 +29,12 @@ public:
 
 private:
     //Text displayed in the button
-    std::shared_ptr<TextBox> mButtonText;
+    StyledText mButtonText;
+
+public:
+    StyledText* getButtonText();
+
+private:
     SDL_Color mButtonColor = {0, 0, 0, 0};
 
     std::function<void()> mCallback = nullptr;

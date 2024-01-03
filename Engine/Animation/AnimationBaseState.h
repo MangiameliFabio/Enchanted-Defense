@@ -10,13 +10,13 @@ class Animator;
 class BaseState
 {
     Texture mSpriteSheet;
-    
+
 public:
     std::shared_ptr<Animator> animation = nullptr;
 
-    virtual ~BaseState()
-    {
-    }
+    BaseState(Vector* position, const std::string& path, float frameRate, int spriteCount,
+              SDL_RendererFlip flip = SDL_FLIP_NONE);
+    virtual ~BaseState() = default;
 
     virtual void startState()
     {
@@ -58,3 +58,12 @@ public:
         mSpriteSheet.free();
     }
 };
+
+inline BaseState::BaseState(Vector* position, const std::string& path, const float frameRate, const int spriteCount, const SDL_RendererFlip flip)
+{
+    animation = std::make_shared<Animator>();
+    animation->setFrameRate(frameRate);
+    animation->addSpriteSheet(position, path, spriteCount);
+
+    animation->flip(flip);
+}

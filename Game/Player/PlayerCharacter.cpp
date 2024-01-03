@@ -8,6 +8,7 @@
 #include "../../Engine/Animation/Animator.h"
 #include "AnimationStateMachine/PlayerASM.h"
 #include "../../../Engine/Core/CollisionObject.h"
+#include "../../../Engine/Animation/AnimationBaseState.h"
 #include "../Projectile.h"
 
 void PlayerCharacter::init()

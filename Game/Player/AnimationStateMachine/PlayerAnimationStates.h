@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿/*
+#pragma once
 #include "../../../Engine/Animation/Animator.h"
 #include "../../../Engine/Animation/AnimationBaseState.h"
 
@@ -41,3 +42,4 @@ public:
 
     void updateState() override;
 };
+*/

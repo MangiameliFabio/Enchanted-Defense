@@ -24,6 +24,8 @@ public:
 
     void init(Object* parent);
 
+    void drawCollisionShape(bool persistent = false);
+
     bool checkForIntersection(CollisionObject* otherObject);
     bool checkForIntersection(const Vector& topLeft, const Vector& bottomRight);
 

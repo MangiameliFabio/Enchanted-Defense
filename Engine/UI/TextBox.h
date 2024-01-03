@@ -23,8 +23,8 @@ public:
     bool loadFromFile(const std::string& _path);
 
     void free() override;
-
-private:
+    
+protected:
     SDL_Color mTextColor;
     std::string mText;
 

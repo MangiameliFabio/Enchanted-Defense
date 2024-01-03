@@ -8,6 +8,7 @@
 #include "../../Engine/Core/CollisionObject.h"
 #include "../../Engine/Debuging/DebugRectangle.h"
 #include "../Pathfinding.h"
+#include "../../Engine/Debuging/DebugPoint.h"
 #include "../Player/PlayerCharacter.h"
 
 SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
@@ -15,18 +16,13 @@ SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
     //Set spawn Position
     position = SpawnPosition;
 
-    //Load sprite sheet
-    Texture spriteSheet;
-    spriteSheet.loadTexture("assets/textures/enemies/skeleton.png");
-    spriteSheet.setDynamicPosition(&position);
-
     //Create Animation
     animation = std::make_shared<Animator>();
-    animation->addSpriteSheet(&spriteSheet, 4, 36, spriteSheet.getHeight());
+    animation->addSpriteSheet(&position, "assets/textures/enemies/skeleton.png", 4);
     animation->enable();
     animation->setFrameRate(8.f);
 
-    collision->createCollisionShape(spriteSheet.getHeight(), spriteSheet.getWidth(), &position);
+    collision->createCollisionShape(animation->getHeight(), animation->getWidth(), &position);
 
     PLAYER->addObserver(this);
 }
@@ -39,6 +35,9 @@ SkeletonCharacter::~SkeletonCharacter()
 void SkeletonCharacter::update()
 {
     lastValidPos = position;
+    
+    auto point = new DebugPoint(position.x,position.y, {255,0,0,255});
+    point->persistent = false;
     
     BaseCharacter::update();
 

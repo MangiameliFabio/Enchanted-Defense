@@ -10,6 +10,8 @@ public:
     BaseCharacter();
     ~BaseCharacter() override = default;
 
+    void update() override;
+
     Vector position;
     Vector moveDir;
 

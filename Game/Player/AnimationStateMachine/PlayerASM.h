@@ -7,11 +7,6 @@
 #include "../../../Engine/Animation/AnimationStateMachine.h"
 #include "../../../Engine/Core/Patterns/Observer.h"
 
-class PlayerUp;
-class PlayerLeft;
-class PlayerDown;
-class PlayerRight;
-class PlayerIdle;
 class BaseState;
 
 class PlayerASM : public AnimationStateMachine, public Observer
@@ -25,11 +20,12 @@ public:
 
     void update() override;
 
-    std::shared_ptr<PlayerIdle> idleState = nullptr;
-    std::shared_ptr<PlayerLeft> leftState = nullptr;
-    std::shared_ptr<PlayerRight> rightState = nullptr;
-    std::shared_ptr<PlayerUp> upState = nullptr;
-    std::shared_ptr<PlayerDown> downState = nullptr;
+    std::shared_ptr<BaseState> idleState = nullptr;
+    std::shared_ptr<BaseState> leftState = nullptr;
+    std::shared_ptr<BaseState> rightState = nullptr;
+    std::shared_ptr<BaseState> upState = nullptr;
+    std::shared_ptr<BaseState> downState = nullptr;
 
     playerAnim stateEnum = IDLE;
+    playerAnim lastStateEnum = stateEnum;
 };

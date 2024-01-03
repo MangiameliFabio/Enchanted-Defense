@@ -682,6 +682,7 @@
     </ClCompile>
     <ClCompile Include="Engine\Scenes\SceneManager.cpp" />
     <ClCompile Include="Engine\UI\Button.cpp" />
+    <ClCompile Include="Engine\UI\StyledText.cpp" />
     <ClCompile Include="Engine\UI\TextBox.cpp" />
     <ClCompile Include="Engine\UI\UIElement.cpp" />
     <ClCompile Include="Game\BaseCharacter.cpp">
@@ -1156,6 +1157,7 @@
     <ClInclude Include="Engine\Scenes\BaseScene.h" />
     <ClInclude Include="Engine\Scenes\SceneManager.h" />
     <ClInclude Include="Engine\UI\Button.h" />
+    <ClInclude Include="Engine\UI\StyledText.h" />
     <ClInclude Include="Engine\UI\TextBox.h" />
     <ClInclude Include="Engine\UI\UIElement.h" />
     <ClInclude Include="Game\BaseCharacter.h" />

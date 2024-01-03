@@ -2,6 +2,7 @@
 
 #include "Object.h"
 #include "../Debuging/DebugPoint.h"
+#include "../Debuging/DebugRectangle.h"
 
 CollisionObject::CollisionObject()
 {
@@ -10,6 +11,12 @@ CollisionObject::CollisionObject()
 void CollisionObject::init(Object* parent)
 {
     mParent = parent;
+}
+
+void CollisionObject::drawCollisionShape(bool persistent)
+{
+    const auto rec = new DebugRectangle(topLeft.x, topLeft.y, mWidth, mHeight, {255,0,0,255});
+    rec->persistent = persistent;
 }
 
 bool CollisionObject::checkForIntersection(CollisionObject* otherObject)

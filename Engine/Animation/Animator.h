@@ -18,13 +18,17 @@ class Animator
 
 public:
     void update();
-    void addSpriteSheet(Texture* texture, int spriteCount, int widthSprite, int widthHeight);
+    void addSpriteSheet(Vector* position, const std::string& path, int spriteCount);
+    void addSpriteSheet(const Vector& position, const std::string& path, int spriteCount);
     void setFrameRate(float framesPerSecond);
     void flip(SDL_RendererFlip flip);
     void disable();
     void enable();
 
     Texture* getSpriteSheet() const;
+
+    int getWidth();
+    int getHeight();
 
     Animator() = default;
     ~Animator();

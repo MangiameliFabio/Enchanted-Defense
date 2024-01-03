@@ -11,7 +11,7 @@ void Animator::update()
         //Reset FrameTime
         currentFrameTime = frameRate;
 
-        animationFrame.x += spriteSheet->getWidth();
+        animationFrame.x += getWidth();
         
         if (currentSprite < maxSprites - 1)
         {
@@ -29,18 +29,42 @@ void Animator::update()
     }
 }
 
-void Animator::addSpriteSheet(Texture* texture, int spriteCount, int widthSprite, int heightSprite)
+void Animator::addSpriteSheet(Vector* position, const std::string& path, int spriteCount)
 {
-    animationFrame.w = widthSprite;
-    animationFrame.h = heightSprite;
+    spriteSheet = std::make_shared<Texture>();
+    spriteSheet->loadTexture(path);
+    spriteSheet->setDynamicPosition(position);
+    
+    animationFrame.w = spriteSheet->getWidth() / spriteCount;
+    animationFrame.h = spriteSheet->getHeight();
     animationFrame.y = 0;
     animationFrame.x = 0;
+
+    spriteSheet->setWidth(animationFrame.w);
+    spriteSheet->setHeight(animationFrame.h);
     
-    spriteSheet = std::make_shared<Texture>(*texture);
     spriteSheet->markForRender = false;
     spriteSheet->clip = &animationFrame;
-    spriteSheet->setHeight(heightSprite);
-    spriteSheet->setWidth(widthSprite);
+
+    maxSprites = spriteCount;
+}
+
+void Animator::addSpriteSheet(const Vector& position, const std::string& path, int spriteCount)
+{
+    spriteSheet = std::make_shared<Texture>();
+    spriteSheet->loadTexture(path);
+    spriteSheet->setStaticPosition(position);
+    
+    animationFrame.w = spriteSheet->getWidth() / spriteCount;
+    animationFrame.h = spriteSheet->getHeight();
+    animationFrame.y = 0;
+    animationFrame.x = 0;
+
+    spriteSheet->setWidth(animationFrame.w);
+    spriteSheet->setHeight(animationFrame.h);
+    
+    spriteSheet->markForRender = false;
+    spriteSheet->clip = &animationFrame;
 
     maxSprites = spriteCount;
 }
@@ -79,4 +103,14 @@ void Animator::enable()
 Texture* Animator::getSpriteSheet() const
 {
     return spriteSheet.get();
+}
+
+int Animator::getWidth()
+{
+    return animationFrame.w;
+}
+
+int Animator::getHeight()
+{
+    return animationFrame.h;
 }

@@ -9,7 +9,7 @@ class DebugPoint : public DebugShape
     Color color_;
 
 public:
-    DebugPoint(int x, int y, Color color = Color(255, 255, 255, 255)) : x_(x), y_(y), color_(color){}
+    DebugPoint(int x, int y, const Color& color = Color(255, 255, 255, 255)) : x_(x), y_(y), color_(color){}
     ~DebugPoint() override {}
     
     void render() override;
