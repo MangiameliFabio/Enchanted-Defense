@@ -15,17 +15,17 @@ class GameScene : public BaseScene, Observer
 {
     std::shared_ptr<EnemySpawner> skeletonSpawner = nullptr;
 
-    Texture background;
-    Texture skeletonIcon;
+    std::shared_ptr<Texture> background = nullptr;
+    std::shared_ptr<Texture> skeletonIcon = nullptr;
 
-    TextBox textEnemyCount;
+    std::shared_ptr<TextBox> textEnemyCount = nullptr;
 
     Vector playerStart;
     Vector enemyStart;
     Vector spawnPoints[4];
 
     float waveCountDown = 2.f;
-    
+
 public:
     GameScene();
     ~GameScene() override;

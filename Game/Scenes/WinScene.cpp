@@ -1,5 +1,7 @@
 ﻿#include "WinScene.h"
 
+#include <memory>
+
 #include "GameScene.h"
 #include "MainMenu.h"
 #include "../../Engine/Scenes/SceneManager.h"
@@ -19,31 +21,37 @@ void WinScene::startScene()
 {
     BaseScene::startScene();
 
-    background.loadTexture("assets/textures/MainMenuScreen.png");
-    background.setStaticPosition({
-        (ENGINE->SCREEN_WIDTH - background.getWidth()) / 2, (ENGINE->SCREEN_HEIGHT - background.getHeight()) / 2
+    background = std::make_shared<Texture>();
+    background->loadTexture("assets/textures/MainMenuScreen.png");
+    background->setStaticPosition({
+        (ENGINE->SCREEN_WIDTH - background->getWidth()) / 2, (ENGINE->SCREEN_HEIGHT - background->getHeight()) / 2
     });
 
-    constexpr SDL_Color textColor = {113, 0, 0, 0};
+    title = std::make_shared<StyledText>();
+    title->init("YOU WIN!", TEXT_COLOR, HEADLINE_SIZE);
+    title->loadFromFile("assets/fonts/alagard.ttf");
+    title->setPosition(Vector((ENGINE->SCREEN_WIDTH - title->getTexture()->getWidth()) / 2, 100));
+    title->createShadow(SHADOW_COLOR);
 
-    title.init("YOU WIN!", textColor, 72);
-    title.loadFromFile("assets/fonts/alagard.ttf");
-    title.setPosition(Vector((ENGINE->SCREEN_WIDTH - title.getTexture()->getWidth()) / 2, 100));
-
-    secondTitle.init("Thank you for playing", textColor, TEXT_SIZE);
-    secondTitle.loadFromFile("assets/fonts/alagard.ttf");
-    secondTitle.setPosition(Vector((ENGINE->SCREEN_WIDTH - secondTitle.getTexture()->getWidth()) / 2, 200));
+    secondTitle = std::make_shared<StyledText>();
+    secondTitle->init("Thank you for playing", TEXT_COLOR, TEXT_SIZE);
+    secondTitle->loadFromFile("assets/fonts/alagard.ttf");
+    secondTitle->setPosition(Vector((ENGINE->SCREEN_WIDTH - secondTitle->getTexture()->getWidth()) / 2, 200));
+    secondTitle->createShadow(SHADOW_COLOR);
     
-    
-    restartButton.init(&textColor);
-    restartButton.setButtonText("RESTART", TEXT_SIZE);
-    restartButton.setPosition(Vector((ENGINE->SCREEN_WIDTH - restartButton.getWidth()) / 2, 300));
-    restartButton.setCallback([] { GAME->sceneManager->changeScene<GameScene>(); });
+    restartButton = std::make_shared<Button>();
+    restartButton->init(TEXT_COLOR);
+    restartButton->setButtonText("RESTART", TEXT_SIZE);
+    restartButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - restartButton->getWidth()) / 2, 300));
+    restartButton->setCallback([] { GAME->sceneManager->changeScene<GameScene>(); });
+    restartButton->getButtonText()->createShadow(SHADOW_COLOR);
 
-    menuButton.init(&textColor);
-    menuButton.setButtonText("MENU", TEXT_SIZE);
-    menuButton.setPosition(Vector((ENGINE->SCREEN_WIDTH - menuButton.getWidth()) / 2, 350));
-    menuButton.setCallback([] { GAME->sceneManager->changeScene<MainMenu>(); });
+    menuButton = std::make_shared<Button>();
+    menuButton->init(TEXT_COLOR);
+    menuButton->setButtonText("MENU", TEXT_SIZE);
+    menuButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - menuButton->getWidth()) / 2, 350));
+    menuButton->setCallback([] { GAME->sceneManager->changeScene<MainMenu>(); });
+    menuButton->getButtonText()->createShadow(SHADOW_COLOR);
 }
 
 void WinScene::endScene()

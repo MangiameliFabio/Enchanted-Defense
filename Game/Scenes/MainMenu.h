@@ -8,13 +8,14 @@
 
 class MainMenu : public BaseScene
 {
-    StyledText title;
-    Button  startButton;
-    Button  creditsButton;
-    Button  quitButton;
+    std::shared_ptr<StyledText> title = nullptr;
 
-    Texture background;
-    
+    std::shared_ptr<Button> startButton = nullptr;
+    std::shared_ptr<Button> creditsButton = nullptr;
+    std::shared_ptr<Button> quitButton = nullptr;
+
+    std::shared_ptr<Texture> background = nullptr;
+
 public:
     MainMenu() = default;
     ~MainMenu() override = default;

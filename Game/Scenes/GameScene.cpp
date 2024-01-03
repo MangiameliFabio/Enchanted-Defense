@@ -1,5 +1,6 @@
 ﻿#include "GameScene.h"
 
+#include <memory>
 #include <random>
 
 #include "GameOverScene.h"
@@ -34,19 +35,22 @@ void GameScene::startScene()
 {
     BaseScene::startScene();
 
-    background.loadTexture("assets/textures/environment/background.png");
-    background.setStaticPosition({
-        (ENGINE->SCREEN_WIDTH - background.getWidth()) / 2, (ENGINE->SCREEN_HEIGHT - background.getHeight()) / 2
+    background = std::make_shared<Texture>();
+    background->loadTexture("assets/textures/environment/background.png");
+    background->setStaticPosition({
+        (ENGINE->SCREEN_WIDTH - background->getWidth()) / 2, (ENGINE->SCREEN_HEIGHT - background->getHeight()) / 2
     });
 
-    skeletonIcon.loadTexture("assets/textures/enemies/SkeletonIcon.png");
-    skeletonIcon.setStaticPosition({
+    skeletonIcon = std::make_shared<Texture>();
+    skeletonIcon->loadTexture("assets/textures/enemies/SkeletonIcon.png");
+    skeletonIcon->setStaticPosition({
         25, 15
     });
-    
-    textEnemyCount.init("x" + std::to_string(GAME->enemyCount), HUD_TEXT_COLOR, HUD_TEXT_SIZE);
-    textEnemyCount.loadFromFile("assets/fonts/alagard.ttf");
-    textEnemyCount.setPosition(75, 15);
+
+    textEnemyCount = std::make_shared<TextBox>();
+    textEnemyCount->init("x" + std::to_string(GAME->enemyCount), HUD_TEXT_COLOR, HUD_TEXT_SIZE);
+    textEnemyCount->loadFromFile("assets/fonts/alagard.ttf");
+    textEnemyCount->setPosition(75, 15);
 
     GAME->pathfindingGrid = std::make_shared<Pathfinding>(65, 65, 50, 50);
     GAME->pathfindingGrid->init();
@@ -112,7 +116,7 @@ void GameScene::updateScene()
 {
     BaseScene::updateScene();
 
-    textEnemyCount.setText("x" + std::to_string(GAME->currentEnemyCount));
+    textEnemyCount->setText("x" + std::to_string(GAME->currentEnemyCount));
 
     if (GAME->currentEnemyCount > 0)
     {

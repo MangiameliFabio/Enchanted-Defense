@@ -7,12 +7,12 @@
 
 class WinScene : public BaseScene
 {
-    Texture background;
-    StyledText title;
-    StyledText secondTitle;
+    std::shared_ptr<Texture> background = nullptr;
+    std::shared_ptr<StyledText> title = nullptr;
+    std::shared_ptr<StyledText> secondTitle = nullptr;
 
-    Button  restartButton;
-    Button  menuButton;
+    std::shared_ptr<Button> restartButton = nullptr;
+    std::shared_ptr<Button> menuButton = nullptr;
 
 public:
     WinScene();

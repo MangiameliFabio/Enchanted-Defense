@@ -29,12 +29,14 @@ void GameOverScene::startScene()
     restartButton->setButtonText("RESTART", TEXT_SIZE);
     restartButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - restartButton->getWidth()) / 2, 300));
     restartButton->setCallback([] { GAME->sceneManager->changeScene<GameScene>(); });
+    restartButton->getButtonText()->createShadow(SHADOW_COLOR);
 
     menuButton = std::make_shared<Button>();
     menuButton->init(TEXT_COLOR);
     menuButton->setButtonText("MENU", TEXT_SIZE);
     menuButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - menuButton->getWidth()) / 2, 350));
     menuButton->setCallback([] { GAME->sceneManager->changeScene<MainMenu>(); });
+    menuButton->getButtonText()->createShadow(SHADOW_COLOR);
 }
 
 void GameOverScene::endScene()
