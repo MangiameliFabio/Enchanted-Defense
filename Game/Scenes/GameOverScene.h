@@ -7,11 +7,12 @@
 
 class GameOverScene : public BaseScene
 {
-    Texture background;
-    TextBox title;
+    std::shared_ptr<Texture> background = nullptr;
+    std::shared_ptr<StyledText> title = nullptr;
 
-    Button  restartButton;
-    Button  menuButton;
+    std::shared_ptr<Button>  restartButton = nullptr;
+    std::shared_ptr<Button>  menuButton = nullptr;
+    
 public:
     void startScene() override;
     void endScene() override;

@@ -142,6 +142,7 @@ void Texture::free()
 
 Texture::~Texture()
 {
+    free();
 }
 
 int Texture::getZindex() const
@@ -162,6 +163,21 @@ void Texture::setDynamicPosition(Vector* v)
 void Texture::setStaticPosition(const Vector& v)
 {
     mStaticPos = v;
+}
+
+Vector Texture::getPosition()
+{
+    if(mDynamicPos)
+    {
+        return *mDynamicPos;
+    }
+
+    return mStaticPos;
+}
+
+SDL_Texture* Texture::getSDLTexture()
+{
+    return mTexture;
 }
 
 int Texture::getWidth() const

@@ -13,7 +13,7 @@ public:
     TextBox() = default;
 
     //Deallocates memory
-    ~TextBox() override = default;
+    ~TextBox() override;
 
     void init(const std::string& _text, const SDL_Color& _textColor, int _fontSize = 24, int _zIndex = 500.f);
 
@@ -21,8 +21,6 @@ public:
 
     //Loads image at specified path
     bool loadFromFile(const std::string& _path);
-
-    void free() override;
     
 protected:
     SDL_Color mTextColor;

@@ -12,14 +12,16 @@ class TextBox;
 class Button : public UIElement
 {
 public:
-    ~Button() override = default;
+    Button();
+    ~Button() override;
 
     void init(const SDL_Color* buttonColor = nullptr);
+    void init(const SDL_Color& buttonColor);
+
     void setButtonText(const std::string& text, int fontSize);
     void setCallback(std::function<void()> callback);
     //Handles mouse event
-    void handleEvent(const SDL_Event* e) const;
-    void free() override;
+    bool handleEvent(const SDL_Event* e) const;
     void updateDimension();
     
     int getWidth() const;
@@ -29,10 +31,10 @@ public:
 
 private:
     //Text displayed in the button
-    StyledText mButtonText;
+    std::shared_ptr<StyledText> mButtonText = nullptr;
 
 public:
-    StyledText* getButtonText();
+    StyledText* getButtonText() const;
 
 private:
     SDL_Color mButtonColor = {0, 0, 0, 0};

@@ -1,9 +1,15 @@
 ﻿#include "StyledText.h"
 
+#include <memory>
+
+StyledText::~StyledText()
+{
+}
+
 void StyledText::createShadow(SDL_Color shadowColor)
 {
-    mTextShadow.init(mText, shadowColor, mFontSize);
-    mTextShadow.loadFromFile(path);
-    mTextShadow.setPosition(getPosition().x + 3, getPosition().y + 3);
-    mTextShadow.setZIndex(getTexture()->getZindex() - 50);
+    mTextShadow = std::make_shared<StyledText>();
+    mTextShadow->init(mText, shadowColor, mFontSize,getTexture()->getZindex() - 50);
+    mTextShadow->loadFromFile(path);
+    mTextShadow->setPosition(getPosition().x + 3, getPosition().y + 3);
 }

@@ -9,13 +9,13 @@
 #include "../GameSingleton.h"
 #include "../../Engine/EngineSingelton.h"
 #include "../Pathfinding.h"
+#include "../Styles.h"
 #include "../../Engine/Scenes/SceneManager.h"
 #include "../Player/PlayerCharacter.h"
 #include "../Skeleton/SkeletonCharacter.h"
 
 GameScene::GameScene()
 {
-    sceneMame = "GameScene";
 }
 
 GameScene::~GameScene()
@@ -44,7 +44,7 @@ void GameScene::startScene()
         25, 15
     });
     
-    textEnemyCount.init("x" + std::to_string(GAME->enemyCount), {255, 255, 255, 0}, 32);
+    textEnemyCount.init("x" + std::to_string(GAME->enemyCount), HUD_TEXT_COLOR, HUD_TEXT_SIZE);
     textEnemyCount.loadFromFile("assets/fonts/alagard.ttf");
     textEnemyCount.setPosition(75, 15);
 
@@ -72,10 +72,6 @@ void GameScene::startScene()
 void GameScene::endScene()
 {
     BaseScene::endScene();
-
-    background.free();
-    skeletonIcon.free();
-    textEnemyCount.free();
 
     GAME->pathfindingGrid = nullptr;
     GAME->sizeEnemiesList = 0;

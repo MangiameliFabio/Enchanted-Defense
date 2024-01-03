@@ -24,6 +24,8 @@ public:
     void removeTexture(Texture* texture);
     void removeDebugShape(DebugShape* debugShape);
 
+    std::vector<Texture*>& getTextures();
+
     //Frees media and shuts down SDL
     void close();
 

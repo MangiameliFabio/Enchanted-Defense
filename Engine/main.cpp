@@ -68,7 +68,11 @@ int main(int argc, char* args[])
             //Handle button events
             for (int i = 0; i < ENGINE->gTotalButtons; ++i)
             {
-                ENGINE->gButtons[i]->handleEvent(&e);
+                //Check if click event is handled
+                if(ENGINE->gButtons[i]->handleEvent(&e))
+                {
+                    break;
+                }
             }
         }
 #if MEASURE_PERFORMANCE

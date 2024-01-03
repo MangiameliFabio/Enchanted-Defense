@@ -1179,6 +1179,7 @@
     <ClInclude Include="Game\Scenes\WinScene.h" />
     <ClInclude Include="Game\Skeleton\SkeletonCharacter.h" />
     <ClInclude Include="Game\GameManager.h" />
+    <ClInclude Include="Game\Styles.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

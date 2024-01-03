@@ -3,41 +3,41 @@
 #include "GameScene.h"
 #include "MainMenu.h"
 #include "../GameSingleton.h"
+#include "../Styles.h"
 #include "../../Engine/EngineSingelton.h"
 #include "../../Engine/Scenes/SceneManager.h"
+#include "../../Engine/UI/StyledText.h"
 
 void GameOverScene::startScene()
 {
     BaseScene::startScene();
-    
-    background.loadTexture("assets/textures/MainMenuScreen.png");
-    background.setStaticPosition({
-        (ENGINE->SCREEN_WIDTH - background.getWidth()) / 2, (ENGINE->SCREEN_HEIGHT - background.getHeight()) / 2
+
+    background = std::make_shared<Texture>();
+    background->loadTexture("assets/textures/MainMenuScreen.png");
+    background->setStaticPosition({
+        (ENGINE->SCREEN_WIDTH - background->getWidth()) / 2, (ENGINE->SCREEN_HEIGHT - background->getHeight()) / 2
     });
-
-    constexpr SDL_Color textColor = {113, 0, 0, 0};
-
-    title.init("GAME OVER", textColor, 72);
-    title.loadFromFile("assets/fonts/alagard.ttf");
-    title.setPosition(Vector((ENGINE->SCREEN_WIDTH - title.getTexture()->getWidth()) / 2, 100));
     
-    restartButton.init(&textColor);
-    restartButton.setButtonText("RESTART", 48);
-    restartButton.setPosition(Vector((ENGINE->SCREEN_WIDTH - restartButton.getWidth()) / 2, 300));
-    restartButton.setCallback([] { GAME->sceneManager->changeScene<GameScene>(); });
+    title = std::make_shared<StyledText>();
+    title->init("GAME OVER", TEXT_COLOR, HEADLINE_SIZE);
+    title->loadFromFile("assets/fonts/alagard.ttf");
+    title->setPosition(Vector((ENGINE->SCREEN_WIDTH - title->getTexture()->getWidth()) / 2, 100));
+    title->createShadow(SHADOW_COLOR);
 
-    menuButton.init(&textColor);
-    menuButton.setButtonText("MENU", 48);
-    menuButton.setPosition(Vector((ENGINE->SCREEN_WIDTH - menuButton.getWidth()) / 2, 350));
-    menuButton.setCallback([] { GAME->sceneManager->changeScene<MainMenu>(); });
+    restartButton = std::make_shared<Button>();
+    restartButton->init(TEXT_COLOR);
+    restartButton->setButtonText("RESTART", TEXT_SIZE);
+    restartButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - restartButton->getWidth()) / 2, 300));
+    restartButton->setCallback([] { GAME->sceneManager->changeScene<GameScene>(); });
+
+    menuButton = std::make_shared<Button>();
+    menuButton->init(TEXT_COLOR);
+    menuButton->setButtonText("MENU", TEXT_SIZE);
+    menuButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - menuButton->getWidth()) / 2, 350));
+    menuButton->setCallback([] { GAME->sceneManager->changeScene<MainMenu>(); });
 }
 
 void GameOverScene::endScene()
 {
     BaseScene::endScene();
-    
-    background.free();
-    title.free();
-    restartButton.free();
-    menuButton.free();
 }

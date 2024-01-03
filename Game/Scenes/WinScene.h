@@ -8,8 +8,8 @@
 class WinScene : public BaseScene
 {
     Texture background;
-    TextBox title;
-    TextBox secondTitle;
+    StyledText title;
+    StyledText secondTitle;
 
     Button  restartButton;
     Button  menuButton;

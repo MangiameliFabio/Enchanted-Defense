@@ -2,6 +2,7 @@
 
 UIElement::~UIElement()
 {
+    mTexture.free();
 }
 
 void UIElement::setPosition(const float x, const float y)
@@ -25,11 +26,6 @@ Texture* UIElement::getTexture()
 void UIElement::setZIndex(int _zIndex)
 {
     mTexture.setZindex(_zIndex);
-}
-
-void UIElement::free()
-{
-    mTexture.free();
 }
 
 Vector UIElement::getPosition() const

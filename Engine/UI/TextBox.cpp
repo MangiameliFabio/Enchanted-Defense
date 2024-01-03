@@ -1,6 +1,16 @@
 ﻿#include "TextBox.h"
 
 #include "../EngineSingelton.h"
+
+TextBox::~TextBox()
+{
+    TTF_CloseFont(mFont);
+    getTexture()->free();
+
+    mFont = nullptr;
+    mInitalized = false;
+}
+
 void TextBox::init(const std::string& _text, const SDL_Color& _textColor, int _fontSize, int _zIndex)
 {
     mInitalized = true;
@@ -40,17 +50,6 @@ bool TextBox::loadFromFile(const std::string& _path)
     }
 
     return success;
-}
-
-void TextBox::free()
-{
-    UIElement::free();
-    
-    TTF_CloseFont(mFont);
-    getTexture()->free();
-
-    mFont = nullptr;
-    mInitalized = false;
 }
 
 bool TextBox::loadFromRenderedText()

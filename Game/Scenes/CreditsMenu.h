@@ -9,15 +9,16 @@
 
 class CreditsMenu : public BaseScene
 {
-    Texture background;
-    TextBox title;
-    TextBox secondTitle;
+    std::shared_ptr<Texture> background = nullptr;
+    
+    std::shared_ptr<StyledText> title = nullptr;
+    std::shared_ptr<StyledText> secondTitle = nullptr;
 
-    Button backButton;
+    std::shared_ptr<Button> backButton;
     
     std::vector<std::shared_ptr<Animator>> skeletons;
 
-    Animator playerIdle;
+    std::shared_ptr<Animator> playerIdle;
 
     int amountOfSkelis = 6;
     

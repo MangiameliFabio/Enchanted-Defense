@@ -157,6 +157,11 @@ void Renderer::removeDebugShape(DebugShape* debugShape)
     numDebugShapes--;
 }
 
+std::vector<Texture*>& Renderer::getTextures()
+{
+    return textureContainer;
+}
+
 void Renderer::close()
 {
     //Destroy window    

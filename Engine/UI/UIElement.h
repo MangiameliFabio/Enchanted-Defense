@@ -16,8 +16,6 @@ public:
 
     //Set set index of texture
     void setZIndex(int _zIndex);
-    virtual void free();
-
 
 private:
     //Top left position

@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "../EngineSingelton.h"
+#include "../Debuging/Log.h"
 
 void Animator::update()
 {

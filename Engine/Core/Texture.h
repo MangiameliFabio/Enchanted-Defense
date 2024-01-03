@@ -24,6 +24,10 @@ public:
     void setDynamicPosition(Vector* v);
     void setStaticPosition(const Vector& v);
 
+    Vector getPosition();
+
+    SDL_Texture* getSDLTexture();
+
     ~Texture();
     SDL_RendererFlip flip = SDL_FLIP_NONE;
 
