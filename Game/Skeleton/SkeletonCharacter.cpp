@@ -1,6 +1,7 @@
 ﻿#include "SkeletonCharacter.h"
 
 #include <memory>
+#include <memory>
 
 #include "../GameSingleton.h"
 #include "../../Engine/EngineSingelton.h"
@@ -8,6 +9,7 @@
 #include "../../Engine/Core/CollisionObject.h"
 #include "../../Engine/Debuging/DebugRectangle.h"
 #include "../Pathfinding.h"
+#include "../../Engine/Core/SoundEffect.h"
 #include "../../Engine/Debuging/DebugPoint.h"
 #include "../Player/PlayerCharacter.h"
 
@@ -25,6 +27,9 @@ SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
     collision->createCollisionShape(animation->getHeight(), animation->getWidth(), &position);
 
     PLAYER->addObserver(this);
+
+    deathSound = std::make_shared<SoundEffect>();
+    deathSound->init("assets/sounds/effects/skeleton_kill.wav");
 }
 
 SkeletonCharacter::~SkeletonCharacter()
@@ -36,9 +41,6 @@ void SkeletonCharacter::update()
 {
     lastValidPos = position;
     
-    auto point = new DebugPoint(position.x,position.y, {255,0,0,255});
-    point->persistent = false;
-    
     BaseCharacter::update();
 
     //Search new Path whenever cooldown is 0
@@ -46,7 +48,7 @@ void SkeletonCharacter::update()
     {
         pfCurrentCooldown = pfCooldown;
 
-        if (!GAME->pathfindingGrid->findPath(position, PLAYER->position, path, this))
+        if (!GAME->gPathfindingGrid->findPath(position, PLAYER->position, path, this))
         {
             printf("no path found in: %s \n", name.c_str());
         }
@@ -90,7 +92,7 @@ void SkeletonCharacter::close()
 
 bool SkeletonCharacter::checkForCollision()
 {
-    for (int enemy = 0; enemy < GAME->sizeEnemiesList; ++enemy)
+    for (int enemy = 0; enemy < GAME->gSizeEnemiesList; ++enemy)
     {
         if(GAME->gEnemyList.empty()){ return false;}
         if (GAME->gEnemyList[enemy].get() != this)
@@ -144,6 +146,12 @@ bool SkeletonCharacter::setDirToPath()
         }
     }
     return false;
+}
+
+void SkeletonCharacter::onDeath() const
+{
+    deathSound->play();
+    BaseEnemy::onDeath();
 }
 
 void SkeletonCharacter::onNotify(const Event event)

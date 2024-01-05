@@ -13,66 +13,41 @@
 
 bool Renderer::init()
 {
-    //Initialization flag
     bool success = true;
-
-    //Initialize PNG loading
-    int imgFlags = IMG_INIT_PNG;
-    if (!(IMG_Init(imgFlags) & imgFlags))
+    //Create window
+    gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                               ENGINE->SCREEN_WIDTH,
+                               ENGINE->SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if (gWindow == nullptr)
     {
-        printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
-        success = false;
-    }
-
-    //Initialize SDL_ttf
-    if (TTF_Init() == -1)
-    {
-        printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
-        success = false;
-    }
-
-    //Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
-        printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+        printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
         success = false;
     }
     else
     {
-        //Create window
-        gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                   ENGINE->SCREEN_WIDTH,
-                                   ENGINE->SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (gWindow == nullptr)
+        //Create vsynced renderer for window
+        ENGINE->gSDL_Renderer =
+            SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        if (ENGINE->gSDL_Renderer == nullptr)
         {
-            printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
+            printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
             success = false;
         }
         else
         {
-            //Create vsynced renderer for window
-            ENGINE->gSDL_Renderer =
-                SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-            if (ENGINE->gSDL_Renderer == nullptr)
-            {
-                printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
-                success = false;
-            }
-            else
-            {
-                //Initialize renderer color
-                SDL_SetRenderDrawColor(ENGINE->gSDL_Renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+            //Initialize renderer color
+            SDL_SetRenderDrawColor(ENGINE->gSDL_Renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-                //Initialize PNG loading
-                int imgFlags = IMG_INIT_PNG;
-                if (!(IMG_Init(imgFlags) & imgFlags))
-                {
-                    printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
-                    success = false;
-                }
+            //Initialize PNG loading
+            int imgFlags = IMG_INIT_PNG;
+            if (!(IMG_Init(imgFlags) & imgFlags))
+            {
+                printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+                success = false;
             }
         }
     }
+
 
     return success;
 }
@@ -169,8 +144,4 @@ void Renderer::close()
     SDL_DestroyWindow(gWindow);
     gWindow = nullptr;
     ENGINE->gSDL_Renderer = nullptr;
-
-    IMG_Quit();
-    SDL_Quit();
-    TTF_Quit();
 }

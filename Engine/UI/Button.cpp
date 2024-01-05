@@ -4,9 +4,12 @@
 #include "Button.h"
 
 #include <memory>
+#include <memory>
 #include <utility>
 
 #include "../EngineSingelton.h"
+#include "../Core/SoundEffect.h"
+#include "../Core/Soundtrack.h"
 
 Button::Button()
 {
@@ -31,6 +34,9 @@ void Button::init(const SDL_Color& buttonColor)
 {
     ENGINE->addButton(this);
 
+    clickSound = std::make_shared<SoundEffect>();
+    clickSound->init("assets/sounds/effects/button_click.wav", 30);
+    
     mButtonColor = buttonColor;
 }
 
@@ -63,6 +69,7 @@ bool Button::handleEvent(const SDL_Event* e) const
             && y > getPosition().y
             && y < getPosition().y + mHeight)
         {
+            clickSound->play();
             mCallback();
             return true;
         }

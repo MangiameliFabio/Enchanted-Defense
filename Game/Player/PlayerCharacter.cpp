@@ -1,6 +1,7 @@
 ﻿#include "PlayerCharacter.h"
 
 #include <memory>
+#include <memory>
 
 #include "InputManager.h"
 #include "../GameSingleton.h"
@@ -10,6 +11,7 @@
 #include "../../../Engine/Core/CollisionObject.h"
 #include "../../../Engine/Animation/AnimationBaseState.h"
 #include "../Projectile.h"
+#include "../../Engine/Core/SoundEffect.h"
 
 void PlayerCharacter::init()
 {
@@ -27,6 +29,11 @@ void PlayerCharacter::init()
     
     collision->createCollisionShape(spriteHeight, spriteWidth - 10, &position);
     collision->updatePixelBorder();
+
+    shootSound = std::make_shared<SoundEffect>();
+    shootSound->init("assets/sounds/effects/shoot_sound.wav");
+    gameOver = std::make_shared<SoundEffect>();
+    gameOver->init("assets/sounds/effects/game_over.wav");
 }
 
 void PlayerCharacter::update()
@@ -44,8 +51,6 @@ void PlayerCharacter::update()
 void PlayerCharacter::close()
 {
     BaseCharacter::close();
-    
-    
 }
 
 void PlayerCharacter::move()
@@ -74,6 +79,7 @@ void PlayerCharacter::move()
 
 void PlayerCharacter::spawnProjectile(Vector& pos, Vector& dir)
 {
+    shootSound->play();
     new Projectile(pos, dir);
 }
 
@@ -95,7 +101,7 @@ void PlayerCharacter::onNotify(const Event event)
 
     if (event == ALL_INPUTS_HANDLED)
     {
-        if (isMoveing)
+        if (isMoving)
         {
             if (!(moveDir.length() == 0.f))
             {
@@ -116,7 +122,7 @@ void PlayerCharacter::onNotify(const Event event)
         aimDir.Zero();
         moveDir.Zero();
         velocity.Zero();
-        isMoveing = false;
+        isMoving = false;
         isShooting = false;
     }
 }
@@ -133,5 +139,6 @@ void PlayerCharacter::addAimDirection(Vector& v)
 
 void PlayerCharacter::die()
 {
+    gameOver->play();
     notify(PLAYER_DIED);
 }

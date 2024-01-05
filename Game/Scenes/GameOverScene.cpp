@@ -7,6 +7,8 @@
 #include "../../Engine/EngineSingelton.h"
 #include "../../Engine/Scenes/SceneManager.h"
 #include "../../Engine/UI/StyledText.h"
+#include "../GameManager.h"
+#include "../../Engine/Core/Soundtrack.h"
 
 void GameOverScene::startScene()
 {
@@ -28,15 +30,17 @@ void GameOverScene::startScene()
     restartButton->init(TEXT_COLOR);
     restartButton->setButtonText("RESTART", TEXT_SIZE);
     restartButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - restartButton->getWidth()) / 2, 300));
-    restartButton->setCallback([] { GAME->sceneManager->changeScene<GameScene>(); });
+    restartButton->setCallback([] { GAME->gSceneManager->changeScene<GameScene>(); });
     restartButton->getButtonText()->createShadow(SHADOW_COLOR);
 
     menuButton = std::make_shared<Button>();
     menuButton->init(TEXT_COLOR);
     menuButton->setButtonText("MENU", TEXT_SIZE);
     menuButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - menuButton->getWidth()) / 2, 350));
-    menuButton->setCallback([] { GAME->sceneManager->changeScene<MainMenu>(); });
+    menuButton->setCallback([] { GAME->gSceneManager->changeScene<MainMenu>(); });
     menuButton->getButtonText()->createShadow(SHADOW_COLOR);
+
+    GAME->gGameManager->getMenuMusic()->play(1000);
 }
 
 void GameOverScene::endScene()

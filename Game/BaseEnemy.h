@@ -9,7 +9,7 @@ public:
     BaseEnemy();
     ~BaseEnemy();
 
-    void onDeath() const;
+    virtual void onDeath() const;
     void setEventOnDeath(std::function<void()> callback);
 
 private:

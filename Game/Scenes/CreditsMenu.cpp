@@ -38,7 +38,7 @@ void CreditsMenu::startScene()
     backButton->init(TEXT_COLOR);
     backButton->setButtonText("BACK", TEXT_SIZE);
     backButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - backButton->getWidth()) / 2, 350));
-    backButton->setCallback([] { GAME->sceneManager->changeScene<MainMenu>(); });
+    backButton->setCallback([] { GAME->gSceneManager->changeScene<MainMenu>(); });
     backButton->getButtonText()->createShadow(SHADOW_COLOR);
 
     for (int i = 0; i < amountOfSkelis; i++)

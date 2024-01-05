@@ -3,12 +3,14 @@
 #include <memory>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 
 #include "EngineSingelton.h"
 #include "Core/Patterns/Subject.h"
 #include "Core/Renderer.h"
 #include "Core/GameClock.h"
 #include "../Game/GameManager.h"
+#include "../Game/GameSingleton.h"
 #include "Core/MeasurePerformance.h"
 #include "Debuging/Log.h"
 #include "UI/Button.h"
@@ -24,15 +26,46 @@ int main(int argc, char* args[])
     measureMain->start();
 #endif
 
+    //Initialization flag
+    bool success = true;
 
+    //Initialize PNG loading
+    int imgFlags = IMG_INIT_PNG;
+    if (!(IMG_Init(imgFlags) & imgFlags))
+    {
+        printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+        success = false;
+    }
+
+    //Initialize SDL_ttf
+    if (TTF_Init() == -1)
+    {
+        printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+        success = false;
+    }
+
+    //Initialize SDL
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
+    {
+        printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+        success = false;
+    }
+    
+    //Initialize SDL_mixer
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
+    
     //Initialize
-    if (!ENGINE->gRenderer->init())
+    if (success && !ENGINE->gRenderer->init())
     {
         printf("failed to initialize renderer \n");
     }
 
-    const auto gameManager = std::make_shared<GameManager>();
-    gameManager->init();
+    GAME->gGameManager = std::make_shared<GameManager>();
+    GAME->gGameManager->init();
     const auto gameClock = std::make_shared<GameClock>();
     gameClock->init();
 
@@ -136,6 +169,11 @@ int main(int argc, char* args[])
     //Shutdown Systems
     ENGINE->gRenderer->close();
     gameClock->close();
-
+    
+    IMG_Quit();
+    SDL_Quit();
+    TTF_Quit();
+    Mix_Quit();
+    
     return 0;
 }

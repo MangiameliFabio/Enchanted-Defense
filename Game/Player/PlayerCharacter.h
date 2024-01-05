@@ -7,6 +7,7 @@
 #include "AnimationStateMachine/PlayerASM.h"
 #include "InputManager.h"
 
+class SoundEffect;
 struct Vector;
 
 class PlayerCharacter : public BaseCharacter, public Observer, public Subject
@@ -26,10 +27,13 @@ public:
     PlayerCharacter();
     ~PlayerCharacter() override;
 
-    std::shared_ptr<PlayerASM> stateMachine;
-    std::shared_ptr<InputManager> inputManager;
+    std::shared_ptr<PlayerASM> stateMachine = nullptr;
+    std::shared_ptr<InputManager> inputManager = nullptr;
 
-    Vector aimDir;
+    std::shared_ptr<SoundEffect> shootSound = nullptr;
+    std::shared_ptr<SoundEffect> gameOver = nullptr;
+
+    Vector aimDir = {0,0};
 
     float spriteHeight = 0.f;
     float spriteWidth = 0.f;
@@ -38,6 +42,6 @@ public:
     float attackSpeed = 0.5f;
     float attackCooldown = 0.f;
 
-    bool isMoveing = false;
+    bool isMoving = false;
     bool isShooting = false;
 };

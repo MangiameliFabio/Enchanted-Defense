@@ -7,6 +7,7 @@
 #include "TextBox.h"
 #include "../Debuging/Log.h"
 
+class SoundEffect;
 class TextBox;
 
 class Button : public UIElement
@@ -38,6 +39,8 @@ public:
 
 private:
     SDL_Color mButtonColor = {0, 0, 0, 0};
+
+    std::shared_ptr<SoundEffect> clickSound = nullptr;
 
     std::function<void()> mCallback = nullptr;
 

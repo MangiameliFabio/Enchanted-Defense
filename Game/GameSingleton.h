@@ -6,6 +6,7 @@
 
 #include "Player/PlayerCharacter.h"
 
+class GameManager;
 class BaseEnemy;
 class Pathfinding;
 class SceneManager;
@@ -33,20 +34,23 @@ public:
     std::shared_ptr<PlayerCharacter> gPlayer = nullptr;
 
     //Pathfinding Grid
-    std::shared_ptr<Pathfinding> pathfindingGrid = nullptr;
+    std::shared_ptr<Pathfinding> gPathfindingGrid = nullptr;
 
-    std::shared_ptr<SceneManager> sceneManager = nullptr;
+    std::shared_ptr<SceneManager> gSceneManager = nullptr;
+    std::shared_ptr<GameManager> gGameManager = nullptr;
 
-    int sizeEnemiesList = 0;
+    int gSizeEnemiesList = 0;
 
     //Enemies to kill for win
-    int enemyCount = 10;
-    int currentEnemyCount = enemyCount;
+    int gEnemyCount = 30;
+    int gCurrentEnemyCount = gEnemyCount;
+
+    SceneState gSceneState = MENU;
 
     void addEnemy(const std::shared_ptr<BaseEnemy>& enemy)
     {
         gEnemyList.push_back(enemy);
-        sizeEnemiesList++;
+        gSizeEnemiesList++;
     }
 
     void removeEnemy(const std::weak_ptr<BaseEnemy>& enemy)
@@ -57,6 +61,6 @@ public:
         //Remove Object
         if (iterator != gEnemyList.end())
             gEnemyList.erase(iterator);
-        sizeEnemiesList--;
+        gSizeEnemiesList--;
     }
 };

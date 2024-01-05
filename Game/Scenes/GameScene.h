@@ -7,6 +7,7 @@
 #include "../../Engine/Scenes/BaseScene.h"
 #include "../../Engine/UI/TextBox.h"
 
+class Soundtrack;
 class BaseEnemy;
 enum Event : int;
 class EnemySpawner;

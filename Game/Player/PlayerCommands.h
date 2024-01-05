@@ -10,7 +10,7 @@ public:
         Vector dir = Vector(-1, 0);
         
         GameSingleton::getInstance()->gPlayer->addMoveDirection(dir);
-        PLAYER->isMoveing = true;
+        PLAYER->isMoving = true;
         PLAYER->stateMachine->stateEnum = LEFT;
     }
 };
@@ -23,7 +23,7 @@ public:
         Vector dir = Vector(1, 0);
 
         PLAYER->addMoveDirection(dir);
-        PLAYER->isMoveing = true;
+        PLAYER->isMoving = true;
         PLAYER->stateMachine->stateEnum = RIGHT;
     }
 };
@@ -36,7 +36,7 @@ public:
         Vector dir = Vector(0, -1);
 
         PLAYER->addMoveDirection(dir);
-        PLAYER->isMoveing = true;
+        PLAYER->isMoving = true;
         PLAYER->stateMachine->stateEnum = UP;
     }
 };
@@ -49,7 +49,7 @@ public:
         Vector dir = Vector(0, 1);
 
         PLAYER->addMoveDirection(dir);
-        PLAYER->isMoveing = true;
+        PLAYER->isMoving = true;
         PLAYER->stateMachine->stateEnum = DOWN;
     }
 };

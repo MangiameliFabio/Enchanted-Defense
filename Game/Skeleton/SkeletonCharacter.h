@@ -7,6 +7,8 @@
 #include "../../Engine/Animation/Animator.h"
 #include "../../Engine/Core/Patterns/Observer.h"
 
+class SoundEffect;
+
 class SkeletonCharacter : public BaseEnemy, public Observer
 {
     void update() override;
@@ -19,13 +21,17 @@ public:
     void close() override;
     bool checkForCollision();
     bool setDirToPath();
+
+    void onDeath() const override;
     
     void onNotify(const Event event) override;
 
     std::vector<Vector> path;
     std::vector<BaseCharacter*> nearCharacter;
     
-    std::shared_ptr<Animator> animation;
+    std::shared_ptr<Animator> animation = nullptr;
+    std::shared_ptr<SoundEffect> deathSound = nullptr;
+
     Vector lastValidPos;
 
     float pfCooldown = 0.5f;

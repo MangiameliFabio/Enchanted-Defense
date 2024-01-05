@@ -60,7 +60,7 @@ public:
     bool gQuit = false;
     
     //True to activate rendering of debugShapes
-    bool debug = true;
+    bool debug = false;
 
     void addObject(Object* object)
     {

@@ -6,6 +6,7 @@ enum Event
     HANDLE_INPUT,
     ALL_INPUTS_HANDLED,
     PLAYER_DIED,
+    SCENE_SWITCH,
 };
 
 enum playerAnim
@@ -20,4 +21,10 @@ enum playerAnim
 enum Enemies
 {
     SKELETON
+};
+
+enum SceneState
+{
+    MENU,
+    IN_GAME
 };

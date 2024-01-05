@@ -2,9 +2,11 @@
 #include <memory>
 
 #include "../../Engine/Scenes/BaseScene.h"
-#include "../../Engine/UI/Button.h"
-#include "../../Engine/UI/StyledText.h"
-#include "../../Engine/UI/TextBox.h"
+
+class Button;
+class StyledText;
+class Texture;
+class Soundtrack;
 
 class MainMenu : public BaseScene
 {

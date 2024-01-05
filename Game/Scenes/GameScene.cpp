@@ -7,10 +7,12 @@
 #include "MainMenu.h"
 #include "WinScene.h"
 #include "../EnemySpawner.h"
+#include "../GameManager.h"
 #include "../GameSingleton.h"
 #include "../../Engine/EngineSingelton.h"
 #include "../Pathfinding.h"
 #include "../Styles.h"
+#include "../../Engine/Core/Soundtrack.h"
 #include "../../Engine/Scenes/SceneManager.h"
 #include "../Player/PlayerCharacter.h"
 #include "../Skeleton/SkeletonCharacter.h"
@@ -27,7 +29,7 @@ void GameScene::onNotify(const Event event)
 {
     if (event == PLAYER_DIED)
     {
-        GAME->sceneManager->changeScene<GameOverScene>();
+        GAME->gSceneManager->changeScene<GameOverScene>();
     }
 }
 
@@ -48,13 +50,15 @@ void GameScene::startScene()
     });
 
     textEnemyCount = std::make_shared<TextBox>();
-    textEnemyCount->init("x" + std::to_string(GAME->enemyCount), HUD_TEXT_COLOR, HUD_TEXT_SIZE);
+    textEnemyCount->init("x" + std::to_string(GAME->gEnemyCount), HUD_TEXT_COLOR, HUD_TEXT_SIZE);
     textEnemyCount->loadFromFile("assets/fonts/alagard.ttf");
     textEnemyCount->setPosition(75, 15);
+    
+    GAME->gGameManager->getGameMusic()->play(5000);
 
-    GAME->pathfindingGrid = std::make_shared<Pathfinding>(65, 65, 50, 50);
-    GAME->pathfindingGrid->init();
-    GAME->currentEnemyCount = GAME->enemyCount;
+    GAME->gPathfindingGrid = std::make_shared<Pathfinding>(65, 65, 50, 50);
+    GAME->gPathfindingGrid->init();
+    GAME->gCurrentEnemyCount = GAME->gEnemyCount;
 
     const float playerStartPosX = ENGINE->SCREEN_WIDTH / 2;
     const float playerStartPosY = ENGINE->SCREEN_HEIGHT / 2;
@@ -77,9 +81,11 @@ void GameScene::endScene()
 {
     BaseScene::endScene();
 
-    GAME->pathfindingGrid = nullptr;
-    GAME->sizeEnemiesList = 0;
-    GAME->currentEnemyCount = 0;
+    GAME->gGameManager->getGameMusic()->stop(500);
+
+    GAME->gPathfindingGrid = nullptr;
+    GAME->gSizeEnemiesList = 0;
+    GAME->gCurrentEnemyCount = 0;
 
     if (!GAME->gEnemyList.empty())
     {
@@ -116,9 +122,9 @@ void GameScene::updateScene()
 {
     BaseScene::updateScene();
 
-    textEnemyCount->setText("x" + std::to_string(GAME->currentEnemyCount));
+    textEnemyCount->setText("x" + std::to_string(GAME->gCurrentEnemyCount));
 
-    if (GAME->currentEnemyCount > 0)
+    if (GAME->gCurrentEnemyCount > 0)
     {
         if (waveCountDown <= 0)
         {
@@ -130,7 +136,7 @@ void GameScene::updateScene()
             enemy->setEventOnDeath([this, enemyTemp]
             {
                 GAME->removeEnemy(enemyTemp);
-                GAME->currentEnemyCount--;
+                GAME->gCurrentEnemyCount--;
             });
         }
         else
@@ -140,6 +146,6 @@ void GameScene::updateScene()
     }
     else
     {
-        GAME->sceneManager->changeScene<WinScene>();
+        GAME->gSceneManager->changeScene<WinScene>();
     }
 }

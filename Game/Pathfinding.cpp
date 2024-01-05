@@ -202,7 +202,7 @@ void Pathfinding::update()
     {
         for (int y = 0; y < mapHeight; ++y)
         {
-            for (int enemy = 0; enemy < GAME->sizeEnemiesList; ++enemy)
+            for (int enemy = 0; enemy < GAME->gSizeEnemiesList; ++enemy)
             {
                 Vector topLeft = nodeToVector(&nodes[y * mapWidth + x]);
                 Vector bottomRight = topLeft;
