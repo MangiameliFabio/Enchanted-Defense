@@ -1,15 +1,14 @@
 ﻿#pragma once
 
-enum Event
+enum EEvent
 {
     NULL_EVENT,
     HANDLE_INPUT,
     ALL_INPUTS_HANDLED,
     PLAYER_DIED,
-    SCENE_SWITCH,
 };
 
-enum playerAnim
+enum EPlayerAnim
 {
     IDLE,
     LEFT,
@@ -18,13 +17,22 @@ enum playerAnim
     DOWN,
 };
 
-enum Enemies
+enum EEnemies
 {
     SKELETON
 };
 
-enum SceneState
+enum ESoundtrack
 {
-    MENU,
-    IN_GAME
+    MENU_TRACK,
+    IN_GAME_TRACK,
+};
+
+enum ESoundEffect
+{
+    BUTTON_CLICK,
+    GAME_OVER,
+    SKELETON_DEATH,
+    SHOOTING,
+    WIN_SOUND
 };

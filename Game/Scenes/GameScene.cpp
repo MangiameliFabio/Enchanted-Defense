@@ -4,10 +4,10 @@
 #include <random>
 
 #include "GameOverScene.h"
-#include "MainMenu.h"
+#include "MainMenuScene.h"
 #include "WinScene.h"
 #include "../EnemySpawner.h"
-#include "../GameManager.h"
+#include "../SoundManager.h"
 #include "../GameSingleton.h"
 #include "../../Engine/EngineSingelton.h"
 #include "../Pathfinding.h"
@@ -25,7 +25,7 @@ GameScene::~GameScene()
 {
 }
 
-void GameScene::onNotify(const Event event)
+void GameScene::onNotify(const EEvent event)
 {
     if (event == PLAYER_DIED)
     {
@@ -50,15 +50,16 @@ void GameScene::startScene()
     });
 
     textEnemyCount = std::make_shared<TextBox>();
-    textEnemyCount->init("x" + std::to_string(GAME->gEnemyCount), HUD_TEXT_COLOR, HUD_TEXT_SIZE);
+    textEnemyCount->init("x" + std::to_string(GAME->gKillCount), HUD_TEXT_COLOR, HUD_TEXT_SIZE);
     textEnemyCount->loadFromFile("assets/fonts/alagard.ttf");
     textEnemyCount->setPosition(75, 15);
-    
-    GAME->gGameManager->getGameMusic()->play(5000);
+
+    GAME->gSoundManager->getSoundtrack(IN_GAME_TRACK)->play(5000);
 
     GAME->gPathfindingGrid = std::make_shared<Pathfinding>(65, 65, 50, 50);
     GAME->gPathfindingGrid->init();
     GAME->gCurrentEnemyCount = GAME->gEnemyCount;
+    GAME->gKillCount = GAME->gEnemyCount;
 
     const float playerStartPosX = ENGINE->SCREEN_WIDTH / 2;
     const float playerStartPosY = ENGINE->SCREEN_HEIGHT / 2;
@@ -71,21 +72,35 @@ void GameScene::startScene()
 
     skeletonSpawner = std::make_shared<EnemySpawnerFor<SkeletonCharacter>>();
 
-    spawnPoints[0] = Vector(ENGINE->SCREEN_WIDTH / 2, 70);
-    spawnPoints[1] = Vector(70,ENGINE->SCREEN_HEIGHT / 2);
-    spawnPoints[2] = Vector(ENGINE->SCREEN_WIDTH / 2, ENGINE->SCREEN_HEIGHT - 70);
-    spawnPoints[3] = Vector(ENGINE->SCREEN_HEIGHT - 70,ENGINE->SCREEN_WIDTH / 2);
+    //Spawn Points Top
+    spawnPoints[0] = Vector(ENGINE->SCREEN_WIDTH / 2 - 50, 70);
+    spawnPoints[1] = Vector(ENGINE->SCREEN_WIDTH / 2, 70);
+    spawnPoints[2] = Vector(ENGINE->SCREEN_WIDTH / 2 + 50, 70);
+
+    //Spawn Points Left
+    spawnPoints[3] = Vector(70,ENGINE->SCREEN_HEIGHT / 2 - 50);
+    spawnPoints[4] = Vector(70,ENGINE->SCREEN_HEIGHT / 2);
+    spawnPoints[5] = Vector(70,ENGINE->SCREEN_HEIGHT / 2 + 50);
+
+    //Spawn Points Bottom
+    spawnPoints[6] = Vector(ENGINE->SCREEN_WIDTH / 2 - 50, ENGINE->SCREEN_HEIGHT - 70);
+    spawnPoints[7] = Vector(ENGINE->SCREEN_WIDTH / 2, ENGINE->SCREEN_HEIGHT - 70);
+    spawnPoints[8] = Vector(ENGINE->SCREEN_WIDTH / 2 + 50, ENGINE->SCREEN_HEIGHT - 70);
+
+    //Spawn Points Right
+    spawnPoints[9] = Vector(ENGINE->SCREEN_WIDTH - 70,ENGINE->SCREEN_HEIGHT / 2 - 50);
+    spawnPoints[10] = Vector(ENGINE->SCREEN_WIDTH - 70,ENGINE->SCREEN_HEIGHT / 2);
+    spawnPoints[11] = Vector(ENGINE->SCREEN_WIDTH - 70,ENGINE->SCREEN_HEIGHT / 2 + 50);
 }
 
 void GameScene::endScene()
 {
     BaseScene::endScene();
 
-    GAME->gGameManager->getGameMusic()->stop(500);
+    GAME->gSoundManager->getSoundtrack(IN_GAME_TRACK)->stop(500);
 
     GAME->gPathfindingGrid = nullptr;
     GAME->gSizeEnemiesList = 0;
-    GAME->gCurrentEnemyCount = 0;
 
     if (!GAME->gEnemyList.empty())
     {
@@ -94,7 +109,6 @@ void GameScene::endScene()
 
     if (GAME->gPlayer)
     {
-        GAME->gPlayer->removeObserver(this);
         GAME->gPlayer = nullptr;
     }
 }
@@ -103,7 +117,7 @@ Vector& GameScene::chooseRandomSpawn()
 {
     std::random_device rd; // Get a random seed from the operating system
     std::mt19937 gen(rd()); // Use the Mersenne Twister 19937 generator
-    std::uniform_int_distribution<int> dis(0, 3);
+    std::uniform_int_distribution<int> dis(0, 11);
     // Define a uniform distribution between 0 and sum of spawnPoints
     const int randomNumber = dis(gen); // Generate a random integer between 0 and sum of spawnPoints
 
@@ -122,30 +136,68 @@ void GameScene::updateScene()
 {
     BaseScene::updateScene();
 
-    textEnemyCount->setText("x" + std::to_string(GAME->gCurrentEnemyCount));
+    textEnemyCount->setText("x" + std::to_string(GAME->gKillCount));
 
-    if (GAME->gCurrentEnemyCount > 0)
+    if (GAME->gKillCount > 0)
     {
-        if (waveCountDown <= 0)
+        if (GAME->gCurrentEnemyCount > 0)
         {
-            waveCountDown = setRandomWaveCountDown(0.5f, 2.f);
-            std::shared_ptr<BaseEnemy> enemy = skeletonSpawner->spawnEnemy(chooseRandomSpawn());
-            GAME->addEnemy(enemy);
-
-            std::weak_ptr<BaseEnemy> enemyTemp(enemy);
-            enemy->setEventOnDeath([this, enemyTemp]
+            if (currentDifficultyTimer <= 0)
             {
-                GAME->removeEnemy(enemyTemp);
-                GAME->gCurrentEnemyCount--;
-            });
-        }
-        else
-        {
-            waveCountDown -= DELTA_TIME;
+                minWaveCD *= 0.6f;
+                maxWaveCD *= 0.6f;
+                currentDifficultyTimer = difficultyTimer;
+            }
+            else
+            {
+                currentDifficultyTimer -= DELTA_TIME;
+            }
+            if (waveCountDown <= 0)
+            {
+                Vector spawnPoint = chooseRandomSpawn();
+                bool spawnNewEnemy = true;
+
+                if (GAME->gCurrentEnemyCount > 0)
+                {
+                    for (const auto& enemy : GAME->gEnemyList)
+                    {
+                        if (Vector::dist(enemy->position, spawnPoint) <= 50.f)
+                        {
+                            if (!enemy->collision->checkIfPointInCollision(spawnPoint))
+                            {
+                                spawnNewEnemy = false;
+                            }
+                        }
+                    }
+                }
+
+                if (spawnNewEnemy)
+                {
+                    waveCountDown = setRandomWaveCountDown(minWaveCD, maxWaveCD);
+
+                    std::shared_ptr<BaseEnemy> newEnemy = skeletonSpawner->spawnEnemy(spawnPoint);
+                    GAME->addEnemy(newEnemy);
+
+                    std::weak_ptr<BaseEnemy> enemyTemp(newEnemy);
+                    newEnemy->setEventOnDeath([this, enemyTemp]
+                    {
+                        GAME->removeEnemy(enemyTemp);
+                        GAME->gKillCount--;
+                    });
+
+                    GAME->gCurrentEnemyCount--;
+                }
+            }
+
+            else
+            {
+                waveCountDown -= DELTA_TIME;
+            }
         }
     }
     else
     {
+        GAME->gSoundManager->getSoundEffect(WIN_SOUND)->play();
         GAME->gSceneManager->changeScene<WinScene>();
     }
 }

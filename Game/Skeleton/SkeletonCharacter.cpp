@@ -1,19 +1,15 @@
 ﻿#include "SkeletonCharacter.h"
 
-#include <memory>
-#include <memory>
-
 #include "../GameSingleton.h"
+#include "../SoundManager.h"
+#include "../Pathfinding.h"
+#include "../Player/PlayerCharacter.h"
 #include "../../Engine/EngineSingelton.h"
 #include "../../Engine/Core/MeasurePerformance.h"
 #include "../../Engine/Core/CollisionObject.h"
-#include "../../Engine/Debuging/DebugRectangle.h"
-#include "../Pathfinding.h"
 #include "../../Engine/Core/SoundEffect.h"
-#include "../../Engine/Debuging/DebugPoint.h"
-#include "../Player/PlayerCharacter.h"
 
-SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
+SkeletonCharacter::SkeletonCharacter(const Vector& SpawnPosition)
 {
     //Set spawn Position
     position = SpawnPosition;
@@ -27,9 +23,6 @@ SkeletonCharacter::SkeletonCharacter(Vector& SpawnPosition)
     collision->createCollisionShape(animation->getHeight(), animation->getWidth(), &position);
 
     PLAYER->addObserver(this);
-
-    deathSound = std::make_shared<SoundEffect>();
-    deathSound->init("assets/sounds/effects/skeleton_kill.wav");
 }
 
 SkeletonCharacter::~SkeletonCharacter()
@@ -74,10 +67,7 @@ void SkeletonCharacter::update()
 
     animation->update();
     
-    if (checkForCollision())
-    {
-        move();
-    }
+    checkForCollision();
 }
 
 void SkeletonCharacter::move()
@@ -97,29 +87,10 @@ bool SkeletonCharacter::checkForCollision()
         if(GAME->gEnemyList.empty()){ return false;}
         if (GAME->gEnemyList[enemy].get() != this)
         {
-            if (Vector::dist(GAME->gEnemyList[enemy]->position, position) <= 100.f)
-            {
-                if (collision->checkForIntersection(GAME->gEnemyList[enemy]->collision.get()))
-                {
-                    // if (collision->calculateCollisionPoint(SINGLETON->gEnemiesList[enemy]->collision, hit))
-                    // {
-                    //     moveDir += hit.normal;
-                    //     return true;
-                    // }
-                    position = lastValidPos;
-                    collision->collisionResponse(GAME->gEnemyList[enemy]->collision.get());
-                    return true;
-                }
-            }
             if (Vector::dist(PLAYER->position, position) <= 100.f)
             {
                 if (collision->checkForIntersection(PLAYER->collision.get()))
                 {
-                    // if (collision->calculateCollisionPoint(SINGLETON->gEnemiesList[enemy]->collision, hit))
-                    // {
-                    //     moveDir += hit.normal;
-                    //     return true;
-                    // }
                     PLAYER->die();
                     return true;
                 }
@@ -150,11 +121,11 @@ bool SkeletonCharacter::setDirToPath()
 
 void SkeletonCharacter::onDeath() const
 {
-    deathSound->play();
+    GAME->gSoundManager->getSoundEffect(SKELETON_DEATH)->play();
     BaseEnemy::onDeath();
 }
 
-void SkeletonCharacter::onNotify(const Event event)
+void SkeletonCharacter::onNotify(const EEvent event)
 {
     if (event == PLAYER_DIED)
     {

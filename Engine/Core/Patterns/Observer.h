@@ -7,5 +7,5 @@ class Observer
 public:
     virtual ~Observer() = default;
 
-    virtual void onNotify(const Event event) = 0;
+    virtual void onNotify(const EEvent event) = 0;
 };

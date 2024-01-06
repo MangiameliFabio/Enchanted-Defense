@@ -3,24 +3,22 @@
 
 #include "../../Engine/Scenes/BaseScene.h"
 
-class Button;
+class CustomButton;
 class StyledText;
 class Texture;
 class Soundtrack;
 
-class MainMenu : public BaseScene
+class MainMenuScene : public BaseScene
 {
     std::shared_ptr<StyledText> title = nullptr;
-
-    std::shared_ptr<Button> startButton = nullptr;
-    std::shared_ptr<Button> creditsButton = nullptr;
-    std::shared_ptr<Button> quitButton = nullptr;
-
+    std::shared_ptr<CustomButton> startButton = nullptr;
+    std::shared_ptr<CustomButton> creditsButton = nullptr;
+    std::shared_ptr<CustomButton> quitButton = nullptr;
     std::shared_ptr<Texture> background = nullptr;
 
 public:
-    MainMenu() = default;
-    ~MainMenu() override = default;
+    MainMenuScene() = default;
+    ~MainMenuScene() override = default;
     void startScene() override;
     void endScene() override;
 };

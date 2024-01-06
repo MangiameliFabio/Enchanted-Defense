@@ -833,6 +833,7 @@
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="Game\BaseEnemy.cpp" />
+    <ClCompile Include="Game\CustomButton.cpp" />
     <ClCompile Include="Game\Pathfinding.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1053,10 +1054,10 @@
     </ClCompile>
     <ClCompile Include="Game\Player\PlayerCharacter.cpp" />
     <ClCompile Include="Game\Projectile.cpp" />
-    <ClCompile Include="Game\Scenes\CreditsMenu.cpp" />
+    <ClCompile Include="Game\Scenes\CreditsScene.cpp" />
     <ClCompile Include="Game\Scenes\GameOverScene.cpp" />
     <ClCompile Include="Game\Scenes\GameScene.cpp" />
-    <ClCompile Include="Game\Scenes\MainMenu.cpp" />
+    <ClCompile Include="Game\Scenes\MainMenuScene.cpp" />
     <ClCompile Include="Game\Scenes\WinScene.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1204,6 +1205,7 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Game\SoundManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Animation\AnimationBaseState.h" />
@@ -1239,6 +1241,7 @@
     <ClInclude Include="Engine\UI\UIElement.h" />
     <ClInclude Include="Game\BaseCharacter.h" />
     <ClInclude Include="Game\BaseEnemy.h" />
+    <ClInclude Include="Game\CustomButton.h" />
     <ClInclude Include="Game\EnemySpawner.h" />
     <ClInclude Include="Game\GameCommands.h" />
     <ClInclude Include="Game\Pathfinding.h" />
@@ -1249,13 +1252,14 @@
     <ClInclude Include="Game\Player\PlayerCommands.h" />
     <ClInclude Include="Game\Projectile.h" />
     <ClInclude Include="Game\GameSingleton.h" />
-    <ClInclude Include="Game\Scenes\CreditsMenu.h" />
+    <ClInclude Include="Game\Scenes\CreditsScene.h" />
     <ClInclude Include="Game\Scenes\GameOverScene.h" />
     <ClInclude Include="Game\Scenes\GameScene.h" />
-    <ClInclude Include="Game\Scenes\MainMenu.h" />
+    <ClInclude Include="Game\Scenes\MainMenuScene.h" />
     <ClInclude Include="Game\Scenes\WinScene.h" />
     <ClInclude Include="Game\Skeleton\SkeletonCharacter.h" />
     <ClInclude Include="Game\GameManager.h" />
+    <ClInclude Include="Game\SoundManager.h" />
     <ClInclude Include="Game\Styles.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

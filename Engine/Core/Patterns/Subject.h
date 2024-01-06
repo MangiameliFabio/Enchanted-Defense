@@ -22,11 +22,13 @@ public:
 
         //Remove Observer
         if (position != observers.end())
+        {
             observers.erase(position);
-        numObservers--;
+            numObservers--;
+        }
     }
 
-    void notify(Event event)
+    void notify(EEvent event)
     {
         for (int i = 0; i < numObservers; ++i)
         {

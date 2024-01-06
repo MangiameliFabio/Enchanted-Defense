@@ -5,13 +5,13 @@
 
 #include "InputManager.h"
 #include "../GameSingleton.h"
+#include "../SoundManager.h"
 #include "../../Engine/EngineSingelton.h"
 #include "../../Engine/Animation/Animator.h"
 #include "AnimationStateMachine/PlayerASM.h"
 #include "../../../Engine/Core/CollisionObject.h"
 #include "../../../Engine/Animation/AnimationBaseState.h"
 #include "../Projectile.h"
-#include "../../Engine/Core/SoundEffect.h"
 
 void PlayerCharacter::init()
 {
@@ -29,11 +29,6 @@ void PlayerCharacter::init()
     
     collision->createCollisionShape(spriteHeight, spriteWidth - 10, &position);
     collision->updatePixelBorder();
-
-    shootSound = std::make_shared<SoundEffect>();
-    shootSound->init("assets/sounds/effects/shoot_sound.wav");
-    gameOver = std::make_shared<SoundEffect>();
-    gameOver->init("assets/sounds/effects/game_over.wav");
 }
 
 void PlayerCharacter::update()
@@ -79,7 +74,7 @@ void PlayerCharacter::move()
 
 void PlayerCharacter::spawnProjectile(Vector& pos, Vector& dir)
 {
-    shootSound->play();
+    GAME->gSoundManager->getSoundEffect(SHOOTING)->play();
     new Projectile(pos, dir);
 }
 
@@ -94,7 +89,7 @@ PlayerCharacter::~PlayerCharacter()
     printf("Player has been deleted \n");
 }
 
-void PlayerCharacter::onNotify(const Event event)
+void PlayerCharacter::onNotify(const EEvent event)
 {
     if (event == HANDLE_INPUT)
         inputManager->handleInput();
@@ -139,6 +134,6 @@ void PlayerCharacter::addAimDirection(Vector& v)
 
 void PlayerCharacter::die()
 {
-    gameOver->play();
+    GAME->gSoundManager->getSoundEffect(GAME_OVER)->play();
     notify(PLAYER_DIED);
 }

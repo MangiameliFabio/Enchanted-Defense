@@ -16,7 +16,7 @@ public:
     ~PlayerASM() override;
 
     void init() override;
-    void onNotify(const Event event) override;
+    void onNotify(const EEvent event) override;
 
     void update() override;
 
@@ -26,6 +26,6 @@ public:
     std::shared_ptr<BaseState> upState = nullptr;
     std::shared_ptr<BaseState> downState = nullptr;
 
-    playerAnim stateEnum = IDLE;
-    playerAnim lastStateEnum = stateEnum;
+    EPlayerAnim stateEnum = IDLE;
+    EPlayerAnim lastStateEnum = stateEnum;
 };

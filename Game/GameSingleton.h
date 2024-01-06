@@ -6,6 +6,7 @@
 
 #include "Player/PlayerCharacter.h"
 
+class SoundManager;
 class GameManager;
 class BaseEnemy;
 class Pathfinding;
@@ -38,6 +39,7 @@ public:
 
     std::shared_ptr<SceneManager> gSceneManager = nullptr;
     std::shared_ptr<GameManager> gGameManager = nullptr;
+    std::shared_ptr<SoundManager> gSoundManager = nullptr;
 
     int gSizeEnemiesList = 0;
 
@@ -45,7 +47,7 @@ public:
     int gEnemyCount = 30;
     int gCurrentEnemyCount = gEnemyCount;
 
-    SceneState gSceneState = MENU;
+    int gKillCount = gEnemyCount;
 
     void addEnemy(const std::shared_ptr<BaseEnemy>& enemy)
     {

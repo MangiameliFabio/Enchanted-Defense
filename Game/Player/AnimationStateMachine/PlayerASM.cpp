@@ -36,7 +36,7 @@ void PlayerASM::init()
     AnimationStateMachine::init();
 }
 
-void PlayerASM::onNotify(const Event event)
+void PlayerASM::onNotify(const EEvent event)
 {
     if (event == PLAYER_DIED)
     {

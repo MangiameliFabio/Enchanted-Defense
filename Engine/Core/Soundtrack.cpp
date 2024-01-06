@@ -2,6 +2,28 @@
 
 #include <memory>
 
+Soundtrack::Soundtrack()
+{
+}
+
+Soundtrack::Soundtrack(const char* path)
+{
+    //Load music
+    mAudio = Mix_LoadMUS( path );
+    if( mAudio == NULL )
+    {
+        printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+    }
+
+    Mix_VolumeMusic(20);
+}
+
+Soundtrack::~Soundtrack()
+{
+    Mix_FreeMusic( mAudio );
+    mAudio = nullptr;
+}
+
 bool Soundtrack::init(const char* path)
 {
     //Load music
@@ -48,7 +70,4 @@ void Soundtrack::stop(int fade)
 
 void Soundtrack::close()
 {
-    //Free the sound effects
-    Mix_FreeMusic( mAudio );
-    mAudio = nullptr;
 }

@@ -1,17 +1,20 @@
 ﻿#pragma once
 
-#include "../../Engine/Core/Texture.h"
+#include <memory>
+
 #include "../../Engine/Scenes/BaseScene.h"
-#include "../../Engine/UI/Button.h"
-#include "../../Engine/UI/TextBox.h"
+
+class CustomButton;
+class StyledText;
+class Texture;
 
 class GameOverScene : public BaseScene
 {
     std::shared_ptr<Texture> background = nullptr;
     std::shared_ptr<StyledText> title = nullptr;
 
-    std::shared_ptr<Button>  restartButton = nullptr;
-    std::shared_ptr<Button>  menuButton = nullptr;
+    std::shared_ptr<CustomButton>  restartButton = nullptr;
+    std::shared_ptr<CustomButton>  menuButton = nullptr;
     
 public:
     void startScene() override;

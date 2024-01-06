@@ -16,7 +16,8 @@ public:
     ~TextBox() override;
 
     void init(const std::string& _text, const SDL_Color& _textColor, int _fontSize = 24, int _zIndex = 500.f);
-
+    
+    void setColor(const SDL_Color& color);
     void setText(const std::string& text);
 
     //Loads image at specified path

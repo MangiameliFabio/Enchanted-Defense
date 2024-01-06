@@ -56,7 +56,7 @@ void InputManager::init()
     ENGINE->addObserver(this);
 }
 
-void InputManager::onNotify(const Event event)
+void InputManager::onNotify(const EEvent event)
 {
     if (event == PLAYER_DIED)
     {

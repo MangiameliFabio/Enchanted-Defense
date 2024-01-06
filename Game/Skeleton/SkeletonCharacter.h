@@ -14,7 +14,7 @@ class SkeletonCharacter : public BaseEnemy, public Observer
     void update() override;
 
 public:
-    SkeletonCharacter(Vector& spawnPosition);
+    SkeletonCharacter(const Vector& spawnPosition);
     ~SkeletonCharacter() override;
 
     void move();
@@ -24,19 +24,18 @@ public:
 
     void onDeath() const override;
     
-    void onNotify(const Event event) override;
+    void onNotify(const EEvent event) override;
 
     std::vector<Vector> path;
     std::vector<BaseCharacter*> nearCharacter;
     
     std::shared_ptr<Animator> animation = nullptr;
-    std::shared_ptr<SoundEffect> deathSound = nullptr;
 
     Vector lastValidPos;
 
     float pfCooldown = 0.5f;
     float pfCurrentCooldown = 0.f;
-    float movementSpeed = 50.f;
+    float movementSpeed = 60.f;
 
     bool isMoving = true;
 };

@@ -15,7 +15,7 @@ void CollisionObject::init(Object* parent)
 
 void CollisionObject::drawCollisionShape(bool persistent)
 {
-    const auto rec = new DebugRectangle(topLeft.x, topLeft.y, mWidth, mHeight, {255,0,0,255});
+    const auto rec = new DebugRectangle(topLeft.x, topLeft.y, mWidth, mHeight, {255, 0, 0, 255});
     rec->persistent = persistent;
 }
 
@@ -41,6 +41,17 @@ bool CollisionObject::checkForIntersection(const Vector& topLeftOther, const Vec
         || bottomRightOther.x <= topLeft.x //Checks the left
         || topLeftOther.y >= bottomRight.y //Checks the bottom
         || bottomRightOther.y <= topLeft.y) //Checks the top
+        return false;
+
+    return true;
+}
+
+bool CollisionObject::checkIfPointInCollision(const Vector& point) const
+{
+    if (point.x <= topLeft.x
+        || point.x >= bottomRight.x
+        || point.y <= topLeft.y
+        || point.y >= bottomRight.y)
         return false;
 
     return true;

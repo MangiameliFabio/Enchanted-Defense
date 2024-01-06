@@ -1,18 +1,19 @@
-﻿#include "MainMenu.h"
+﻿#include "MainMenuScene.h"
 
 #include <memory>
-#include <memory>
 
-#include "CreditsMenu.h"
+#include "CreditsScene.h"
 #include "GameScene.h"
-#include "../GameManager.h"
+#include "../CustomButton.h"
+#include "../SoundManager.h"
 #include "../GameSingleton.h"
 #include "../Styles.h"
 #include "../../Engine/EngineSingelton.h"
 #include "../../Engine/Core/Soundtrack.h"
 #include "../../Engine/Scenes/SceneManager.h"
+#include "../../Engine/UI/StyledText.h"
 
-void MainMenu::startScene()
+void MainMenuScene::startScene()
 {
     BaseScene::startScene();
 
@@ -28,25 +29,25 @@ void MainMenu::startScene()
     title->setPosition(Vector((ENGINE->SCREEN_WIDTH - title->getTexture()->getWidth()) / 2, 150));
     title->createShadow(SHADOW_COLOR);
 
-    startButton = std::make_shared<Button>();
+    startButton = std::make_shared<CustomButton>();
     startButton->init(TEXT_COLOR);
     startButton->setButtonText("START", TEXT_SIZE);
     startButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - startButton->getWidth()) / 2, 300));
     startButton->setCallback([]
     {
-        GAME->gGameManager->getMenuMusic()->stop(500);
+        GAME->gSoundManager->getSoundtrack(MENU_TRACK)->stop(500);
         GAME->gSceneManager->changeScene<GameScene>();
     });
     startButton->getButtonText()->createShadow(SHADOW_COLOR);
 
-    creditsButton = std::make_shared<Button>();
+    creditsButton = std::make_shared<CustomButton>();
     creditsButton->init(TEXT_COLOR);
     creditsButton->setButtonText("CREDITS", TEXT_SIZE);
     creditsButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - creditsButton->getWidth()) / 2, 350));
-    creditsButton->setCallback([] { GAME->gSceneManager->changeScene<CreditsMenu>(); });
+    creditsButton->setCallback([] { GAME->gSceneManager->changeScene<CreditsScene>(); });
     creditsButton->getButtonText()->createShadow(SHADOW_COLOR);
 
-    quitButton = std::make_shared<Button>();
+    quitButton = std::make_shared<CustomButton>();
     quitButton->init(TEXT_COLOR);
     quitButton->setButtonText("QUIT", TEXT_SIZE);
     quitButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - quitButton->getWidth()) / 2, 400));
@@ -54,7 +55,7 @@ void MainMenu::startScene()
     quitButton->getButtonText()->createShadow(SHADOW_COLOR);
 }
 
-void MainMenu::endScene()
+void MainMenuScene::endScene()
 {
     BaseScene::endScene();
 }

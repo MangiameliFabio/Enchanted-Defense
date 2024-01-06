@@ -29,6 +29,8 @@ public:
     bool checkForIntersection(CollisionObject* otherObject);
     bool checkForIntersection(const Vector& topLeft, const Vector& bottomRight);
 
+    bool checkIfPointInCollision(const Vector& point) const;
+
     bool calculateCollisionPoint(CollisionObject* otherObject, RaycastHit& hit);
     void collisionResponse(CollisionObject* otherObject);
 

@@ -84,18 +84,21 @@ bool Pathfinding::findPath(Vector& start, Vector& end, std::vector<Vector>& path
 
         for (auto neighbour : nodeCurrent->neighbours)
         {
-            if (neighbour->visited || (neighbour->blocked && neighbour->blockingObject != callingObject))
-                continue;
-
-            float possiblyLowerGoal = nodeCurrent->localGoal + distance(nodeCurrent, neighbour);
-
-            if (possiblyLowerGoal < neighbour->localGoal)
+            if(neighbour)
             {
-                neighbour->parent = nodeCurrent;
-                neighbour->localGoal = possiblyLowerGoal;
+                if (neighbour->visited || (neighbour->blocked && neighbour->blockingObject != callingObject))
+                    continue;
 
-                neighbour->globalGoal = neighbour->localGoal + heuristic(neighbour, nodeEnd);
-                pqOpenNodes.push(neighbour);
+                float possiblyLowerGoal = nodeCurrent->localGoal + distance(nodeCurrent, neighbour);
+
+                if (possiblyLowerGoal < neighbour->localGoal)
+                {
+                    neighbour->parent = nodeCurrent;
+                    neighbour->localGoal = possiblyLowerGoal;
+
+                    neighbour->globalGoal = neighbour->localGoal + heuristic(neighbour, nodeEnd);
+                    pqOpenNodes.push(neighbour);
+                } 
             }
         }
 

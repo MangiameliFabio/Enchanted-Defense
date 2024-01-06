@@ -9,7 +9,7 @@
 
 class Soundtrack;
 class BaseEnemy;
-enum Event : int;
+enum EEvent : int;
 class EnemySpawner;
 
 class GameScene : public BaseScene, Observer
@@ -23,14 +23,20 @@ class GameScene : public BaseScene, Observer
 
     Vector playerStart;
     Vector enemyStart;
-    Vector spawnPoints[4];
+    Vector spawnPoints[12];
 
-    float waveCountDown = 2.f;
+    float difficultyTimer = 5.f;
+    float currentDifficultyTimer = difficultyTimer;
+
+    float waveCountDown = 1.f;
+
+    float minWaveCD = 0.5f;
+    float maxWaveCD = 2.f;
 
 public:
     GameScene();
     ~GameScene() override;
-    void onNotify(const Event event) override;
+    void onNotify(const EEvent event) override;
     void startScene() override;
     void updateScene() override;
     void endScene() override;

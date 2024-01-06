@@ -24,7 +24,7 @@ public:
     void init();
 
     Command* handleInput();
-    void onNotify(const Event event) override;
+    void onNotify(const EEvent event) override;
 
     bool disablePlayerInput = false;
 };

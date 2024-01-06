@@ -76,6 +76,13 @@ bool TextBox::loadFromRenderedText()
     return true;
 }
 
+void TextBox::setColor(const SDL_Color& color)
+{
+    mTextColor = color;
+    loadFromFile(path);
+    setPosition(getPosition());
+}
+
 void TextBox::setText(const std::string& text)
 {
     mText = text;

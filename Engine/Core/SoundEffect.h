@@ -6,7 +6,11 @@ class SoundEffect
     Mix_Chunk* mSoundEffect = nullptr;
     
 public:
-    bool init(const char* path, int volume = 20);
+    SoundEffect();
+    SoundEffect(const char* path);
 
-    void play();
+    ~SoundEffect();
+    bool init(const char* path);
+
+    void play(int volume = 20);
 };

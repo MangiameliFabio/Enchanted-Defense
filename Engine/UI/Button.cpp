@@ -8,7 +8,6 @@
 #include <utility>
 
 #include "../EngineSingelton.h"
-#include "../Core/SoundEffect.h"
 #include "../Core/Soundtrack.h"
 
 Button::Button()
@@ -33,9 +32,6 @@ void Button::init(const SDL_Color* buttonColor)
 void Button::init(const SDL_Color& buttonColor)
 {
     ENGINE->addButton(this);
-
-    clickSound = std::make_shared<SoundEffect>();
-    clickSound->init("assets/sounds/effects/button_click.wav", 30);
     
     mButtonColor = buttonColor;
 }
@@ -54,8 +50,35 @@ void Button::setCallback(std::function<void()> callback)
     mCallback = std::move(callback);
 }
 
-bool Button::handleEvent(const SDL_Event* e) const
+bool Button::handleEvent(const SDL_Event* e)
 {
+    //Check for hovering
+    if(enableHover && e->type == SDL_MOUSEMOTION)
+    {
+        //Get mouse position
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+
+        //Mouse is left of the button
+        if (x > getPosition().x
+            && x < getPosition().x + mWidth
+            && y > getPosition().y
+            && y < getPosition().y + mHeight)
+        {
+            if(!mIsHovering)
+            {
+                mIsHovering = true;
+                mButtonText->setColor(mHoverColor);
+            }
+        }else
+        {
+            if(mIsHovering)
+            {
+                mIsHovering = false;
+                mButtonText->setColor(mButtonColor);
+            }
+        }   
+    }  
     //If mouse event happened
     if (e->type == SDL_MOUSEBUTTONDOWN)
     {
@@ -69,12 +92,16 @@ bool Button::handleEvent(const SDL_Event* e) const
             && y > getPosition().y
             && y < getPosition().y + mHeight)
         {
-            clickSound->play();
+            playButtonSound();
             mCallback();
             return true;
         }
     }
     return false;
+}
+
+void Button::playButtonSound()
+{
 }
 
 void Button::updateDimension()

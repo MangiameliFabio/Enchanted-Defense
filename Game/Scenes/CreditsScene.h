@@ -1,24 +1,25 @@
 ﻿#pragma once
 
+#include <memory>
 #include <vector>
 
 #include "../../Engine/Scenes/BaseScene.h"
-#include "../../Engine/Animation/Animator.h"
-#include "../../Engine/UI/Button.h"
-#include "../../Engine/UI/TextBox.h"
 
-class CreditsMenu : public BaseScene
+class Animator;
+class StyledText;
+class Texture;
+class CustomButton;
+
+class CreditsScene : public BaseScene
 {
     std::shared_ptr<Texture> background = nullptr;
-    
     std::shared_ptr<StyledText> title = nullptr;
     std::shared_ptr<StyledText> secondTitle = nullptr;
+    std::shared_ptr<CustomButton> backButton= nullptr;
+    std::shared_ptr<Animator> playerIdle = nullptr;
 
-    std::shared_ptr<Button> backButton;
-    
     std::vector<std::shared_ptr<Animator>> skeletons;
 
-    std::shared_ptr<Animator> playerIdle;
 
     int amountOfSkelis = 6;
     

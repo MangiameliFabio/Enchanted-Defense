@@ -19,7 +19,7 @@ public:
 
     void move();
     void spawnProjectile(Vector& pos, Vector& dir);
-    void onNotify(const Event event) override;
+    void onNotify(const EEvent event) override;
     void addMoveDirection(Vector& v);
     void addAimDirection(Vector& v);
     void die();
@@ -29,9 +29,6 @@ public:
 
     std::shared_ptr<PlayerASM> stateMachine = nullptr;
     std::shared_ptr<InputManager> inputManager = nullptr;
-
-    std::shared_ptr<SoundEffect> shootSound = nullptr;
-    std::shared_ptr<SoundEffect> gameOver = nullptr;
 
     Vector aimDir = {0,0};
 

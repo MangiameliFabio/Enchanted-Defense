@@ -1,9 +1,10 @@
-﻿#include "CreditsMenu.h"
+﻿#include "CreditsScene.h"
 
 #include <memory>
 #include <memory>
 
-#include "MainMenu.h"
+#include "MainMenuScene.h"
+#include "../CustomButton.h"
 #include "../../Engine/Scenes/SceneManager.h"
 #include "../GameSingleton.h"
 #include "../Styles.h"
@@ -12,7 +13,7 @@
 
 #define PI 3.14159265
 
-void CreditsMenu::startScene()
+void CreditsScene::startScene()
 {
     BaseScene::startScene();
 
@@ -34,11 +35,11 @@ void CreditsMenu::startScene()
     secondTitle->setPosition(Vector((ENGINE->SCREEN_WIDTH - secondTitle->getTexture()->getWidth()) / 2, 200));
     secondTitle->createShadow(SHADOW_COLOR);
 
-    backButton = std::make_shared<Button>();
+    backButton = std::make_shared<CustomButton>();
     backButton->init(TEXT_COLOR);
     backButton->setButtonText("BACK", TEXT_SIZE);
     backButton->setPosition(Vector((ENGINE->SCREEN_WIDTH - backButton->getWidth()) / 2, 350));
-    backButton->setCallback([] { GAME->gSceneManager->changeScene<MainMenu>(); });
+    backButton->setCallback([] { GAME->gSceneManager->changeScene<MainMenuScene>(); });
     backButton->getButtonText()->createShadow(SHADOW_COLOR);
 
     for (int i = 0; i < amountOfSkelis; i++)
@@ -68,7 +69,7 @@ void CreditsMenu::startScene()
     playerIdle->getSpriteSheet()->setStaticPosition({(ENGINE->SCREEN_WIDTH - playerIdle->getWidth() - 16) / 2, 500});
 }
 
-void CreditsMenu::endScene()
+void CreditsScene::endScene()
 {
     BaseScene::endScene();
 
@@ -76,7 +77,7 @@ void CreditsMenu::endScene()
     playerIdle = nullptr;
 }
 
-void CreditsMenu::updateScene()
+void CreditsScene::updateScene()
 {
     BaseScene::updateScene();
 
