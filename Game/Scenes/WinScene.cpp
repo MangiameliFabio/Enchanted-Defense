@@ -61,7 +61,7 @@ void WinScene::startScene()
     });
     menuButton->getButtonText()->createShadow(SHADOW_COLOR);
 
-    GAME->gSoundManager->getSoundtrack(MENU_TRACK)->stop(500);
+    GAME->gSoundManager->getSoundtrack(MENU_TRACK)->play(5000);
 }
 
 void WinScene::endScene()

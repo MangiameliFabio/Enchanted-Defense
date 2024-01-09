@@ -15,7 +15,7 @@ bool Renderer::init()
 {
     bool success = true;
     //Create window
-    gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+    gWindow = SDL_CreateWindow("Enchanted Defense", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                ENGINE->SCREEN_WIDTH,
                                ENGINE->SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (gWindow == nullptr)
