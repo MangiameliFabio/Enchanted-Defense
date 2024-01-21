@@ -1,6 +1,5 @@
 ﻿#include "Log.h"
 
-#include <cstdio>
 #include "../Core/Vector.h"
 
 void Log::print(float floatToPrint, std::string message)

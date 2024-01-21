@@ -1,9 +1,9 @@
 ﻿#include "Animator.h"
 
 #include <memory>
-
 #include "../EngineSingelton.h"
 #include "../Debuging/Log.h"
+#include "../Core/Texture.h"
 
 void Animator::update()
 {

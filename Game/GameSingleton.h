@@ -2,8 +2,8 @@
 
 #define GAME GameSingleton::getInstance()
 #define PLAYER GameSingleton::getInstance()->gPlayer
-#include <vector>
 
+#include <vector>
 #include "Player/PlayerCharacter.h"
 
 class SoundManager;

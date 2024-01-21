@@ -1,13 +1,12 @@
 ﻿#include "CreditsScene.h"
 
 #include <memory>
-#include <memory>
 
 #include "MainMenuScene.h"
 #include "../CustomButton.h"
-#include "../../Engine/Scenes/SceneManager.h"
 #include "../GameSingleton.h"
 #include "../Styles.h"
+#include "../../Engine/Scenes/SceneManager.h"
 #include "../../Engine/EngineSingelton.h"
 #include "../../Engine/Animation/Animator.h"
 

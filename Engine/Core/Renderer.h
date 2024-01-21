@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <SDL_render.h>
+#include <SDL.h>
 #include <vector>
 
 #include "../Debuging/DebugShape.h"

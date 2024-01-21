@@ -1,8 +1,11 @@
 ﻿#pragma once
 
 #include <memory>
+#include <SDL.h>
+#include <string>
 
-#include "../Core/Texture.h"
+struct Vector;
+class Texture;
 
 class Animator
 {

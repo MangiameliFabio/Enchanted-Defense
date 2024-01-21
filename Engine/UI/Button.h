@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <functional>
 #include <memory>
-#include <SDL_events.h>
+#include <SDL.h>
 
 #include "StyledText.h"
 #include "TextBox.h"

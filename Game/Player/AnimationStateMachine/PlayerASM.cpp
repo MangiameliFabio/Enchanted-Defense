@@ -1,13 +1,9 @@
 ﻿#include "PlayerASM.h"
 
-#include <memory>
-
-#include "PlayerAnimationStates.h"
 #include "../../GameSingleton.h"
 #include "../PlayerCharacter.h"
 #include "../../../Engine/EngineSingelton.h"
 #include "../../../Engine/Animation/AnimationBaseState.h"
-#include "../../../Engine/Debuging/Log.h"
 
 PlayerASM::~PlayerASM()
 {

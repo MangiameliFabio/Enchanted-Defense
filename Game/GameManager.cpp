@@ -5,7 +5,7 @@
 #include "GameSingleton.h"
 #include "SoundManager.h"
 #include "Scenes/GameScene.h"
-#include "Scenes\MainMenuScene.h"
+#include "Scenes/MainMenuScene.h"
 
 #include "../Engine/Core/Object.h"
 #include "../Engine/Core/Soundtrack.h"

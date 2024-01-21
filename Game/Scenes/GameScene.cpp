@@ -4,18 +4,17 @@
 #include <random>
 
 #include "GameOverScene.h"
-#include "MainMenuScene.h"
 #include "WinScene.h"
 #include "../EnemySpawner.h"
 #include "../SoundManager.h"
 #include "../GameSingleton.h"
-#include "../../Engine/EngineSingelton.h"
 #include "../Pathfinding.h"
 #include "../Styles.h"
-#include "../../Engine/Core/Soundtrack.h"
-#include "../../Engine/Scenes/SceneManager.h"
 #include "../Player/PlayerCharacter.h"
 #include "../Skeleton/SkeletonCharacter.h"
+#include "../../Engine/EngineSingelton.h"
+#include "../../Engine/Core/Soundtrack.h"
+#include "../../Engine/Scenes/SceneManager.h"
 
 GameScene::GameScene()
 {

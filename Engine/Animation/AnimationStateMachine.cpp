@@ -1,15 +1,13 @@
 ﻿#include "AnimationStateMachine.h"
+
 #include "AnimationBaseState.h"
-
-#include <cstdio>
-
-#include "../EngineSingelton.h"
+#include "../Debuging/Log.h"
 
 void AnimationStateMachine::init()
 {
     if (!currentState)
     {
-        printf("Current State is invalid");
+        Log::print("Current State is invalid");
     }
     else
     {

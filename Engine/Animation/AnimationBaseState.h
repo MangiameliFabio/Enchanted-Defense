@@ -1,11 +1,7 @@
 ﻿#pragma once
-#include <cstdio>
-#include <vcruntime_typeinfo.h>
-#include <memory>
 
 #include "Animator.h"
-
-class Animator;
+#include "../Core/Texture.h"
 
 class BaseState
 {

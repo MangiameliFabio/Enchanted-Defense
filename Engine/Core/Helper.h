@@ -1,6 +1,4 @@
 ﻿#pragma once
-#define F_EQUALS Helper::epsilonComparison
-#define DEGREE_TO_R Helper::degreeToRadian
 
 class Helper
 {

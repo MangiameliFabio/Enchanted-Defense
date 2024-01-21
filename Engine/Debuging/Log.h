@@ -11,6 +11,4 @@ public:
     static void print(const Vector& vectorToPrint, std::string message = "");
     static void print(const std::string& stringToPrint);
     static void printBool(bool boolToPrint);
-
-
 };

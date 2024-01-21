@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <memory>
-#include <SDL_surface.h>
 #include <SDL_timer.h>
 
 #include "BaseScene.h"

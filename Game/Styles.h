@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include <SDL_pixels.h>
 
 #define TEXT_COLOR {150, 0, 0, 0}
 #define SHADOW_COLOR {10, 0, 0, 140}

@@ -1,8 +1,6 @@
 ﻿#pragma once
-#include <memory>
 
 #include "../Engine/Core/Object.h"
-#include "../Engine/Core/Patterns/Observer.h"
 
 class Soundtrack;
 class EnemySpawner;

@@ -14,23 +14,23 @@ struct Vector
     ~Vector(){}
 
     Vector& operator=(const Vector& v);
-    Vector operator+(const Vector& v);
+    Vector operator+(const Vector& v) const;
     void operator+=(const Vector& v);
-    Vector operator-(const Vector& v);
+    Vector operator-(const Vector& v) const;
     void operator-=(const Vector& v);
     Vector operator*(const float f) const;
-    friend Vector operator*(const float f, Vector v);
-    float operator*(Vector& v);
-    bool operator==(const Vector& v);
+    friend Vector operator*(const float f, const Vector& v);
+    float operator*(const Vector& v) const;
+    bool operator==(const Vector& v) const;
 
-    float length();
-    Vector normalize();
+    float length() const;
+    Vector normalize() const;
     void Zero();
-    void print(std::string text = "");
+    void print(const std::string& text = "") const;
     void round();
 
     static float dist(Vector& v1, Vector& v2);
-    static bool compare(Vector& v1, Vector& v2, float tolerance);
-    static Vector middleBetweenVec(Vector& v1, Vector& v2);
-    static Vector rotate(Vector& v, float angle);
+    static bool compare(const Vector& v1, const Vector& v2, float tolerance);
+    static Vector middleBetweenVec(const Vector& v1, const Vector& v2);
+    static Vector rotate(const Vector& v, float angle);
 };

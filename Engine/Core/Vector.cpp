@@ -1,8 +1,6 @@
 ﻿#include "Vector.h"
 
 #include <cmath>
-#include <cstdio>
-
 #include "Helper.h"
 
 Vector& Vector::operator=(const Vector& v)
@@ -13,7 +11,7 @@ Vector& Vector::operator=(const Vector& v)
     return *this;
 }
 
-Vector Vector::operator+(const Vector& v)
+Vector Vector::operator+(const Vector& v) const
 {
     return {x + v.x, y + v.y};
 }
@@ -24,7 +22,7 @@ void Vector::operator+=(const Vector& v)
     y += v.y;
 }
 
-Vector Vector::operator-(const Vector& v)
+Vector Vector::operator-(const Vector& v) const
 {
     return {x - v.x, y - v.y};
 }
@@ -40,29 +38,29 @@ Vector Vector::operator*(const float f) const
     return {x * f, y * f};
 }
 
-Vector operator*(const float f, Vector v)
+Vector operator*(const float f, const Vector& v)
 {
     return {v.x * f, v.y * f};
 }
 
-float Vector::operator*(Vector& v)
+float Vector::operator*(const Vector& v) const
 {
     return x * v.x + y * v.x;
 }
 
-bool Vector::operator==(const Vector& v)
+bool Vector::operator==(const Vector& v) const
 {
-    return F_EQUALS(v.x, x) && F_EQUALS(v.y, y);
+    return Helper::epsilonComparison(v.x, x) && Helper::epsilonComparison(v.y, y);
 }
 
-float Vector::length()
+float Vector::length() const
 {
-    return abs(sqrt(x * x + y * y));
+    return (abs(std::sqrt(x * x + y * y)));
 }
 
-Vector Vector::normalize()
+Vector Vector::normalize() const
 {
-    float vLength = length();
+    const float vLength = length();
     if (vLength == 0.f)
     {
         return {};
@@ -77,15 +75,15 @@ void Vector::Zero()
     y = 0;
 }
 
-void Vector::print(std::string text)
+void Vector::print(const std::string& text) const
 {
     printf("%sx: %.0f, y: %.1f \n", text.c_str(), x, y);
 }
 
 void Vector::round()
 {
-    static_cast<int>(x + 0.5f);
-    static_cast<int>(y + 0.5f);
+    x = roundf(x);
+    y = roundf(y);
 }
 
 float Vector::dist(Vector& v1, Vector& v2)
@@ -93,7 +91,7 @@ float Vector::dist(Vector& v1, Vector& v2)
     return (v1 - v2).length();
 }
 
-bool Vector::compare(Vector& v1, Vector& v2, float tolerance)
+bool Vector::compare(const Vector& v1, const Vector& v2, const float tolerance)
 {
     if (!Helper::epsilonComparison(v1.x, v2.x, tolerance))
     {
@@ -106,19 +104,19 @@ bool Vector::compare(Vector& v1, Vector& v2, float tolerance)
     return true;
 }
 
-Vector Vector::middleBetweenVec(Vector& v1, Vector& v2)
+Vector Vector::middleBetweenVec(const Vector& v1, const Vector& v2)
 {
-    return Vector((v1.x + v2.x) / 2, (v1.y + v2.y) / 2);
+    return {(v1.x + v2.x) / 2, (v1.y + v2.y) / 2};
 }
 
 //     ( cos α | -sin α) (vx) 
 //     ( sin α | cos α ) (vy)
-Vector Vector::rotate(Vector& v, float angle)
+Vector Vector::rotate(const Vector& v, const float angle)
 {
-    double radian = DEGREE_TO_R(angle);
+    const double radian = Helper::degreeToRadian(angle);
 
-    double x = cos(radian) * static_cast<double>(v.x) + -sin(radian) * static_cast<double>(v.y);
-    double y = sin(radian) * static_cast<double>(v.x) + cos(radian) * static_cast<double>(v.y);
+    const double x = cos(radian) * static_cast<double>(v.x) + -sin(radian) * static_cast<double>(v.y);
+    const double y = sin(radian) * static_cast<double>(v.x) + cos(radian) * static_cast<double>(v.y);
 
-    return Vector(x, y);
+    return {x, y};
 }

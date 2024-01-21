@@ -1,9 +1,6 @@
 ﻿#pragma once
 
-#include <SDL_pixels.h>
 #include <SDL_ttf.h>
-#include <string>
-
 #include "UIElement.h"
 
 class TextBox : public UIElement

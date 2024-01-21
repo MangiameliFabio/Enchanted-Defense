@@ -1,16 +1,14 @@
 ﻿#include "PlayerCharacter.h"
 
 #include <memory>
-#include <memory>
 
 #include "InputManager.h"
 #include "../GameSingleton.h"
 #include "../SoundManager.h"
 #include "../../Engine/EngineSingelton.h"
 #include "../../Engine/Animation/Animator.h"
+#include "../../Engine/Animation/AnimationBaseState.h"
 #include "AnimationStateMachine/PlayerASM.h"
-#include "../../../Engine/Core/CollisionObject.h"
-#include "../../../Engine/Animation/AnimationBaseState.h"
 #include "../Projectile.h"
 
 void PlayerCharacter::init()

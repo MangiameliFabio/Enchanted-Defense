@@ -1,8 +1,6 @@
 ﻿#pragma once
 
 #include <memory>
-
-#include "PlayerAnimationStates.h"
 #include "../../../Engine/Enums.h"
 #include "../../../Engine/Animation/AnimationStateMachine.h"
 #include "../../../Engine/Core/Patterns/Observer.h"

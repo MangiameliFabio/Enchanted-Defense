@@ -1,6 +1,6 @@
 ﻿#include "DebugRectangle.h"
 
-#include <SDL_render.h>
+#include <SDL.h>
 
 #include "..\EngineSingelton.h"
 

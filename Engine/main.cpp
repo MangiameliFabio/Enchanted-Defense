@@ -1,5 +1,4 @@
 ﻿#include <chrono>
-#include <cstdio>
 #include <memory>
 #include <SDL.h>
 #include <SDL_image.h>

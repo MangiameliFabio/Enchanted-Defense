@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include "../Core/Texture.h"
 #include "../Core/Vector.h"
 

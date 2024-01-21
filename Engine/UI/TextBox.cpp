@@ -1,5 +1,4 @@
 ﻿#include "TextBox.h"
-
 #include "../EngineSingelton.h"
 
 TextBox::~TextBox()

@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "BaseEnemy.h"
-#include "../Engine/Core/Object.h"
 
 struct Vector;
 class BaseEnemy;

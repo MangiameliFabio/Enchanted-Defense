@@ -1,6 +1,6 @@
 ﻿#include "InputManager.h"
 
-#include <SDL_keyboard.h>
+#include <SDL.h>
 
 #include "PlayerCommands.h"
 #include "../GameCommands.h"
